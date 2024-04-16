@@ -1,0 +1,29 @@
+
+
+{% load static %}
+<div class="wrapper">
+    <div class="main_navbar">
+        <div class="inner_navbar">
+            <div class="logo">
+                <!-- <a href="/"><img src="{% static 'media/geo-real3.png' %}" alt="logo georeal"></a> -->
+     
+              <!-- <a href="/"><h2>Georeal</h2></a>  -->
+            </div>
+            <div class="menu">
+                <ul>
+                    <li class="home" data-section="home"><a href="" title="Domov">Domov</a></li>
+                    <li class="Gallery" data-section="Gallery"><a href="" title="Gallery">Galeria</a></li>
+                    <li class="Blog" data-section="Blog"><a href="" title="Blog">Blog</a></li>
+                    <li class="About" data-section="About"><a href="" title="About">O mne</a></li>
+                    <li class="kontakt" data-section="kontakt"><a href="" title="Kontakt">Kontakt</a></li>
+{#                    {% if user.is_authenticated %}#}
+{#                    <li><a href="/logout">Odhlásiť sa</a></li>#}
+{#                    {% endif %}#}
+                </ul>
+            </div>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </div>
+</div>

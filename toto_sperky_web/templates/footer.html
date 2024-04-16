@@ -1,0 +1,106 @@
+<footer>
+  <div class="footer_container">
+    <div class="switch-box" id="switch-box">
+      <i class="fas fa-sun"></i>
+      <div class="switch" id="switch-btn"></div>
+      <i class="fas fa-moon"></i>
+    </div>
+    <p>&copy; 2023 Toto šperky</p>
+    <p><a href="/cookies">Informácie o Cookies</a></p>
+    <p class="starter3">Made with <a href="https://www.linkedin.com/in/lukas-mandik-62324b253/"><i class="bx bx-heart"></i></a></p>
+  </div>
+
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const switchBox = document.getElementById("switch-box");
+    const body = document.body;
+
+    // Funkcia na kontrolu preferovaného farebného režimu
+    function checkColorScheme() {
+        const storedColorScheme = localStorage.getItem('colorScheme');
+        if (storedColorScheme === null) {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark-mode');
+                body.classList.add('dark-mode');
+                // localStorage.setItem('colorScheme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark-mode');
+                body.classList.remove('dark-mode');
+                // localStorage.setItem('colorScheme', 'light');
+                body.classList.add('light-mode'); // Pridá triedu light-mode do body
+            }
+        } else {
+            if (storedColorScheme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+                body.classList.add('dark-mode');
+            }
+            if (storedColorScheme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode'); // Pridá triedu light-mode do body
+            }
+            if (storedColorScheme === 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.remove('dark-mode');
+                body.classList.remove('dark-mode');
+            }
+        }
+    }
+    switchBox.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        const isDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('colorScheme', isDarkMode ? 'dark' : 'light');
+        
+        if (!isDarkMode && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            body.classList.add('light-mode'); // Pridá triedu light-mode do body iba ak preferovaný farebný režim je tmavý
+        } else {
+            body.classList.remove('light-mode'); // Odstráni triedu light-mode z body, ak je preferovaný farebný režim svetlý alebo ak bola pridaná manuálne
+        }
+        // location.reload();
+
+    });
+
+    // Zavoláme funkciu pri načítaní stránky
+    checkColorScheme();
+
+    // Zavoláme funkciu pri zmene preferovaného farebného režimu
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', checkColorScheme);
+  });
+</script>
+
+  
+<script>
+  const switchBox = document.getElementById('switch-box');
+  const switchBtn = document.getElementById('switch-btn');
+  const body = document.body;
+  
+  // Funkcia na kontrolu a nastavenie počiatočného stavu prepínača
+  function setInitialSwitchState() {
+      const storedColorScheme = localStorage.getItem('colorScheme');
+      if (storedColorScheme === 'dark') {
+          body.classList.add('body-dark');
+          switchBtn.classList.add('move-switch');
+          switchBtn.classList.add('switch-dark');
+          switchBox.classList.add('switch-box-dark');
+      }
+  }
+  
+  function handleSwitch() {
+      body.classList.toggle('body-dark');
+      switchBtn.classList.toggle('move-switch');
+      switchBtn.classList.toggle('switch-dark');
+      switchBox.classList.toggle('switch-box-dark');
+      
+      // Uložiť aktuálny farebný režim do úložiska localStorage
+      const isDarkMode = body.classList.contains('body-dark');
+      localStorage.setItem('colorScheme', isDarkMode ? 'dark' : 'light');
+  }
+  
+  switchBox.addEventListener('click', () => {
+      handleSwitch();
+  });
+  
+  // Nastaviť počiatočný stav prepínača pri načítaní stránky
+  setInitialSwitchState();
+  </script>
+</footer>
