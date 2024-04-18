@@ -1,11 +1,34 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Category ,Product
 # Create your views here.
 
 
 def home(request):
+    categories = Category.objects.all()
+    products = Product.objects.filter(available=True)
+    context = {
+        'categories': categories,
+        'products': products,
+    
+    }
 
-    return render(request, 'home.html')
+    return render(request, 'home.html', context)
+
+
+def gallery(request):
+    categories = Category.objects.all()
+    products = Product.objects.filter(available=True)  # Assuming 'available' field for product availability
+
+ 
+
+    context = {
+        'categories': categories,
+        'products': products,
+    }
+    return render(request, 'gallery.html', context)
+
+
 
 def cookies(request):
 
