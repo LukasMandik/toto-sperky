@@ -3,18 +3,30 @@
 {% block title %}Toto{% endblock %}
 
 {% block content %}
-<div class="gallery_container">
+<!-- <div class="gallery_container">
     <div class="items_gallery">
         <ul>
             {% for product in products %}
             <li>
                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
                 <h3>{{ product.name }}</h3>
-                    <!-- <p>{{ product.description }}</p> -->
+
                 </li>
             {% endfor %}
         </ul>
     </div>  
+</div> -->
+
+<div class="container starter">
+    {% for product in products %}
+        <div class="box">
+
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <!-- <h3>{{ product.name }}</h3> -->
+                <!-- <p>{{ product.description }}</p> -->
+        
+        </div>  
+    {% endfor %}
 </div>
 
 {% if not products %}

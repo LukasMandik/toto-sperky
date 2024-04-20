@@ -31,6 +31,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*","localhost", "127.0.0.1"]
 
+CSRF_TRUSTED_ORIGINS = [
+    # 'https://blog.hubspot.com/website/what-is-localhost',  # Povoliť localhost
+    # 'https://*.vasedomena.com',  # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
+    'http://127.0.0.1:8000',  # Povoliť konkrétnu IP adresu a port
+    'http://[2a03:3b40:fe:eb::1]'
+]
 
 # Application definition
 
@@ -94,8 +100,8 @@ DATABASES = {
         'NAME': env('DB_NAME'),
         'USER': env('DB_USERNAME'),
         'PASSWORD': env('DB_PASSWORD'),
-        # 'HOST': env('DB_HOST'),
-        # 'PORT': env('DB_PORT'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 } 
 
@@ -146,8 +152,8 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # MEDIA_URL = '/images/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

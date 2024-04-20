@@ -15,12 +15,12 @@ $(document).ready(function() {
 
   gsap.to(".main_navbar", {
     y: -100,
-    // backgroundColor: "rgba(45, 48, 56, 0.95)",
+    // backgroundColor: "rgba(5, 8, 6, 0.95)",
     duration: 0.7,
     ease: "power2.out",
     scrollTrigger: {
       trigger: ".endpoint",
-      start: "top -30svh ",
+      start: "top 180svh ",
       end: "center -80svh",
       // toggleClass: "black",
       scrub: false,
@@ -104,22 +104,22 @@ $(document).ready(function() {
 
 $(document).ready(function() {
   gsap.utils.toArray('.starter').forEach((elem) => {
-      let lines = elem.querySelectorAll('.item_home_container p');
+      let lines = elem.querySelectorAll('.box');
 
       lines.forEach((line) => {
           let Timeline = gsap.timeline({
               ease: "elastic",
               scrollTrigger: {
                   trigger: line,
-                  start: "top 650svh",
-                  end: "bottom 650svh",
-                  scrub: false,
+                  start: "top 550svh",
+                  end: "bottom 600svh",
+                  scrub: true,
                   // markers: true,
-                  toggleActions: "restart none none reverse",
+                  // toggleActions: "restart none none reverse",
               }
           });
 
-          Timeline.to(line, { opacity: 1, y: -10 });
+          Timeline.to(line, { opacity: 1, y: -20 });
       });
   });
 });
