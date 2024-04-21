@@ -35,7 +35,7 @@ CSRF_TRUSTED_ORIGINS = [
     # 'https://blog.hubspot.com/website/what-is-localhost',  # Povoliť localhost
     # 'https://*.vasedomena.com',  # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
     'http://127.0.0.1:8000',  # Povoliť konkrétnu IP adresu a port
-    'http://[2a03:3b40:fe:eb::1]'
+    'http://37.205.12.97',
 ]
 
 # Application definition
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livereload',
+#    'livereload',
     'django.contrib.staticfiles',
     'toto_sperky_web',
 ]

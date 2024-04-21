@@ -572,10 +572,10 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 		flex-direction: row;
 	}
 
-	.main_container {
+	/* .main_container {
 		/*margin: 100px auto;*/
 
-	}
+	} */
 
 	.main_navbar .menu ul {
 		background: rgba(255, 255, 255, 0.74);
