@@ -72,12 +72,12 @@ body.dark-mode {
 	width: 1200px;
 	margin: 10px auto;
 	columns: 4;
-	/* column-gap: 20px; */
+	column-gap: 20px;
 }
 .container .box{  
 	width: 100% ;
 	margin-bottom: 10px;  
-	break-inside: avoid;
+	/* break-inside: avoid; */
 	opacity: 0;
 }
 
@@ -512,8 +512,7 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 
 @media (max-width: 1200px){
 	.container{
-		/* width: calc(100% - 40px);
-		width: 100%; */
+		width: calc(100% - 40px);
 		columns: 3; 
 	}
 
@@ -614,6 +613,9 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	.menu.active .dropdown .dropdown_content a {
 		width: 10rem;
 		margin: 1rem auto;
+	}
+	.container{
+		columns: 2; 
 	}
 	.wrapper2 {
 		right: -700px ;
