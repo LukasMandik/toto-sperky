@@ -124,7 +124,27 @@ $(document).ready(function() {
   });
 });
 
+$(document).ready(function() {
+  gsap.utils.toArray('.starter').forEach((elem) => {
+      let lines = elem.querySelectorAll('.main_image_container');
 
+      lines.forEach((line) => {
+          let Timeline = gsap.timeline({
+              ease: "elastic",
+              scrollTrigger: {
+                  trigger: line,
+                  start: "top -0svh",
+                  end: "bottom -600svh",
+                  scrub: true,
+                  // markers: true,
+                  // toggleActions: "restart none none reverse",
+              }
+          });
+
+          Timeline.to(line, { backgroundPosition: "50% -200px" });
+      });
+  });
+});
 
 
 

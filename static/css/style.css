@@ -63,6 +63,10 @@ body.dark-mode {
 	--moon-color: #BDBDBD;
   }
 
+
+
+
+
   .gallery_content_page{
 	display: flex;
 	flex-direction: column;
@@ -121,7 +125,7 @@ body.dark-mode {
 .container{
 	/* width: calc(100% - 30px); */
 	width: 800px;
-	margin: 10px auto;
+	margin: 110px auto;
 	/* display: grid; */
 	columns: 4;
 	column-gap: 20px;
@@ -442,7 +446,31 @@ margin: 0 auto;
 display: flex;
 justify-content: center;
 align-items: center;
-height: 100svh;
+z-index: 12;
+font-size: 43px;
+/* color: white; */
+font-weight: 600;
+/* height: 100svh; */
+}
+.main_home_container .main_image_container{
+	/* position: absolute; */
+	background-image: url("/static/media/286009191_3233430306984063_7160859084952266432_n.jpg");
+    height: 100svh;
+	/* width: 100%; */
+	background-position: 50% 0;
+	background-attachment: fixed;
+	background-size: cover; /* Scales to cover the container */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+.main_home_container .main_image_container img{
+	object-fit: cover;
+	/* width: 100%; */
+	height: 100vh;
+	position: relative;
+	z-index: 0;
 }
 
 
