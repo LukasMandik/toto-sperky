@@ -119,7 +119,7 @@ $(document).ready(function() {
               }
           });
 
-          Timeline.to(line, { opacity: 1, y: -20 });
+          Timeline.to(line, { opacity: 1 });
       });
   });
 });
