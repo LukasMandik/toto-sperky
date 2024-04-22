@@ -82,7 +82,7 @@ body.dark-mode {
 	opacity: 0;
 	height: 100%;
 	break-inside: avoid;
-	margin-bottom: 10px;
+
 }
 
 .container .box img{  
@@ -90,6 +90,7 @@ body.dark-mode {
 	height: 100%;
 	box-sizing: none;
 	border-radius: 10px;
+	margin-bottom: 10px;
 	/* border: solid 0.04rem black; */
 }
 
