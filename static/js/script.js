@@ -113,9 +113,9 @@ $(document).ready(function() {
                   trigger: line,
                   start: "top 550svh",
                   end: "bottom 600svh",
-                  scrub: false,
+                  scrub: true,
                   // markers: true,
-                  toggleActions: "restart none none reverse",
+                  // toggleActions: "restart none none reverse",
               }
           });
 
