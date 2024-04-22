@@ -104,7 +104,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
   gsap.utils.toArray('.starter').forEach((elem) => {
-      let lines = elem.querySelectorAll('.box');
+      let lines = elem.querySelectorAll('.container .box');
 
       lines.forEach((line) => {
           let Timeline = gsap.timeline({
@@ -113,13 +113,13 @@ $(document).ready(function() {
                   trigger: line,
                   start: "top 550svh",
                   end: "bottom 600svh",
-                  scrub: true,
+                  scrub: false,
                   // markers: true,
-                  // toggleActions: "restart none none reverse",
+                  toggleActions: "restart none none reverse",
               }
           });
 
-          Timeline.to(line, { opacity: 1, y: -20 });
+          Timeline.to(line, { opacity: 1, y: -40 });
       });
   });
 });
