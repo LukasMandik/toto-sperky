@@ -82,6 +82,7 @@ body.dark-mode {
 	opacity: 0;
 	height: 100%;
 	break-inside: avoid;
+	transform: translateY(30px)
 
 }
 
