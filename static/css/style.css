@@ -85,7 +85,7 @@ body.dark-mode {
 .container .box{  
 	width: 100% ;
 	margin-bottom: 10px;  
-	break-inside: avoid;
+	break-inside: avoid-column;
 	opacity: 0;
 }
 
