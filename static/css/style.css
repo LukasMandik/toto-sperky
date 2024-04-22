@@ -102,10 +102,12 @@ body.dark-mode {
 	object-fit: contain;
 	border: solid 0.04rem black;
 } */
-
+.gallery_container{
+	margin-top: 240px;
+}
 .container{
 	width: 1200px;
-	margin: 240px auto;
+	margin: 10px auto;
 	columns: 4;
 	column-gap: 20px;
 }
@@ -311,7 +313,7 @@ margin: 0 auto;
 	display: none;
 }
 
-/* .main_navbar .logo a{
+.main_navbar .logo a{
 	position: absolute;
 	top: -54px;
 	left: -40px;
@@ -321,7 +323,7 @@ margin: 0 auto;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	margin: 0 2rem;
-} */
+}
 
 
 .main_navbar .logo img{
@@ -572,10 +574,6 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 		flex-direction: row;
 	}
 
-	/* .main_container {
-		/*margin: 100px auto;*/
-
-	} */
 
 	.main_navbar .menu ul {
 		background: rgba(255, 255, 255, 0.74);
@@ -653,17 +651,9 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 		width: 10rem;
 		margin: 1rem auto;
 	}
-
 	.container{
 		columns: 2; 
 	}
-
-
-	.svg_shpe{
-
-		width: 80%;
-	}
-	
 	.wrapper2 {
 		right: -700px ;
 		position: fixed;
@@ -671,7 +661,6 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 		bottom: 10px;
 		padding: 6px 15px 8px;
 	}
-	  
 	header i {
 	font-size: 18px;
 	}
@@ -685,57 +674,10 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	.wrapper2 .data p {
 	font-size: 16px;
 	}
-
 	.wrapper2 .buttons{
 	margin-top: 8px;
 	}  
-
-	.collapse-holder{
-		max-width: 90%;
-	}
-
-	.collapse-holder:hover{
-		border: none;
-		color: none;
-	}
-	.video_container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		/* width: 100%; */
-		/* height: 100svh; */
-	
-	  }
-	  
-	.video_container video {
-		width: initial;
-		height: 100svh;
-		/* max-width: 100%; */
-		/* max-height: 100%; */
-	}
-
-
-	/* .up_address_container{
-		display: flex;
-		flex-direction: column;
-		padding: 10px;
-	}
-	.up_address_container2{
-		display: flex;
-	}
-	#kontakt .title_home_container2 {
-		display: flex;
-		flex-direction: column;
-		width: 90%;
-		margin: 5px;
-	} */
-
-	/* .kontakt_container_content .network_kontakt_container{
-		flex-direction: column;
-	}
-	.kontakt_container_content .network_kontakt_container p a{
-		margin-bottom: 15px;
-	} */
+}
 
 @media (max-width: 426px) {
 
