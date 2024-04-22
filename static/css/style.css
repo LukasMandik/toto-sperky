@@ -63,45 +63,6 @@ body.dark-mode {
 	--moon-color: #BDBDBD;
   }
 
-
-.gallery_container{
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	margin-top: 160px;
-	
-  }
-
-  .gallery_container .items_gallery {
-	display: flex;
-	width: 700px;
-
-}
-.gallery_container .items_gallery ul{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	width: 800px;
-
-}
-.gallery_container .items_gallery ul li{
-	display: flex;
-	flex-direction: column;
-    justify-content: space-between;
-}
-
-.gallery_container .items_gallery ul li h3{
-	text-align: center;
-	}
-
-
-/* img{
-	width: 100%;
-	height: 280px;
-	border-radius: 8px;
-	object-fit: contain;
-	border: solid 0.04rem black;
-} */
 .gallery_container{
 	margin-top: 240px;
 }
@@ -112,12 +73,11 @@ body.dark-mode {
 	column-gap: 20px;
 }
 .container .box{  
-	width: 100% !important;
-	clear: none !important;
+	width: 100%;
 	margin-bottom: 10px;  
 	break-inside: avoid;
 	opacity: 0;
-}
+}g
 
 .container .box img{  
 	max-width: 100%;
