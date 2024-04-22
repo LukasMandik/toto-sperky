@@ -74,8 +74,8 @@ body.dark-mode {
 	margin: 10px auto;
 	/* display: grid; */
 	columns: 2;
-	column-gap: 20px;
-	border: solid 0.04rem black;
+	column-gap: 10px;
+	/* border: solid 0.04rem black; */
 }
 .container .box{  
 	width: 100% ;
