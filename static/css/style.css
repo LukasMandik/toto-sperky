@@ -112,7 +112,8 @@ body.dark-mode {
 	column-gap: 20px;
 }
 .container .box{  
-	width: 100% ;
+	width: 100% !important;
+	clear: none !important;
 	margin-bottom: 10px;  
 	break-inside: avoid;
 	opacity: 0;
