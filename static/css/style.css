@@ -466,7 +466,6 @@ font-weight: 600;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 }
 .main_home_container .main_image_container img{
 	object-fit: cover;
