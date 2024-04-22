@@ -681,10 +681,6 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 
 @media (max-width: 426px) {
 
-	.container{
-		columns: 3; 
-	}
-
 
 }
 
