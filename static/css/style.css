@@ -460,6 +460,9 @@ font-weight: 600;
 	background-position: 50% 0;
 	background-attachment: fixed;
 	background-size: cover; /* Scales to cover the container */
+	-webkit-background-size: cover; /* Safari/Chrome */
+	-moz-background-size: cover; /* Firefox */
+	-o-background-size: cover; /* Opera */
 	display: flex;
 	justify-content: center;
 	align-items: center;
