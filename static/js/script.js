@@ -14,13 +14,13 @@ $(document).ready(function() {
 
 
   gsap.to(".main_navbar", {
-    y: -100,
+    // y: -80,
     // backgroundColor: "rgba(5, 8, 6, 0.95)",
     duration: 0.7,
     ease: "power2.out",
     scrollTrigger: {
       trigger: ".endpoint",
-      start: "top 180svh ",
+      start: "top -10svh ",
       end: "center -80svh",
       // toggleClass: "black",
       scrub: false,
@@ -113,9 +113,9 @@ $(document).ready(function() {
                   trigger: line,
                   start: "top 550svh",
                   end: "bottom 600svh",
-                  scrub: true,
+                  scrub: false,
                   // markers: true,
-                  // toggleActions: "restart none none reverse",
+                  toggleActions: "restart none none reverse",
               }
           });
 

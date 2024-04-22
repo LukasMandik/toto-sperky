@@ -3,17 +3,34 @@
 {% block title %}Galllery{% endblock %}
 
 {% block content %}
-<div class="gallery_container">
-    <div class="container starter">
-        {% for product in products %}
-        <div class="box">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-        </div>  
-        {% endfor %}
+
+<div class="gallery_content_page">
+    <div class="categories">
+        <ul>
+            <div class="categories_item">
+                <li {% if not selected_category %} class="selected"{% endif %}><a href="/gallery">All</a></li>
+            </div>
+            {% for category in categories %}
+            <div class="categories_item">
+                <li {% if category.name == selected_category %} class="selected"{% endif %}><a href="/gallery?category={{ category.name }}">{{ category.name }}</a></li>
+            </div>
+            {% endfor %}
+        </ul>
     </div>
-    
-    {% if not products %}
-    <p>No products found.</p>
-    {% endif %}
+
+
+    <div class="gallery_container">
+        <div class="container starter">
+            {% for product in products %}
+            <div class="box">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>  
+            {% endfor %}
+        </div>
+        
+        {% if not products %}
+        <p>No products found.</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

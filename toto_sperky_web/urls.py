@@ -7,7 +7,7 @@ app_name = 'toto_sperky_web'
 urlpatterns = [
     path('', views.home, name='home'),
     path('gallery', views.gallery, name='gallery'),
-    # path('<slug:category_slug>/', views.product_gallery, name='product_gallery_by_category'),
+    # path('<slug:category_slug>/', views.gallery, name='product_gallery_by_category'),
     path('cookies', views.cookies, name='cookies'),
 ]
 
