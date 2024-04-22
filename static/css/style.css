@@ -466,7 +466,15 @@ font-weight: 600;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	@media (max-width: 768px) {
+		background-size: contain;
+		-webkit-background-size: contain; /* Safari/Chrome */
+		-moz-background-size: contain; /* Firefox */
+		-o-background-size: contain; /* Opera */}
 }
+
+
 .main_home_container .main_image_container img{
 	object-fit: cover;
 	/* width: 100%; */
