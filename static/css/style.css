@@ -512,8 +512,8 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 
 @media (max-width: 1200px){
 	.container{
-		/* width: calc(100% - 40px); */
-		width: 100%;
+		/* width: calc(100% - 40px);
+		width: 100%; */
 		columns: 3; 
 	}
 
@@ -614,9 +614,6 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	.menu.active .dropdown .dropdown_content a {
 		width: 10rem;
 		margin: 1rem auto;
-	}
-	.container{
-		columns: 2; 
 	}
 	.wrapper2 {
 		right: -700px ;
