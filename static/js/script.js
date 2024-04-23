@@ -156,17 +156,19 @@ $(document).ready(function() {
               ease: "elastic",
               scrollTrigger: {
                   trigger: line,
-                  start: "top 30svh",
-                  end: "bottom -800svh",
+                  start: "top 80svh",
+                  end: "bottom -500svh",
                   scrub: true,
-                  markers: true,
+                  // markers: true,
                   // toggleActions: "restart none none reverse",
               }
           });
 
-          Timeline.to(line, { y: 470 })
+          Timeline.to(line, {width: 270, y: 350 , rotate: -3})
           // Timeline.to(line, {  });
-          Timeline.to(line, { width: 600, y: 200, opacity: 0 });
+          Timeline.to(line, { width: 400, y: 350, opacity: 0});
+          // Timeline.to(line, {  });
+          // Timeline.to(line, {  });
       });
   });
 });
