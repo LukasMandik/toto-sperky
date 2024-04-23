@@ -141,11 +141,35 @@ $(document).ready(function() {
               }
           });
 
-          Timeline.to(line, { backgroundPosition: "50% -200px" });
+          Timeline.to(line, { backgroundPosition: "47% 60%" });
       });
   });
 });
 
+
+$(document).ready(function() {
+  gsap.utils.toArray('.starter').forEach((elem) => {
+      let lines = elem.querySelectorAll('.main_image_container img');
+
+      lines.forEach((line) => {
+          let Timeline = gsap.timeline({
+              ease: "elastic",
+              scrollTrigger: {
+                  trigger: line,
+                  start: "top 30svh",
+                  end: "bottom -800svh",
+                  scrub: true,
+                  markers: true,
+                  // toggleActions: "restart none none reverse",
+              }
+          });
+
+          Timeline.to(line, { y: 470 })
+          // Timeline.to(line, {  });
+          Timeline.to(line, { width: 600, y: 200, opacity: 0 });
+      });
+  });
+});
 
 
 $(document).ready(function() {
