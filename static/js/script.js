@@ -1,3 +1,5 @@
+$(document).ready(function() {
+
 let hamburger = document.querySelector(".hamburger");
 let menu = document.querySelector(".menu");
 
@@ -5,7 +7,7 @@ let menu = document.querySelector(".menu");
 		menu.classList.toggle("active");
 	})
 
-
+})
 
 
 
@@ -14,19 +16,19 @@ $(document).ready(function() {
 
 
   gsap.to(".main_navbar", {
-    // y: -80,
-    // backgroundColor: "rgba(5, 8, 6, 0.95)",
-    duration: 0.7,
+    // height: 100,
+    // backgroundColor: "rgba(251, 251, 251, 1)",
+    duration: 0,
     ease: "power2.out",
     scrollTrigger: {
       trigger: ".endpoint",
-      start: "top -10svh ",
-      end: "center -80svh",
+      start: "center 390svh ",
+      end: "center 390svh",
       // toggleClass: "black",
       scrub: false,
       // markers: true,
       // pin: true,
-      toggleActions: "restart none none reverse",
+      toggleActions: "restart none none reverse ",
     }
   })
 })
@@ -164,10 +166,9 @@ $(document).ready(function() {
               }
           });
 
-          Timeline.to(line, {width: 270, y: 350 , rotate: -3})
+          // Timeline.to(line, {width: 270, y: 350 , rotate: -3},0,0)
           // Timeline.to(line, {  });
-          Timeline.to(line, { width: 400, y: 350, opacity: 0});
-          // Timeline.to(line, {  });
+          Timeline.to(line, { width: 330, y: 350, rotate: -3}),0,0
           // Timeline.to(line, {  });
       });
   });
