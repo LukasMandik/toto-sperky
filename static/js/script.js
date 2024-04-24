@@ -9,31 +9,75 @@ let menu = document.querySelector(".menu");
 
 })
 
-
-
 $(document).ready(function() {
-  gsap.registerPlugin(ScrollTrigger);
 
-
-  gsap.to(".main_navbar", {
-    // height: 100,
-    // backgroundColor: "rgba(251, 251, 251, 1)",
-    duration: 0,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: ".endpoint",
-      start: "center 390svh ",
-      end: "center 390svh",
-      // toggleClass: "black",
-      scrub: false,
-      // markers: true,
-      // pin: true,
-      toggleActions: "restart none none reverse ",
-    }
+  let hamburger = document.querySelector(".hamburger");
+  let toggle = document.querySelector("#toggle");
+  
+    hamburger.addEventListener("click", function(){
+      toggle.classList.toggle("active");
+    })
+  
   })
-})
 
 
+
+  $(document).ready(function() {
+    // Check if screen width is greater than 748px using media query
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      gsap.registerPlugin(ScrollTrigger);
+  
+      gsap.to(".main_navbar", {
+        // height: 100,
+        backgroundColor: "rgba(251, 251, 251, 1)",
+        duration: 0.4,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".endpoint",
+          start: "center 390svh ",
+          end: "center 390svh",
+          // toggleClass: "black",
+          scrub: false,
+          // markers: true,
+          // pin: true,
+          toggleActions: "restart none none reset ",
+          // play pause resume reverse restart reset complete
+        }
+      });
+    }
+  });
+  
+
+
+  $(document).ready(function() {
+  
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.starter2').forEach((elem) => {
+        let line = elem.querySelector('.line');
+        var lineLength = line.getTotalLength();
+        line.style.strokeDasharray = lineLength;
+        line.style.strokeDashoffset = lineLength;
+  
+        let Timeline = gsap.timeline({
+            ease: "elastic",
+
+            scrollTrigger: {
+                trigger: elem,
+                start: "top 50svh",
+                end: "bottom 50svh",
+                scrub: true,
+                // markers:true,
+            }
+        });
+  
+        Timeline
+        .to(line,{strokeDashoffset: 0})
+        // .to(dot,{ opacity: 0 })
+            // .to(line[1], { opacity: 0 },"+=");
+    });
+  
+  
+  });
 
 $(document).ready(function() {
   gsap.utils.toArray('.starter2').forEach((elem) => {
