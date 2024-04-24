@@ -132,7 +132,7 @@ $(document).ready(function() {
 
       lines.forEach((line) => {
           let Timeline = gsap.timeline({
-              ease: "elastic",
+              ease: "slowMo.ease",
               scrollTrigger: {
                   trigger: line,
                   start: "top -0svh",
@@ -155,10 +155,10 @@ $(document).ready(function() {
 
       lines.forEach((line) => {
           let Timeline = gsap.timeline({
-              ease: "elastic",
+              ease: "ease.inOut",
               scrollTrigger: {
                   trigger: line,
-                  start: "top 80svh",
+                  start: "top 50svh",
                   end: "bottom -500svh",
                   scrub: true,
                   // markers: true,
@@ -168,11 +168,14 @@ $(document).ready(function() {
 
           // Timeline.to(line, {width: 270, y: 350 , rotate: -3},0,0)
           // Timeline.to(line, {  });
-          Timeline.to(line, { width: 330, y: 350, rotate: -3}),0,0
+          Timeline.to(line, { width: 330, y: 380})
           // Timeline.to(line, {  });
       });
   });
 });
+
+
+
 
 
 $(document).ready(function() {
