@@ -10,7 +10,7 @@
               <!-- <a href="/"><h2>Georeal</h2></a>  -->
             </div>
             <div class="menu" id="menu">
-                <ul>
+                <ul class="startermenu">
                     <li class="home" data-section="home"><a href="/" title="Domov">Domov</a></li>
                     <li class="Gallery" data-section="Gallery"><a href="/gallery" title="Gallery">Galeria</a></li>
                     <li class="Blog" data-section="Blog"><a href="" title="Blog">Blog</a></li>
@@ -19,23 +19,23 @@
 {#                    {% if user.is_authenticated %}#}
 {#                    <li><a href="/logout">Odhlásiť sa</a></li>#}
 {#                    {% endif %}#}
-
+                </ul> 
+                <div class="connections_container">
+                    <p><a href="/cookies"><i class="fab fa-facebook"></i> Facebook</a></p>
+                    <p><a href="/cookies" class="instagram"><i class="fab fa-instagram"></i> Instagram</a></p>
+                    <p><a href="/cookies">Informácie o Cookies</a></p>
+                    <p>&copy; 2023 Toto šperky</p>
+                </div>
+                           
                 <div class="switch-box" id="switch-box">
                     <i class="fas fa-sun"></i>
                     <div class="switch" id="switch-btn"></div>
                     <i class="fas fa-moon"></i>
                 </div>
-                </ul>                   
             </div>   
-
             <div class="hamburger">
-            
                 <a id="toggle"><span></span></a>
             </div>
-            
-
-        
-
         </div>
     </div>
 </div>

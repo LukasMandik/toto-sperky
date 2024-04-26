@@ -47,12 +47,118 @@ $(document).ready(function() {
     }
   });
   
+  // $(document).ready(function() {
 
 
+  //     gsap.utils.toArray('.startermenu').forEach((elem) => {
+  //         let lines = elem.querySelectorAll('.main_navbar .menu ul li a');
+    
+  //         let Timeline = gsap.timeline({
+  //           scrollTrigger: {
+  //               trigger: elem,
+  //               start: "botton 600svh",
+  //               end: "top 600svh",
+  //               scrub: false,
+  //               toggleActions: "restart none none reverse",
+  //               markers: true,
+  //           }
+  //         });
+      
+  //         lines.forEach((line) => {
+  //           Timeline.to(line, { x: 40,duration: 0.35 });
+  //         });
+  //       });
+    
+  // });
+
+
+
+  
+  // $(document).on("click", ".hamburger", function() {
+  //   if ($(".menu").hasClass("active")) {
+  //     gsap.utils.toArray('.startermenu').forEach((elem) => {
+  //       let lines = elem.querySelectorAll('.main_navbar .menu ul li');
+     
+  //       let Timeline = gsap.timeline({
+  //         scrollTrigger: {
+  //           trigger: elem,
+  //           start: "botton 600svh",
+  //           end: "top 600svh",
+  //           scrub: false,
+  //           toggleActions: "play none none reverse",
+  //           // markers: true,
+  //         }
+  //       });
+  //         Timeline.from(lines, { x: 40, stagger: 0.05});
+  //       });
+  //   }
+  // });
+    
+  // $(document).on("click", ".hamburger", function() {
+  //   if ($(".menu").hasClass("active")) {
+  //     gsap.utils.toArray('.startermenu').forEach((elem) => {
+  //       let lines = elem.querySelectorAll('.main_navbar .menu ul li');
+     
+  //       let Timeline = gsap.timeline({
+  //         scrollTrigger: {
+  //           trigger: elem,
+  //           start: "botton 600svh",
+  //           end: "top 600svh",
+  //           scrub: false,
+  //           toggleActions: "play none none reverse",
+  //           // markers: true,
+  //         }
+  //       });
+  //         Timeline.from(lines, { x: 40, stagger: 0.05});
+  //       });
+  //   }
+  // });
+  
+
+
+  $(document).on("click", ".hamburger", function() {
+    if ($(".menu").hasClass("active")) {
+    const Container = document.querySelectorAll('.main_navbar .menu ul li');
+  
+  // Create an animation loop using GSAP
+  gsap.from(Container, {
+    x: -340,
+    opacity: 0, 
+    // y: 2,
+    // rotate: 1,
+    stagger: 0.03,  
+    duration: 1, 
+    // repeat: -1,
+    // yoyo: true, 
+    ease: 'power2.inOut' // Smooth easing function
+  });
+}
+});
+
+$(document).on("click", ".hamburger", function() {
+  if ($(".menu").hasClass("active")) {
+  const Container = document.querySelectorAll('.main_navbar .menu .connections_container p');
+// Create an animation loop using GSAP
+gsap.from(Container, {
+  x: -340,
+  delay: 0.5, 
+  opacity: 0, 
+  // y: 2,
+  // rotate: 1,
+  stagger: 0.03,  
+  duration: 0.8, 
+  // repeat: -1,
+  // yoyo: true, 
+  ease: 'power2.inOut' // Smooth easing function
+});
+}
+});
+
+  
   $(document).ready(function() {
   
     gsap.registerPlugin(ScrollTrigger);
-    gsap.utils.toArray('.starter2').forEach((elem) => {
+    gsap.utils.toArray('.starterline').forEach((elem) => {
         let line = elem.querySelector('.line');
         var lineLength = line.getTotalLength();
         line.style.strokeDasharray = lineLength;
@@ -63,8 +169,8 @@ $(document).ready(function() {
 
             scrollTrigger: {
                 trigger: elem,
-                start: "top 50svh",
-                end: "bottom 50svh",
+                start: "top 0svh",
+                end: "bottom -100svh",
                 scrub: true,
                 // markers:true,
             }
@@ -75,9 +181,22 @@ $(document).ready(function() {
         // .to(dot,{ opacity: 0 })
             // .to(line[1], { opacity: 0 },"+=");
     });
-  
-  
   });
+
+$(document).ready(function() {
+  const svgContainer = document.querySelector('.svg_container');
+
+// Create an animation loop using GSAP
+gsap.to(svgContainer, {
+  x: 10, // Move horizontally by 10 pixels
+  // y: 2,
+  // rotate: 1,  
+  duration: 2, // Animation duration in seconds
+  repeat: -1, // Repeat indefinitely
+  yoyo: true, // Reverse the animation direction back and forth
+  ease: 'power2.inOut' // Smooth easing function
+});
+});
 
 $(document).ready(function() {
   gsap.utils.toArray('.starter2').forEach((elem) => {
