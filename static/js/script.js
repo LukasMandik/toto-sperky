@@ -92,16 +92,17 @@ $(document).ready(function() {
             start: 'top 580svh',    // Začiatok triggeru
             end: 'bottom 190svh',   // Koniec triggeru
             scrub: 1,               // Skrúbovacie posúvanie
-            // markers: true,      
+            // markers: true,   
+            // toggleActions: "restart none none reverse",   
           },
         });
   
         // Pridáme animáciu na Timeline
         timeline
-        .to(line[0], { rotation: "-=360_cw", transformOrigin: "7220px 2000px", duration: 3},0,0, "<")
-        .to(line[1], { rotation: "-=360_cw", transformOrigin: "7620px 2000px", duration: 4}, "<")
-        .to(line[2], { rotation: "-=360_cw", transformOrigin: "-5370px -4250px", duration: 5},0,0, "<") // Rotácia elementu s offsetom
-        .to(line[3], { rotation: "-=360_cw", transformOrigin: "4020px 6220px", duration: 6},0,0,"<"); // Rotácia elementu s offsetom
+        .from(line[0], { rotation: "-=360_cw", transformOrigin: "7220px 2000px", duration: 3},0,0, ">")
+        .from(line[1], { rotation: "-=360_cw", transformOrigin: "7620px 2000px", duration: 4}, "<")
+        .from(line[2], { rotation: "-=360_cw", transformOrigin: "-5370px -4250px", duration: 4},0,0, "=") // Rotácia elementu s offsetom
+        .from(line[3], { rotation: "-=360_cw", transformOrigin: "4020px 6220px", duration: 5},0,0,"<"); // Rotácia elementu s offsetom
       
     });
   });
