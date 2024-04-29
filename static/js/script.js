@@ -47,6 +47,91 @@ $(document).ready(function() {
     }
   });
   
+
+
+  // $(document).ready(function() {
+  // // Inicializuj ScrollTrigger
+  // gsap.registerPlugin(ScrollTrigger);
+
+  // // Vytvor animáciu s ScrollTrigger
+  // gsap.to('.logo_dot', {
+  //   rotation: "-=360_cw",
+  //   transformOrigin: "7220px 2000px",
+  //   duration: 3,
+  //   ease: 'power2.inOut',
+  //   repeat: 100000,
+  //   scrollTrigger: {
+  //     trigger: '.starterdot', // Bod, kde sa spustí animácia
+  //     start: 'top 580svh',     // Začiatok triggeru (keď je 80% prvku v zornom poli)
+  //     end: 'bottom 190svh',    // Koniec triggeru
+  //     scrub: 1,             // Skrúbovací efekt pri posúvaní
+  //     toggleActions: 'play none none none', // Akcie pri spustení
+  //     markers: true,
+  //   },
+  // });
+
+  // });
+
+
+
+
+
+  $(document).ready(function() {
+    gsap.registerPlugin(ScrollTrigger);
+  
+    gsap.utils.toArray('.starterdot').forEach((elem) => {
+      // Predpokladáme, že každý prvok má niečo ako čiaru alebo iný element na animovanie
+      let line = elem.querySelectorAll('.logo_dot'); // Prvok, ktorý budeme animovať
+
+  
+        // Vytvoríme GSAP časovú os s ScrollTrigger
+        let timeline = gsap.timeline({
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: elem, // Bod, kde sa spustí animácia
+            start: 'top 580svh',    // Začiatok triggeru
+            end: 'bottom 190svh',   // Koniec triggeru
+            scrub: 1,               // Skrúbovacie posúvanie
+            // markers: true,      
+          },
+        });
+  
+        // Pridáme animáciu na Timeline
+        timeline
+        .to(line[0], { rotation: "-=360_cw", transformOrigin: "7220px 2000px", duration: 3},0,0, "<")
+        .to(line[1], { rotation: "-=360_cw", transformOrigin: "7620px 2000px", duration: 4}, "<")
+        .to(line[2], { rotation: "-=360_cw", transformOrigin: "-5370px -4250px", duration: 5},0,0, "<") // Rotácia elementu s offsetom
+        .to(line[3], { rotation: "-=360_cw", transformOrigin: "4020px 6220px", duration: 6},0,0,"<"); // Rotácia elementu s offsetom
+      
+    });
+  });
+  
+
+
+
+
+  // $(document).ready(function() {
+  //   gsap.utils.toArray('.starter2').forEach((elem) => {
+  //       let lines = elem.querySelectorAll('.main_title_container h1 ,.main_title_container h2');
+  
+  //       let Timeline = gsap.timeline({
+  //         scrollTrigger: {
+  //             trigger: elem,
+  //             start: "center 610svh",
+  //             end: "center 620svh",
+  //             scrub: false,
+  //             toggleActions: "restart none none reverse",
+  //             // markers: true,
+  //         }
+  //     });
+  
+  //     lines.forEach((line) => {
+  //       Timeline.from(line, { opacity: 0, x: 100,duration: 0.35 });
+  //     });
+  //   });
+  // });
+
+
   // $(document).ready(function() {
 
 
@@ -197,6 +282,7 @@ gsap.to(svgContainer, {
   ease: 'power2.inOut' // Smooth easing function
 });
 });
+
 
 $(document).ready(function() {
   gsap.utils.toArray('.starter2').forEach((elem) => {
