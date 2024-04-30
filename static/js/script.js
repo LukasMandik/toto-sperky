@@ -89,7 +89,7 @@ $(document).ready(function() {
           ease: "power2.inOut",
           scrollTrigger: {
             trigger: elem, // Bod, kde sa spustí animácia
-            start: 'top 580svh',    // Začiatok triggeru
+            start: 'top 280svh',    // Začiatok triggeru
             end: 'bottom 190svh',   // Koniec triggeru
             scrub: 1,               // Skrúbovacie posúvanie
             // markers: true,   
@@ -109,28 +109,81 @@ $(document).ready(function() {
   
 
 
+  $(document).ready(function() {
+    gsap.registerPlugin(ScrollTrigger);
+  
+    gsap.utils.toArray('.line_center').forEach((elem) => {
+      let line = elem.querySelector('.line');
+      let lineLength = line.getTotalLength();
+  
+      // Nastavte strokeDasharray a počiatočný offset
+      line.style.strokeDasharray = lineLength;
+      line.style.strokeDashoffset = lineLength; // Začne od stredu
+  
+      // Vytvorte časovú os pre animáciu
+      let Timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: elem,
+          easy:"linear",
+          start: "top 500svh",
+          end: "bottom 300svh",
+          scrub: true,
+          // markers: true,
+          // toggleActions: "restart none none reverse",  
+        }
+      });
+  
+      // Animačný efekt, ktorý zobrazí čiaru od stredu po oba konce
+      Timeline
+        .to(line, { strokeDashoffset: 0 }) // Záporná hodnota pre animáciu oboma smermi
+    });
+  });
 
 
-  // $(document).ready(function() {
-  //   gsap.utils.toArray('.starter2').forEach((elem) => {
-  //       let lines = elem.querySelectorAll('.main_title_container h1 ,.main_title_container h2');
+
   
-  //       let Timeline = gsap.timeline({
-  //         scrollTrigger: {
-  //             trigger: elem,
-  //             start: "center 610svh",
-  //             end: "center 620svh",
-  //             scrub: false,
-  //             toggleActions: "restart none none reverse",
-  //             // markers: true,
-  //         }
-  //     });
+
+  $(document).ready(function() {
+    gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
+        let lines = elem.querySelectorAll('.text_home_about_jewelry p');
   
-  //     lines.forEach((line) => {
-  //       Timeline.from(line, { opacity: 0, x: 100,duration: 0.35 });
-  //     });
-  //   });
-  // });
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 610svh",
+              end: "center 620svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, y: 100,duration: 0.35 });
+      });
+    });
+  });
+  $(document).ready(function() {
+    gsap.utils.toArray('.home_buttons').forEach((elem) => {
+        let lines = elem.querySelectorAll('.home_buttons .btn');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 610svh",
+              end: "center 620svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, y: 20,duration: 0.35, width: 80});
+      });
+    });
+  });
+
 
 
   // $(document).ready(function() {

@@ -5,10 +5,10 @@ from .models import Category ,Product
 
 
 def home(request):
-    categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
+
+    products = Product.objects.filter(available=True).order_by('-created')[:5]
     context = {
-        'categories': categories,
+
         'products': products,
     
     }
@@ -19,17 +19,25 @@ def home(request):
 def gallery(request):
     category_name = request.GET.get('category', '')
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)  # Assuming 'available' field for product availability
+
+
+    if category_name:
+        products = Product.objects.filter(category__name=category_name).order_by('-id')
+    else:
+        products = Product.objects.all().order_by('-id')
+
+
+
+    # products = Product.objects.filter(available=True)  # Assuming 'available' field for product availability
 
  
 
     context = {
         'categories': categories,
         'products': products,
+        'selected_category': category_name,
     }
     return render(request, 'gallery.html', context)
-
-
 
 def cookies(request):
 

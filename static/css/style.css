@@ -168,17 +168,6 @@ body.dark-mode {
 }
 
 
-.logo_svg_container{
-	width: 250px;
-	margin: 0 auto;
-	
-}
-.logo_svg_container svg path{
-/* stroke: hwb(0 63% 37%); */
-/* fill:red; */
-	
-}
-
 /* cookies */
 .wrapper2 {
 	position: fixed;
@@ -465,13 +454,16 @@ body.dark-mode {
 	/* position: absolute; */
 	/* bottom: 60px; */
 	/* left: center; */
-	margin-top: 100px;
+	margin-top: 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	/* border: red solid 1px; */
 }
-.home_buttons button{
+.home_buttons .btn{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 120px;
 	height: 37px;
 	border-radius: 25px;
@@ -480,17 +472,62 @@ body.dark-mode {
 	background-color: rgba(255, 255, 255, 0.06);
 	color: #131313;
 	font-size: 18px;
-
+	text-align: center;
 
 }
-.text_home_about_me{
-	padding: 50px;
+
+
+.logo_svg_container{
+	/* position: absolute; */
+	width: 350px;
+	margin: 300px auto 20px auto;
+	/* left: 50%; */
+	/* padding-bottom: -120px; */
+	/* right: 50%; */
+	/* top: 0; */
+	/* transform: translateX(50%); */
+	/* transform: translateY(50%); */
+
+	z-index: 215;
+
+}
+
+path.toto, path.logo_dot, path.circle_fill{
+	fill: rgb(248, 248, 248);
+	stroke:rgb(248, 248, 248);
+}
+.logo_svg_container path{
+	stroke: rgb(248, 248, 248);
+}
+
+.second_home_container{
+	height: 100svh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	/* border: red solid 1px; */
+}
+.line_center{
+	height: 150px;
+	/* rotate: 180deg; */
+}
+.text_home_about_jewelry{
+	padding: 0px 40px 10px 40px;
 	max-width: 600px;
-	/* text-align: center; */
-	font-size: 22px;
-	margin: 0 auto;
+	text-align: center;
+	font-size: 20px;
+	margin: 10px auto 10px auto;
+	z-index: 12;
 }
 
+
+
+.third_home_container p{
+	font-size: 22px;
+	margin-top: 30px;
+	text-align: center;
+	margin-bottom: 10px;
+}
 
 
 
