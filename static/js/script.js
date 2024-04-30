@@ -408,7 +408,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-  gsap.utils.toArray('.starter').forEach((elem) => {
+  gsap.utils.toArray('.container').forEach((elem) => {
       let lines = elem.querySelectorAll('.container .box');
 
       lines.forEach((line) => {
