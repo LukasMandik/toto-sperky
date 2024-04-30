@@ -424,7 +424,7 @@ $(document).ready(function() {
               }
           });
 
-          Timeline.to(line, { opacity: 1, y: 0 });
+          Timeline.from(line, { opacity: 0, y: 20 });
       });
   });
 });

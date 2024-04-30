@@ -133,10 +133,9 @@ body.dark-mode {
 }
 .container .box{  
 	width: 100%;
-	opacity: 0;
 	height: 100%;
 	break-inside: avoid;
-	transform: translateY(20px)
+	/* transform: translateY(20px) */
 
 }
 
@@ -488,7 +487,7 @@ body.dark-mode {
 	/* transform: translateX(50%); */
 	/* transform: translateY(50%); */
 
-	z-index: 215;
+	z-index: 15;
 
 }
 
