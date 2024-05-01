@@ -135,9 +135,9 @@ body.dark-mode {
 	width: 100%;
 	height: auto;
 	overflow: hidden;
-	-webkit-column-break-inside: avoid;
+	/* -webkit-column-break-inside: avoid;
 	page-break-inside: avoid;
-		 break-inside: avoid;
+		 break-inside: avoid; */
 	/* transform: translateY(20px) */
 
 }
