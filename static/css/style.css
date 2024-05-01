@@ -526,6 +526,9 @@ path.toto, path.logo_dot, path.circle_fill{
 	display: flex;
 	flex-direction: column;
 	margin-top: 10px;
+	page-break-before: always;
+	page-break-inside: avoid;
+	break-inside: avoid;
 
 
 }
