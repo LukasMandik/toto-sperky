@@ -103,7 +103,7 @@
             </g>
         </svg>
     </div> 
-    <!-- <p>Najnovšie pridané</p> -->
+    <p>Najnovšie pridané</p>
 
     <div class="gallery_container_home">
         <div class="container_home starter">
@@ -118,6 +118,10 @@
             </div> 
             <div class="box_home">
                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        
+                <p>
+                    {{ product.name }}
+                </p>
             </div>  
             {% endfor %}
         </div>

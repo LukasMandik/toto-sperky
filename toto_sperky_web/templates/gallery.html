@@ -29,8 +29,12 @@
         <div class="container starter">
             {% for product in products %}
             <div class="box">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="gallery-image" data-name="{{ product.name }}" data-description="{{ product.description }}">
             </div>  
+            <!-- <p>
+                {{ product.name }}
+            </p> -->
+
             <div class="line_center" >
                 <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <defs/>
@@ -40,14 +44,92 @@
                 </svg>
             </div> 
             {% endfor %}
-        </div>
+
+
         </div>
 
+    </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+
+                    <div class="modal-body">
+            
+                        <h3 class="modal-name"></h3>
+                        <img src="" class="modal-img" alt="">
+                        <p class="modal-description"></p>
+                        
+                    </div>
+        
+                    <span class="previous-button"><i class='bx bx-chevron-left' ></i></span> <!-- Tlačidlo predošlého -->
+                    <span class="next-button"><i class='bx bx-chevron-right' ></i></span> <!-- Tlačidlo nasledujúceho -->
+          
+
+                </div>
+            </div>
         
         {% if not products %}
         <p>No products found.</p>
         {% endif %}
 
     </div>
+
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('modal');
+    const modalBody = document.querySelector('.modal-body');
+    const modalImg = document.querySelector('.modal-img');
+    const modalName = document.querySelector('.modal-name');
+    const modalDescription = document.querySelector('.modal-description');
+    const closeButton = document.querySelector('.close-button');
+    const galleryImages = document.querySelectorAll('.container .box img');
+
+    let currentIndex = -1;
+
+    const showImageInModal = (index) => {
+        if (index >= 0 && index < galleryImages.length) {
+            const img = galleryImages[index];
+            modalImg.src = img.getAttribute('src');
+            modalName.innerText = img.getAttribute('data-name');
+            modalDescription.innerText = img.getAttribute('data-description');
+            document.body.style.overflow = 'hidden'; // Zastavte posúvanie
+            modal.style.display = 'flex';
+            currentIndex = index; 
+        }
+    };
+
+    galleryImages.forEach((img, index) => {
+        img.addEventListener('click', function () {
+            showImageInModal(index);
+        });
+    });
+
+    const nextButton = document.querySelector('.next-button');
+    const previousButton = document.querySelector('.previous-button');
+
+    // Posun na nasledujúci obrázok
+    nextButton.addEventListener('click', function () {
+        showImageInModal(currentIndex + 1);
+    });
+
+    // Posun na predchádzajúci obrázok
+    previousButton.addEventListener('click', function () {
+        showImageInModal(currentIndex - 1);
+    });
+
+    closeButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Obnovte posúvanie
+    });
+
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Obnovte posúvanie
+        }
+    });
+});
+</script>
 {% endblock %}

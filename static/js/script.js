@@ -408,8 +408,8 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-  gsap.utils.toArray('.container').forEach((elem) => {
-      let lines = elem.querySelectorAll('.container .box');
+  gsap.utils.toArray('.container, .container_home').forEach((elem) => {
+      let lines = elem.querySelectorAll('.container .box, .container_home .box_home');
 
       lines.forEach((line) => {
           let Timeline = gsap.timeline({
@@ -446,7 +446,7 @@ $(document).ready(function() {
               }
           });
 
-          Timeline.to(line, { backgroundPosition: "47% 60%" });
+          Timeline.to(line, { backgroundPosition: "51% 35%" });
       });
   });
 });
