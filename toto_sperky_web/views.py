@@ -22,9 +22,9 @@ def gallery(request):
 
 
     if category_name:
-        products = Product.objects.filter(category__name=category_name).order_by('-created')[:5]
+        products = Product.objects.filter(category__name=category_name).order_by('-created')
     else:
-        products = Product.objects.all().order_by('-created')[:5]
+        products = Product.objects.all().order_by('-created')
 
 
 

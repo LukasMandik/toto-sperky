@@ -105,8 +105,8 @@
     </div> 
     <!-- <p>Najnovšie pridané</p> -->
 
-    <div class="gallery_container">
-        <div class="container starter">
+    <div class="gallery_container_home">
+        <div class="container_home starter">
             {% for product in products %}
             <div class="line_center" >
                 <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -116,7 +116,7 @@
                     </g>
                 </svg>
             </div> 
-            <div class="box">
+            <div class="box_home">
                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
             </div>  
             {% endfor %}
