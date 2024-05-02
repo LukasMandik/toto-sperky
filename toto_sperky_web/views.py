@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from .models import Category ,Product
 # Create your views here.
 
@@ -38,6 +39,15 @@ def gallery(request):
         'selected_category': category_name,
     }
     return render(request, 'gallery.html', context)
+
+
+
+def ProductDetailView(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    context = {
+        'product': product,
+    }
+    return render(request, 'product_detail.html', context)
 
 def cookies(request):
 

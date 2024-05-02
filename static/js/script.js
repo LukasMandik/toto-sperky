@@ -139,7 +139,35 @@ $(document).ready(function() {
     });
   });
 
-
+  $(document).ready(function() {
+    gsap.registerPlugin(ScrollTrigger);
+  
+    gsap.utils.toArray('.line_center_short').forEach((elem) => {
+      let line = elem.querySelector('.line');
+      let lineLength = line.getTotalLength();
+  
+      // Nastavte strokeDasharray a počiatočný offset
+      line.style.strokeDasharray = lineLength;
+      line.style.strokeDashoffset = lineLength; // Začne od stredu
+  
+      // Vytvorte časovú os pre animáciu
+      let Timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: elem,
+          easy:"linear",
+          start: "top 500svh",
+          end: "bottom 300svh",
+          scrub: true,
+          // markers: true,
+          // toggleActions: "restart none none reverse",  
+        }
+      });
+  
+      // Animačný efekt, ktorý zobrazí čiaru od stredu po oba konce
+      Timeline
+        .to(line, { strokeDashoffset: 0 }) // Záporná hodnota pre animáciu oboma smermi
+    });
+  });
 
   
 

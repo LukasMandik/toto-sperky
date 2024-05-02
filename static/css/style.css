@@ -127,7 +127,7 @@ body.dark-mode {
 	width: 800px;
 	margin: 110px auto;
 	/* display: grid; */
-	columns: 2;
+	columns: 4;
 	column-gap: 5px;
 	/* border: red solid 1px; */
 }
@@ -150,14 +150,14 @@ body.dark-mode {
 	height: 100%;
 	box-sizing: none;
 	border-radius: 10px;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	/* overflow: hidden; */
-	cursor: pointer;
+	/* cursor: pointer; */
 	-webkit-column-break-inside: avoid;
 	/* border: solid 0.04rem black; */
 }
 
-.modal {
+/* .modal {
     display: none;
     position: fixed;
     top: 0;
@@ -175,12 +175,12 @@ body.dark-mode {
 	display: flex;
 	flex-direction: column;
     background: rgb(232, 232, 232);
-    /* padding: 20px; */
-	height: 100%;
-    border-radius: 5px;
+
+	height: 100%; */
+    /* border-radius: 5px;
     text-align: center;
 	max-height: 85%;
-	/* max-width: 95%; */
+
     overflow-y: auto;
 }
 
@@ -191,7 +191,7 @@ body.dark-mode {
 .modal-img{
 	width: 96%;
 	height: 100%;
-	/* margin-top: 30px; */
+
 	max-height: 50%;
 	object-fit: cover;
 	border-radius: 10px;
@@ -202,12 +202,12 @@ body.dark-mode {
 
 .close-button {
     font-size: 44px;
-    /* font-weight: bold; */
+
     position: absolute;
     top: 35px;
     right: 50%;
 	transform: translate(50%, 50%);
-	/* transform-origin: center center; */
+
     cursor: pointer;
 }
 .previous-button {
@@ -215,7 +215,6 @@ body.dark-mode {
 	flex-direction: column;
 	justify-content: center;
     font-size: 24px;
-    /* font-weight: bold; */
     position: absolute;
     top: 50%;
     left: 10px;
@@ -232,7 +231,6 @@ body.dark-mode {
 	justify-content: center;
 
     font-size: 24px;
-    /* font-weight: bold; */
     position: absolute;
 	top: 50%;
     right: 10px;
@@ -243,7 +241,76 @@ body.dark-mode {
 
 	background-color: #f4f4f4;
 
+} */
+
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(107, 107, 107, 0.7); /* Polopriehľadné pozadie */
+    justify-content: center;
+    align-items: center;
+	z-index: 200;
 }
+
+.modal-content {
+    background: white;
+	width: 80%;
+    height: 80%;
+    padding: 20px;
+    border-radius: 10px;
+}
+.modal-content img {
+width: 200px;
+height: 200px;
+}
+
+.close-button {
+    font-size: 44px;
+
+    position: absolute;
+    top: 35px;
+    right: 50%;
+	transform: translate(50%, 50%);
+
+    cursor: pointer;
+}
+.previous-button {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    cursor: pointer;
+	width: 35px;
+	height: 35px;
+	border-radius: 20px;
+
+	background-color: #f4f4f4;
+}
+.next-button {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+    font-size: 24px;
+    position: absolute;
+	top: 50%;
+    right: 10px;
+    cursor: pointer;
+	width: 35px;
+	height: 35px;
+	border-radius: 20px;
+
+	background-color: #f4f4f4;
+
+} 
 
 .svg_shpe{
 
@@ -599,6 +666,7 @@ path.toto, path.logo_dot, path.circle_fill{
 	height: 150px;
 	/* rotate: 180deg; */
 }
+
 .text_home_about_jewelry{
 	padding: 0px 40px 10px 40px;
 	max-width: 600px;
@@ -627,6 +695,13 @@ path.toto, path.logo_dot, path.circle_fill{
 	column-gap: 8px;
 	/* border: red solid 1px; */
 }
+
+.line_center_short{
+	height: 80px;
+	break-inside: avoid;
+	/* rotate: 180deg; */
+}
+
 .container_home .box_home{  
 	display: inline-block;
 	width: 100%;
@@ -644,11 +719,12 @@ path.toto, path.logo_dot, path.circle_fill{
 	height: 100%;
 	box-sizing: none;
 	border-radius: 10px;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	overflow: hidden;
 	-webkit-column-break-inside: avoid;
 	/* border: solid 0.04rem black; */
 }
+
 
 .third_home_container p{
 	font-size: 22px;
@@ -656,7 +732,12 @@ path.toto, path.logo_dot, path.circle_fill{
 	text-align: center;
 	margin-bottom: 10px;
 }
-
+.product_name p{
+	font-size: 22px;
+	margin-top: 10px;
+	text-align: center;
+	margin-bottom: 10px;
+}
 
 
 .cookies_container{

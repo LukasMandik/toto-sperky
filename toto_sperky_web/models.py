@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.urls import reverse
 from PIL import Image
 import os
 # Create your models here.
@@ -26,6 +27,9 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     available = models.BooleanField(default=True)
+
+    def get_absolute_url(self):
+        return reverse('toto_sperky_web:product_detail', args=[self.slug])
 
 
 
