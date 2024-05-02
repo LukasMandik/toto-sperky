@@ -608,10 +608,14 @@ path.toto, path.logo_dot, path.circle_fill{
 	z-index: 12;
 }
 
-/* .third_home_container{
+.third_home_container{
 	display: block;
+	/* display: block; */
+	page-break-before: always;
+	page-break-inside: avoid;
+	break-inside: avoid;
 
-} */
+}
 .gallery_container_home{
 	margin-top: 10px;
 }
