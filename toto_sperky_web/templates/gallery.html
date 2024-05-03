@@ -30,14 +30,9 @@
             {% for product in products %}
             <div class="box">
                 <!-- <a href="{{ product.get_absolute_url }}"> -->
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="gallery-image" data-name="{{ product.name }}" data-description="{{ product.description }}" slug="{{ product.slug }}" data-url="{{ product.get_absolute_url }}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
                 <!-- </a> -->
             </div> 
-
-            <!-- <p>
-                {{ product.name }}
-            </p> -->
-
             <div class="line_center_short" > 
                 <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 150" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <defs/>
@@ -52,7 +47,7 @@
         </div>
 
     </div>
-            <!-- <div id="modal" class="modal">
+            <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="close-button">&times;</span>
 
@@ -69,18 +64,21 @@
           
 
                 </div>
-            </div> -->
+            </div>
         
 
-            <div id="modal" class="modal">
+            <!-- <div id="modal" class="modal">
                 <span class="close-button">&times;</span>
                 <span class="previous-button"><i class='bx bx-chevron-left' ></i></span> 
                 <span class="next-button"><i class='bx bx-chevron-right' ></i></span> 
                 <div class="modal-content">
-                    <!-- Toto bude nahradené dynamicky pomocou AJAX -->
-                    
+     
                 </div>
-            </div>
+                <div class="modal-body">
+        
+                </div>
+              
+            </div> -->
             
         {% if not products %}
         <p>No products found.</p>
@@ -90,62 +88,108 @@
 
 </div>
 
-<!-- <script>
-document.addEventListener('DOMContentLoaded', function () {
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
-    const modalBody = document.querySelector('.modal-body');
+    const modalContent = document.querySelector('.modal-content');
+    const closeButton = document.querySelector('.close-button');
     const modalImg = document.querySelector('.modal-img');
     const modalName = document.querySelector('.modal-name');
     const modalDescription = document.querySelector('.modal-description');
-    const closeButton = document.querySelector('.close-button');
     const galleryImages = document.querySelectorAll('.container .box img');
-
+    const nextButton = document.querySelector('.next-button');
+    const previousButton = document.querySelector('.previous-button');
+    
     let currentIndex = -1;
+    let originalUrl = window.location.pathname; // Uloží pôvodnú URL pre prípadné vrátenie
 
-    const showImageInModal = (index) => {
+    const fetchProductData = (slug) => {
+        return fetch(`/product/${slug}/data/`)
+            .then(response => response.json())
+            .catch(error => console.error('Error fetching product data:', error));
+    };
+
+    const showProductInModal = (index, updateHistory = true) => {
         if (index >= 0 && index < galleryImages.length) {
-            const img = galleryImages[index];
-            modalImg.src = img.getAttribute('src');
-            modalName.innerText = img.getAttribute('data-name');
-            modalDescription.innerText = img.getAttribute('data-description');
-            document.body.style.overflow = 'hidden'; // Zastavte posúvanie
-            modal.style.display = 'flex';
-            currentIndex = index; 
+            const slug = galleryImages[index].getAttribute('data-slug');
+            fetchProductData(slug)
+                .then(data => {
+                    modalImg.src = data.image_url;
+                    modalName.innerText = data.name;
+                    modalDescription.innerText = data.description;
+                    
+                    document.body.style.overflow = 'hidden'; // Zastaví posúvanie
+                    modal.style.display = 'flex'; // Zobrazí modal
+                    currentIndex = index; // Nastaví aktuálny index
+                    
+                    if (updateHistory) {
+                        history.pushState({ product: slug }, '', `/product/${slug}/`); // Aktualizuje URL
+                    }
+                });
         }
     };
 
     galleryImages.forEach((img, index) => {
         img.addEventListener('click', function () {
-            showImageInModal(index);
+            showProductInModal(index);
         });
     });
 
-    const nextButton = document.querySelector('.next-button');
-    const previousButton = document.querySelector('.previous-button');
+    // Pridanie podpory pre tlačidlo "Späť"
+    window.addEventListener('popstate', function (e) {
+        const state = e.state;
 
-    // Posun na nasledujúci obrázok
-    nextButton.addEventListener('click', function () {
-        showImageInModal(currentIndex + 1);
-    });
+        if (state && state.product) { // Ak je produkt v histórii
+            const productIndex = Array.from(galleryImages).findIndex(img => img.getAttribute('data-slug') === state.product);
 
-    // Posun na predchádzajúci obrázok
-    previousButton.addEventListener('click', function () {
-        showImageInModal(currentIndex - 1);
+            if (productIndex >= 0) {
+                showProductInModal(productIndex, false); // Obnoví modál bez aktualizácie histórie
+            }
+        } else { 
+            // Ak nie je stav s produktom, zatvára modal
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Obnoví posúvanie
+        }
     });
 
     closeButton.addEventListener('click', function () {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Obnovte posúvanie
+        modal.style.display = 'none'; // Zavrie modal
+        document.body.style.overflow = 'auto'; // Obnoví posúvanie
+        
+        // Návrat na pôvodnú URL
+        if (window.location.pathname !== originalUrl) {
+            history.pushState(null, '', originalUrl); // Vráti na pôvodnú URL
+        }
+    });
+
+    // Posun na ďalší produkt
+    nextButton.addEventListener('click', function () {
+        if (currentIndex + 1 < galleryImages.length) {
+            showProductInModal(currentIndex + 1);
+        }
+    });
+
+    // Posun na predchádzajúci produkt
+    previousButton.addEventListener('click', function () {
+        if (currentIndex - 1 >= 0) {
+            showProductInModal(currentIndex - 1);
+        }
     });
 
     modal.addEventListener('click', function (e) {
         if (e.target === modal) {
             modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Obnovte posúvanie
+            document.body.style.overflow = 'auto'; // Obnoví posúvanie
+            
+            // Návrat na pôvodnú URL
+            if (window.location.pathname !== originalUrl) {
+                history.pushState(null, '', originalUrl); // Vráti na pôvodnú URL
+            }
         }
     });
 });
-</script> -->
+    </script>
+    
 
 <!-- 
 <script>
@@ -182,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script> -->
 
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
     const modalContent = document.querySelector('.modal-content');
@@ -243,5 +287,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-</script>
+</script> -->
 {% endblock %}
