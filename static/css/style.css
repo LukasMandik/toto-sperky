@@ -67,57 +67,92 @@ body.dark-mode {
 
 
 
-  .gallery_content_page{
+.gallery_content_page{
 	display: flex;
 	flex-direction: column;
 	margin-top: 80px;
   }
-  .categories {
-	margin: 10px auto;
+
+.gallery_content_page h3{
+text-align: center;
   }
-  
-  .categories_item {
-	display: inline-block;
-	margin-bottom: 5px;
-  }
-  
-  .categories_item li{
-	  opacity: 0.5;
-	  display: flex;
-	  align-items: center;
-	  background-color: #e7e7e7;
-	  width: auto;
-	  height: 24px;
-	  border-radius: 15px;
-  }
-  
-  .categories_item li:hover {
-	  background-color: #d3d3d3;
-	  transition: .5s ease-in-out;
-  }
-  
-  .categories_item li a{
-		color: var(--primary-color2);
-		font-size: 11px;
-	  letter-spacing: 1px;
-	  text-transform: uppercase;
-	  margin: 0 10px;
-  }
-  
-  .categories_item li.selected a {
-	  color: #000000;
-	  /*font-weight: bold;*/
-	  font-size: 12px;
-  }
-  
-  .categories_item li.selected {
-	  background-color: #d3d3d3;
-	  height: 32px;
-  }
+.categories {
+    overflow-x: auto; 
+    white-space: nowrap; 
+    padding: 10px 10px 30px 10px; 
+    scrollbar-width: none;
+    display: flex;
+}
+
+.categories::-webkit-scrollbar {
+    display: none;  /* Skryje celú posuvnú lištu */
+}
+
+.categories-list {
+    display: inline-flex; 
+    align-items: center;
+    margin: 0 auto;
+}
+
+.categories_item {
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 5px;
+	
+}
+
+.categories_item li {
+    position: relative;
+    opacity: 0.9;
+    background-color: #e7e7e7;
+
+    height: 74px;
+    width: 74px;
+    border-radius: 15px;
+    /* Prechod pri zmene veľkosti */
+	
+}
+
+
+.categories_item li.selected {
+    height: 84px;  
+    width: 84px;   
+	transition: width 1s ease-in-out, height 1s ease-in-out !important;
+
+}
+
+.categories_item img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    z-index: 20;
+}
 
 
 
+.categories_item li a {
+    position: absolute;
+    transform: translateX(50%);
+    right: 50%;
+    bottom: -18px;
+    color: var(--primary-color2);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    z-index: 25;
+}
 
+.categories_item li.selected a {
+    color: #000000;
+    font-size: 12px;
+}
+
+
+.line_center{
+	margin-top: 30px;
+}
 
 .gallery_container{
 	margin-top: 10px;

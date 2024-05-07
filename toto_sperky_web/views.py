@@ -20,7 +20,6 @@ def home(request):
 
 def gallery(request):
     category_name = request.GET.get('category', '')
-    product_slug = request.GET.get('product', '')  # Získa slug produktu z URL
     categories = Category.objects.all()
 
     if category_name:
@@ -34,11 +33,7 @@ def gallery(request):
         'selected_category': category_name,
     }
 
-    # Ak je zadaný product_slug, načítajte a pridajte produkt do kontextu
-    if product_slug:
-        selected_product = get_object_or_404(Product, slug=product_slug)
-        context['selected_product'] = selected_product  # Pridajte do kontextu pre modálne zobrazenie
-    
+
     return render(request, 'gallery.html', context)
 
 
@@ -64,3 +59,6 @@ def product_data(request, slug):
 def cookies(request):
 
     return render(request, 'cookies.html')
+
+
+

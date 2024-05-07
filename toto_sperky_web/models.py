@@ -10,6 +10,7 @@ import os
 class Category(models.Model):
     name = models.CharField(max_length=200, unique=True, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
+    image = models.ImageField(blank=True, null=True,)
 
     class Meta:
         verbose_name_plural = 'categories'
