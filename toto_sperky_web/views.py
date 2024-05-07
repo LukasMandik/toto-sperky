@@ -20,21 +20,23 @@ def home(request):
 
 def gallery(request):
     category_name = request.GET.get('category', '')
-    categories = Category.objects.all()
-
-    if category_name:
-        products = Product.objects.filter(category__name=category_name).order_by('-created')
-    else:
-        products = Product.objects.all().order_by('-created')
+    products = Product.objects.filter(category__name=category_name) if category_name else Product.objects.all()
 
     context = {
-        'categories': categories,
         'products': products,
+        'categories': Category.objects.all(),
         'selected_category': category_name,
     }
 
+    # Skontrolujte, či je požiadavka AJAX
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Ak je to AJAX, vráťte iba partial
+        return render(request, 'partials/product_list.html', context)
 
+    # Inak vráťte celú šablónu
     return render(request, 'gallery.html', context)
+
+
 
 
 

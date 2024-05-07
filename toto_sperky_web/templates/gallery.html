@@ -9,11 +9,11 @@
     <div class="categories">
         <ul class="categories-list">
             <div class="categories_item">
-                <li {% if not selected_category %} class="selected"{% endif %}><a href="/gallery">All</a></li>
+                <li {% if not selected_category %} class="selected"{% endif %}><a class="category-link" href="/gallery">All</a></li>
             </div>
             {% for category in categories %}
             <div class="categories_item">
-                <li {% if category.name == selected_category %} class="selected"{% endif %}><a href="/gallery?category={{ category.name }}">{{ category.name }}</a>
+                <li {% if category.name == selected_category %} class="selected"{% endif %}><a  class="category-link" href="/gallery?category={{ category.name }}">{{ category.name }}</a>
                     <img src="{{ category.image.url }}" alt="{{ category.name }}">
                 </li>
             </div>
@@ -28,13 +28,14 @@
             </g>
         </svg>
     </div> 
-    <div class="gallery_container">
+    {% include "partials/product_list.html" %}
+    <!-- <div class="gallery_container">
         <div class="container starter">
             {% for product in products %}
             <div class="box">
-                <!-- <a href="{{ product.get_absolute_url }}"> -->
+                <a href="{{ product.get_absolute_url }}">
                     <img src="{{ product.image.url }}" alt="{{ product.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
-                <!-- </a> -->
+                </a>
             </div> 
             <div class="line_center_short" > 
                 <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 150" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -46,7 +47,7 @@
             </div> 
             {% endfor %}
         </div>
-    </div>
+    </div> -->
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="close-button">&times;</span>
@@ -92,29 +93,37 @@
 
 
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Uchovanie pozície posúvania
-  var categories = document.querySelector('.categories');
+    document.querySelectorAll('.category-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();  // Zabránite úplnému obnovenie stránky
+            var url = this.getAttribute('href');  // Získa cieľový odkaz
 
-  // Pri prechode na novú stránku uložte pozíciu
-  categories.addEventListener('click', function (event) {
-    var target = event.target.closest('li');
-    if (target) {
-      var scrollPosition = categories.scrollLeft; // Získajte aktuálnu pozíciu posúvania
-      sessionStorage.setItem('scrollPosition', scrollPosition); // Uložte ju do sessionStorage
-    }
-  });
+            // AJAX na načítanie produktov
+            fetch(url, { method: 'GET' })
+                .then(response => response.text())  // Získa HTML
+                .then(html => {
+                    var newContent = $(html).find('.gallery_container').html();  // Získa partial
+                    $('.gallery_container').html(newContent);  // Aktualizuje zoznam produktov
+                    
+                    // Odstráni starý "selected" a pridá nový
+                    document.querySelectorAll('.category-link').forEach(l => {
+                        l.parentElement.classList.remove('selected');  // Odstráni "selected"
+                    });
 
-  // Po načítaní stránky obnovte pozíciu
-  var savedScrollPosition = sessionStorage.getItem('scrollPosition');
-  if (savedScrollPosition) {
-    categories.scrollLeft = parseInt(savedScrollPosition); // Obnoví pozíciu posúvania
-  }
+                    this.parentElement.classList.add('selected');  // Pridá "selected" na vybranú kategóriu
+                })
+                .catch(error => console.error('Chyba pri načítaní produktov:', error));
+        });
+    });
 });
 
-  </script>
+
+</script>
+
+
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

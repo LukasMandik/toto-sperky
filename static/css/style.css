@@ -82,6 +82,9 @@ text-align: center;
     padding: 10px 10px 30px 10px; 
     scrollbar-width: none;
     display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 134px;
 }
 
 .categories::-webkit-scrollbar {
@@ -109,7 +112,7 @@ text-align: center;
     height: 74px;
     width: 74px;
     border-radius: 15px;
-    /* Prechod pri zmene veľkosti */
+	transition: width 0.3s ease-in-out, height 0.3s ease-in-out !important;
 	
 }
 
@@ -117,7 +120,7 @@ text-align: center;
 .categories_item li.selected {
     height: 84px;  
     width: 84px;   
-	transition: width 1s ease-in-out, height 1s ease-in-out !important;
+	transition: width 0.3s ease-in-out, height 0.3s ease-in-out !important;
 
 }
 
@@ -160,7 +163,7 @@ text-align: center;
 .container{
 	/* width: calc(100% - 30px); */
 	width: 800px;
-	margin: 110px auto;
+	margin: 10px auto 100px auto ;
 	/* display: grid; */
 	columns: 4;
 	column-gap: 5px;
