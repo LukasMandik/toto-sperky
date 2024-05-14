@@ -32,42 +32,10 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('toto_sperky_web:product_detail', args=[self.slug])
 
-
-
-
-
-    # def save(self, *args, **kwargs):
-
-
-       
-
-        # # Convert the image to WebP format
-        # width, height = img.size
-        # new_size = (width // 7, height // 7)
-        # img.thumbnail(new_size)
-        #
-        # webp_image_path = os.path.splitext(self.image.path)[0] + '.webp'
-        # img.save(webp_image_path, 'WEBP', quality=100, lossless=True)
-        # self.webp_image.name = os.path.join('photos_web', 'static', 'photos', os.path.basename(webp_image_path))
-
-        # Convert the image to PNG format
-        # img = Image.open(self.image.path)
-
-        # width, height = img.size
-        # new_size = (width // 7, height // 7)
-        # img.thumbnail(new_size)
-
-        # png_image_path = os.path.splitext(self.image.path)[0] + '.png'
-        # img.save(png_image_path, 'PNG', compress_level=9)
-        # self.png_image.name = os.path.join(os.path.basename(png_image_path))
-
-        # super(Product, self).save(*args, **kwargs)
     class Meta:
         verbose_name_plural = 'products'
         ordering = ('-created',)
 
-    # def get_absolute_url(self):
-    #     return reverse('toto_sperky_web:product_detail', args=[self.slug])
 
     def __str__(self):
         return self.name

@@ -1,21 +1,37 @@
 <div class="gallery_container">
+    {% if not selected_category %}
+    <h3 class="navigation">Galeria/Všetko</h3>
+    {% endif %}
+
+    {% for category in categories %}
+
+    {% if category.name == selected_category %}
+    <h3 class="navigation">Galeria/{{ category.name }}</h3>
+    {% endif %}
+        
+
+    {% endfor %}
+
     <div class="container starter">
         {% for product in products %}
         <div class="box">
             <a href="{{ product.get_absolute_url }}">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
             </a>
-        </div> 
-        <div class="line_center_short" > 
-            <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 150" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <defs/>
-                <g id="Layer-1">
-                    <path d="M15.4714 0L15.3701 150" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1" class="line"/>
-                </g>
-            </svg>
+            <div class="line_center_short" > 
+                <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 150" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <defs/>
+                    <g id="Layer-1">
+                        <path d="M15.4714 0L15.3701 150" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1" class="line"/>
+                    </g>
+                </svg>
+            </div> 
+            <h3 class="product_name">{{ product.name }}</h3>
         </div> 
         {% endfor %}
     </div>
 </div>
+
+
 
 

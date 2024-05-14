@@ -437,8 +437,8 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-  gsap.utils.toArray('.container, .container_home').forEach((elem) => {
-      let lines = elem.querySelectorAll('.container .box, .container_home .box_home');
+  gsap.utils.toArray('.container_home').forEach((elem) => {
+      let lines = elem.querySelectorAll('.container_home .box_home');
 
       lines.forEach((line) => {
           let Timeline = gsap.timeline({

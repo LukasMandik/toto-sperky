@@ -5,50 +5,22 @@
 {% block content %}
 
 <div class="gallery_content_page">
-    <h3>Kategorie:</h3>
     <div class="categories">
         <ul class="categories-list">
             <div class="categories_item">
-                <li {% if not selected_category %} class="selected"{% endif %}><a class="category-link" href="/gallery">All</a></li>
+                <li {% if not selected_category %} class="selected"{% endif %}><a class="category-link" href="/gallery">Všetko</a></li>
             </div>
             {% for category in categories %}
             <div class="categories_item">
                 <li {% if category.name == selected_category %} class="selected"{% endif %}><a  class="category-link" href="/gallery?category={{ category.name }}">{{ category.name }}</a>
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
                 </li>
             </div>
             {% endfor %}
         </ul>
     </div>
-    <div class="line_center" >
-        <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs/>
-            <g id="Layer-1">
-            <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
-            </g>
-        </svg>
-    </div> 
     {% include "partials/product_list.html" %}
-    <!-- <div class="gallery_container">
-        <div class="container starter">
-            {% for product in products %}
-            <div class="box">
-                <a href="{{ product.get_absolute_url }}">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
-                </a>
-            </div> 
-            <div class="line_center_short" > 
-                <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 150" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <defs/>
-                    <g id="Layer-1">
-                        <path d="M15.4714 0L15.3701 150" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1" class="line"/>
-                    </g>
-                </svg>
-            </div> 
-            {% endfor %}
-        </div>
-    </div> -->
-            <div id="modal" class="modal">
+            <!-- <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="close-button">&times;</span>
 
@@ -65,7 +37,7 @@
           
 
                 </div>
-            </div>
+            </div> -->
         
 
             <!-- <div id="modal" class="modal">
@@ -88,16 +60,68 @@
     </div>
 
 </div>
-
-
+ 
 
 
 
 <script>
+function initializeGSAPAnimations() {
+    gsap.utils.toArray('.container').forEach((elem) => {
+        let lines = elem.querySelectorAll('.container .box');
+
+        lines.forEach((line) => {
+            let timeline = gsap.timeline({
+                ease: "elastic",
+                scrollTrigger: {
+                    trigger: line,
+                    start: "top 630svh",
+                    end: "bottom 600svh",
+                    scrub: false,
+                    // markers: true,
+                    toggleActions: "restart none none reverse",
+                },
+            });
+
+            timeline.from(line, { opacity: 0, y: 20 });
+        });
+    });
+
+    gsap.registerPlugin(ScrollTrigger);
+  
+  gsap.utils.toArray('.line_center_short').forEach((elem) => {
+    let line = elem.querySelector('.line');
+    let lineLength = line.getTotalLength();
+
+    // Nastavte strokeDasharray a počiatočný offset
+    line.style.strokeDasharray = lineLength;
+    line.style.strokeDashoffset = lineLength; // Začne od stredu
+
+    // Vytvorte časovú os pre animáciu
+    let Timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: elem,
+        easy:"linear",
+        start: "top 500svh",
+        end: "bottom 300svh",
+        scrub: true,
+        // markers: true,
+        // toggleActions: "restart none none reverse",  
+      }
+    });
+
+    // Animačný efekt, ktorý zobrazí čiaru od stredu po oba konce
+    Timeline
+      .to(line, { strokeDashoffset: 0 }) // Záporná hodnota pre animáciu oboma smermi
+  });
+
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+    initializeGSAPAnimations(); // Spustí animácie GSAP
+
     document.querySelectorAll('.category-link').forEach(link => {
         link.addEventListener('click', function (e) {
-            e.preventDefault();  // Zabránite úplnému obnovenie stránky
+            e.preventDefault();  // Zabránite úplnému obnoveniu stránky
             var url = this.getAttribute('href');  // Získa cieľový odkaz
 
             // AJAX na načítanie produktov
@@ -113,19 +137,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
 
                     this.parentElement.classList.add('selected');  // Pridá "selected" na vybranú kategóriu
+
+                    // Znovu inicializuje GSAP animácie
+                    initializeGSAPAnimations();  // Spustí animácie GSAP po obnovení obsahu
                 })
                 .catch(error => console.error('Chyba pri načítaní produktov:', error));
         });
     });
 });
-
-
 </script>
 
 
 
 
-<script>
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
     const modalContent = document.querySelector('.modal-content');
@@ -225,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-    </script>
+    </script> -->
     
 
 
