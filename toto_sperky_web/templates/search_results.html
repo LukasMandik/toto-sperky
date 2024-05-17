@@ -10,9 +10,14 @@
         {% for product in results %}
         <li>
             <a href="{{ product.get_absolute_url }}">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                <p>{{ product.name }}</p>
-                <span>Najdené podľa: {{ product.search_type }}</span>
+                <div class="img_and_name">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <p class="name">{{ product.name }}</p>
+                </div>
+                <div>
+                    <p class="description">{{ product.description|truncatechars:180}}</p>
+                    <span>Najdené podľa: {{ product.search_type }}</span>
+                </div>
             </a>
         </li>
         {% endfor %}
@@ -23,3 +28,4 @@
     
 </div>
 {% endblock %}
+

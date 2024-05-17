@@ -403,11 +403,79 @@ input[type=search]::-webkit-search-cancel-button {
     cursor: pointer;
 }
 
-.search_results{
+.list,
+.list * {
+    box-sizing: border-box;
+}
+
+.list {
+    background: #ffffff;
+    height: 231px;
+    position: relative;
+}
+
+.line-1 {
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.3px 0 0 0;
+    width: 100.21%;
+    height: 0px;
+    position: absolute;
+    right: 0.06%;
+    left: -0.26%;
+    bottom: 1px;
+    transform-origin: 0 0;
+    transform: rotate(0.093deg) scale(1, 1);
+}
+
+.aura-vlastnosti-bez-oh-adu-na-to-e-sa-jedn-o-umelo-vyroben-kame-sa-aqua-aura-vyzna-uje-silnou-energiou-v-ktorej-sa-odr-a-alchymistick-proces-pri-ktorom-sa-nan {
+    color: #000000;
+    text-align: left;
+
+    font-size: 16px;
+    line-height: 110%;
+
+    position: absolute;
+    right: 24px;
+    left: 21px;
+    bottom: 0.43%;
+    top: 48.05%;
+    height: 51.52%;
+}
+
+.nau-nice {
+    color: #000000;
+    text-align: left;
+
+    font-size: 22px;
+
+    position: absolute;
+    right: 12px;
+    left: 109px;
+    top: 42px;
+}
+
+._306945892-485843796889101-1746532509153375008-n-1 {
+    border-radius: 90px;
+    width: 84px;
+    height: 84px;
+    position: absolute;
+    left: 9px;
+    top: 16px;
+    object-fit: cover;
+}
+
+
+
+/* .search_results{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 120px;
+	margin: 120px auto 0 auto ;
+	width: 600px;
+	min-height: 100svh;
+
+
 }
 .search_results h2{
 
@@ -415,28 +483,50 @@ input[type=search]::-webkit-search-cancel-button {
 } 
 .search_results a{
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+
+
 	cursor: pointer;
 	color: #131313;
-	height: 100px;
-} 
-.search_results ul li a{
-	margin-bottom: 20px;
-} 
-.search_results ul li a img{
-	width: 100px;
-	height: 100px;
-	border-radius: 100px;
-	object-fit: cover;
+
+}
+.search_results ul{
+	display: flex;
+	flex-direction: column;
 } 
 
-.search_results ul li a p{
+.search_results ul li a{
+	margin-bottom: 30px;
+} 
+.search_results ul li a .img_and_name{
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+
+}
+.search_results ul li a img{
+	width: 80px;
+	height: 80px;
+	border-radius: 10px;
+	object-fit: cover;
+
+	@media (max-width: 768px){
+		width: 60px;
+		height: 60px;
+	}
+} 
+.search_results ul li a p.name{
 	margin-left: 10px;
 	font-size: 24px;
 } 
-.search_results ul li a span{
-	margin-left: 10px;
+
+.search_results ul li a p.description{
+	margin-bottom: 10px;
+	font-size: 18px;
 } 
+.search_results ul li a span{
+	margin-bottom: 10px;
+}  */
 /* .modal {
     display: none;
     position: fixed;
