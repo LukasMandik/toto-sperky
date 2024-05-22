@@ -116,11 +116,10 @@ $(document).ready(function() {
       let line = elem.querySelector('.line');
       let lineLength = line.getTotalLength();
   
-      // Nastavte strokeDasharray a počiatočný offset
+
       line.style.strokeDasharray = lineLength;
-      line.style.strokeDashoffset = lineLength; // Začne od stredu
-  
-      // Vytvorte časovú os pre animáciu
+      line.style.strokeDashoffset = lineLength; 
+
       let Timeline = gsap.timeline({
         scrollTrigger: {
           trigger: elem,
@@ -132,13 +131,37 @@ $(document).ready(function() {
           // toggleActions: "restart none none reverse",  
         }
       });
-  
-      // Animačný efekt, ktorý zobrazí čiaru od stredu po oba konce
       Timeline
-        .to(line, { strokeDashoffset: 0 }) // Záporná hodnota pre animáciu oboma smermi
+        .to(line, { strokeDashoffset: 0 })
     });
   });
 
+  $(document).ready(function() {
+    gsap.registerPlugin(ScrollTrigger);
+  
+    gsap.utils.toArray('.line_center_about_me').forEach((elem) => {
+      let line = elem.querySelector('.line');
+      let lineLength = line.getTotalLength();
+  
+
+      line.style.strokeDasharray = lineLength;
+      line.style.strokeDashoffset = lineLength; 
+
+      let Timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: elem,
+          easy:"linear",
+          start: "top 200svh",
+          end: "bottom 200svh",
+          scrub: false,
+          // markers: true,
+          toggleActions: "restart none none reverse",  
+        }
+      });
+      Timeline
+        .to(line, { strokeDashoffset: 0 })
+    });
+  });
   $(document).ready(function() {
     gsap.registerPlugin(ScrollTrigger);
   
@@ -191,6 +214,7 @@ $(document).ready(function() {
       });
     });
   });
+
   $(document).ready(function() {
     gsap.utils.toArray('.home_buttons').forEach((elem) => {
         let lines = elem.querySelectorAll('.home_buttons .btn');
@@ -208,6 +232,70 @@ $(document).ready(function() {
   
       lines.forEach((line) => {
         Timeline.from(line, { opacity: 0, y: 20,duration: 0.35, width: 80});
+      });
+    });
+  });
+
+  $(document).ready(function() {
+    gsap.utils.toArray('.text-about-me1').forEach((elem) => {
+        let lines = elem.querySelectorAll('.text-about-me1 p');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 450svh",
+              end: "center 450svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, y: 20,duration: 0.35},0.5,0);
+      });
+    });
+  });
+
+  $(document).ready(function() {
+    gsap.utils.toArray('.content-about-me').forEach((elem) => {
+        let lines = elem.querySelectorAll('.carusel');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 1450svh",
+              end: "center 1450svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, y: 20,duration: 0.35},0.8,0);
+      });
+    });
+  });
+
+
+  $(document).ready(function() {
+    gsap.utils.toArray('.text-about-me').forEach((elem) => {
+        let lines = elem.querySelectorAll('.text-about-me p');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 650svh",
+              end: "center 650svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, y: 20,duration: 0.35});
       });
     });
   });
@@ -506,7 +594,27 @@ $(document).ready(function() {
   });
 });
 
+$(document).ready(function() {
+  gsap.utils.toArray('.container_about_me').forEach((elem) => {
+      let lines = elem.querySelectorAll('.image_neckless');
 
+      lines.forEach((line) => {
+          let Timeline = gsap.timeline({
+              ease: "slowMo.ease",
+              scrollTrigger: {
+                  trigger: line,
+                  start: "top 650svh",
+                  end: "bottom 0svh",
+                  scrub: true,
+                  // markers: true,
+                  // toggleActions: "restart none none reverse",
+              }
+          });
+
+          Timeline.to(line, { scale: 1.2,});
+      });
+  });
+});
 
 
 

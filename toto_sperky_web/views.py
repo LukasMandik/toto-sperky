@@ -19,6 +19,17 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+def about_me(request):
+
+    products = Product.objects.filter(available=True).order_by('-created')[:5]
+    context = {
+
+        'products': products,
+    
+    }
+
+    return render(request, 'about_me.html', context)
+
 def gallery(request):
     category_name = request.GET.get('category', '')
     products = Product.objects.filter(category__name=category_name) if category_name else Product.objects.all()

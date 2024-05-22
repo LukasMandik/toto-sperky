@@ -6,22 +6,6 @@
 
 {% block content %}
 <div class="main_home_container starter">
-
-
-
-    <!-- <div class="svg_container starterline">
-        <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 5455.42 246.325" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs/>
-            <clipPath id="ArtboardFrame">
-            <rect height="246.325" width="5455.42" x="0" y="0"/>
-            </clipPath>
-            <g clip-path="url(#ArtboardFrame)" id="Layer-1" vectornator:layerName="Layer 1">
-            <path d="M-47.7183 168.269C-17.8438 151.438 12.0308 100.944 71.7799 100.944C131.529 100.944 131.529 168.269 191.278 168.269C251.027 168.269 251.027 100.944 310.776 100.944C370.526 100.944 370.526 168.269 430.275 168.269C490.024 168.269 490.024 100.944 549.773 100.944C609.522 100.944 609.522 168.269 669.271 168.269C729.02 168.269 729.02 100.944 788.77 100.944C848.519 100.944 848.519 168.269 908.268 168.269C968.017 168.269 968.017 100.944 1027.77 100.944C1087.52 100.944 1087.52 168.269 1147.26 168.269C1207.01 168.269 1207.01 100.944 1266.76 100.944C1326.51 100.944 1326.51 168.269 1386.26 168.269C1446.01 168.269 1446.01 100.944 1505.76 100.944C1565.51 100.944 1565.51 168.269 1625.26 168.269C1685.01 168.269 1685.01 100.944 1744.76 100.944C1804.5 100.944 1804.5 168.269 1864.25 168.269C1924 168.269 1924 100.944 1983.75 100.944C2043.5 100.944 2043.5 168.269 2103.25 168.269C2163 168.269 2163 100.944 2222.75 100.944C2282.5 100.944 2282.5 168.269 2342.25 168.269C2402 168.269 2402 100.944 2461.75 100.944C2521.49 100.944 2521.49 168.269 2581.24 168.269C2640.99 168.269 2640.99 100.944 2700.74 100.944C2760.49 100.944 2760.49 168.269 2820.24 168.269C2879.99 168.269 2879.99 100.944 2939.74 100.944C2999.49 100.944 2999.49 168.269 3059.24 168.269C3118.99 168.269 3118.99 100.944 3178.74 100.944C3238.48 100.944 3238.48 168.269 3298.23 168.269C3357.98 168.269 3357.98 100.944 3417.73 100.944C3477.48 100.944 3477.48 168.269 3537.23 168.269C3596.98 168.269 3596.98 100.944 3656.73 100.944C3716.48 100.944 3716.48 168.269 3776.23 168.269C3835.98 168.269 3835.98 100.944 3895.72 100.944C3955.47 100.944 3955.47 168.269 4015.22 168.269C4074.97 168.269 4074.97 100.944 4134.72 100.944C4194.47 100.944 4194.47 168.269 4254.22 168.269C4313.97 168.269 4313.97 100.944 4373.72 100.944C4433.47 100.944 4433.47 168.269 4493.22 168.269C4552.97 168.269 4552.97 100.944 4612.71 100.944C4672.46 100.944 4672.46 168.269 4732.21 168.269C4791.96 168.269 4791.96 100.944 4851.71 100.944C4911.46 100.944 4911.46 168.269 4971.21 168.269C5030.96 168.269 5030.96 100.944 5090.71 100.944C5150.46 100.944 5150.46 168.269 5210.21 168.269C5269.95 168.269 5269.95 100.944 5329.7 100.944C5389.45 100.944 5389.45 168.269 5449.2 168.269C5508.95 168.269 5538.83 117.775 5568.7 100.944" fill="none" opacity="1" stroke="#2b2a29" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="1.7" class="line"/>
-            </g>
-            </svg>
-    </div> -->
-
-
     <div class="main_image_container starter2">
         <!-- <img src="{% static 'media/logo_biele.png' %}" alt="logo"> -->
         
@@ -73,10 +57,11 @@
         </svg>
     </div>
     <div class="text_home_about_jewelry">
-        <p>Cínované šperky vyrábané s precíznosťou a jemnosťou. Výnimočné tvary polodrahokamov vsadených v bezolovnatom šperkárskom cíne s prímesou striebra. Jedinečné šperky, doplnky a ozdôbky vyrobené iba pre teba.
-            </p>
-
-
+        <p>
+            Cínované šperky vyrábané s precíznosťou a jemnosťou. 
+            Výnimočné tvary polodrahokamov vsadených v bezolovnatom šperkárskom cíne 
+            s prímesou striebra. Jedinečné šperky, doplnky a ozdôbky vyrobené iba pre teba.
+        </p>
     </div>
 
     
@@ -89,17 +74,17 @@
             </g>
         </svg>
     </div>      
-    <div class="home_buttons">
-        <a href="/gallery" class="btn">Galeria</a>
-        <a href="" class="btn">Blog</a>
-        <a href="" class="btn">O mne</a>
-        
-    </div>
     <div class="search_form">
         <form method="GET" action="{% url 'search_results' %}">
             <input id="s" type="text" name="q" placeholder="Vyhladaj product" required>
             <!-- <button class="btn" type="submit"><i class='bx bx-search'></i></button> -->
         </form>
+    </div>
+    <div class="home_buttons">
+        <a href="/gallery" class="btn">Galeria</a>
+        <a href="" class="btn">Blog</a>
+        <a href="/about_me" class="btn">O mne</a>
+        
     </div>
 </div>
 

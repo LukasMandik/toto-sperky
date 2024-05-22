@@ -1,31 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="search_results">
-
-    
-    <h2>Výsledky hľadania pre "{{ query }}"</h2>
-    {% if results %}
-    <ul>
-        {% for product in results %}
-        <li>
-            <a href="{{ product.get_absolute_url }}">
-                <div class="img_and_name">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                    <p class="name">{{ product.name }}</p>
-                </div>
-                <div>
-                    <p class="description">{{ product.description|truncatechars:180}}</p>
-                    <span>Najdené podľa: {{ product.search_type }}</span>
-                </div>
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>Žiadny vysledok pre "{{ query }}".</p>
-    {% endif %}
-    
+<div class="search-results">
+    <div class="results-text">
+        <div class="results"> Výsledky hľadania pre "{{ query }}" </div>
+    </div>
+    {% for product in results %}
+    <div class="result-item">
+       
+        <img class="image_result" src="{{ product.image.url }}" alt="{{ product.name }}" />
+        <div class="name-and-description">
+            <div class="name"> {{ product.name }} </div>
+            <div class="description"> {{ product.description|truncatechars:180}}</div>
+        </div>
+   
+    </div>
+    {% endfor %}
+    <!-- <div class="results-text">
+        <div class="v-sledky-h-adania-pre-an"> Výsledky hľadania pre "{{ query }}" </div>
+    </div> -->
 </div>
+
 {% endblock %}
+
+
+
 

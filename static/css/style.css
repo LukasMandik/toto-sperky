@@ -7,7 +7,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
-    -webkit-box-shadow: 240px 0 0 0 rgb(255, 255, 255) inset !important;
+    -webkit-box-shadow: 240px 0 0 0 #efefef inset !important;
 }
 
 :root {
@@ -403,67 +403,265 @@ input[type=search]::-webkit-search-cancel-button {
     cursor: pointer;
 }
 
-.list,
-.list * {
-    box-sizing: border-box;
+
+
+.search-results {
+
+    min-height: 100svh;
+    position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.list {
-    background: #ffffff;
-    height: 231px;
+.results-text {
+    width: 380px;
+    height: 49px;
+    /* position: absolute;
+    left: calc(50% - 188px);
+    top: 65px; */
+    /* overflow: hidden; */
+	margin-top: 120px;
+	margin-bottom: 20px;
+}
+
+.results {
+    color: #000000;
+    text-align: center;
+
+    font-size: 22px;
+
+    /* position: absolute;
+    left: calc(50% - 175px);
+    top: 0px; */
+    width: 351px;
+    height: 49px;
+}
+
+.result-item {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 420px;
+    /* position: absolute;
+    left: 16px;
+    top: 129px; */
+	margin-bottom: 30px;
+}
+
+.image_result {
+    border-radius: 100px;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    object-fit: cover;
+}
+
+.name-and-description {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 300px;
     position: relative;
 }
 
-.line-1 {
-    border-style: solid;
-    border-color: #000000;
-    border-width: 0.3px 0 0 0;
-    width: 100.21%;
-    height: 0px;
-    position: absolute;
-    right: 0.06%;
-    left: -0.26%;
-    bottom: 1px;
-    transform-origin: 0 0;
-    transform: rotate(0.093deg) scale(1, 1);
+.name {
+    color: #000000;
+    text-align: left;
+
+    font-size: 22px;
+
+    position: relative;
+    width: 251px;
+    height: 24px;
 }
 
-.aura-vlastnosti-bez-oh-adu-na-to-e-sa-jedn-o-umelo-vyroben-kame-sa-aqua-aura-vyzna-uje-silnou-energiou-v-ktorej-sa-odr-a-alchymistick-proces-pri-ktorom-sa-nan {
+.description {
     color: #000000;
     text-align: left;
 
     font-size: 16px;
     line-height: 110%;
 
-    position: absolute;
-    right: 24px;
-    left: 21px;
-    bottom: 0.43%;
-    top: 48.05%;
-    height: 51.52%;
-}
-
-.nau-nice {
-    color: #000000;
-    text-align: left;
-
-    font-size: 22px;
-
-    position: absolute;
-    right: 12px;
-    left: 109px;
-    top: 42px;
-}
-
-._306945892-485843796889101-1746532509153375008-n-1 {
-    border-radius: 90px;
-    width: 84px;
+    position: relative;
+    width: 300px;
     height: 84px;
-    position: absolute;
-    left: 9px;
-    top: 16px;
+}
+
+
+
+
+
+.container_about_me {
+    /* background: #ffffff; */
+    width: 100%;
+	/* max-width: 800px; */
+    /* position: relative; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    /* overflow-y: auto; */
+	overflow-x: hidden;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	/* overflow-x: auto;  */
+
+}
+
+.content-about-me {
+	/* overflow-x: hidden; */
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    /* position: absolute;
+    right: 5.13%;
+    left: 5.13%;
+    top: 84px; */
+	overflow: hidden;
+}
+.line_center_about_me{
+	height: 100px;
+	/* rotate: 180deg; */
+}
+.content-about-me, .line_center_about_me {
+	margin-top: 0;
+    
+}
+
+.logo-cierne-1 {
+    flex-shrink: 0;
+    width: 186px;
+    height: 177px;
+
     object-fit: cover;
 }
+
+.tro-ku-o-mne {
+    color: #000000;
+    text-align: justified;
+
+    font-size: 29px;
+    line-height: 114%;
+
+    font-weight: 300;
+
+    width: 173px;
+    height: 29px;
+}
+
+.text-about-me, .text-about-me1 {
+    color: #0a0a0a;
+    text-align: justify;
+	max-width: 600px;
+    font-size: 20px;
+	margin: 0 auto;
+	width: 90%;
+
+    /* position: relative; */
+    align-self: stretch;
+}
+.text-about-me span, .text-about-me1 span{
+    /* color: #fb144e; */
+
+	font-weight: 400;
+
+}
+
+
+.carusel {
+	display: inline-flex; 
+	justify-content: center;
+    width: 100%;
+    overflow-x: scroll; 
+	gap: 10px;
+	scrollbar-width: none;
+	/* margin: 0 auto; */	
+}
+
+.carusel::-webkit-scrollbar {
+    display: none;  /* Skryje celú posuvnú lištu */
+}
+
+
+.image {
+	display: inline-flex; 
+    border-radius: 10px;
+    width: 210px;
+    /* height: 100%; */
+	aspect-ratio: 1/1;
+    /* position: absolute;
+    left: -146.12px;
+    top: 576.54px; */
+    object-fit: cover;
+}
+
+.image_neckless{
+
+	aspect-ratio: 9/4;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-bottom: 20px;
+	filter: brightness(98%);
+	
+	@media (max-width: 768px) {
+
+		
+		width: 110%;
+		/* height: 240px; */
+		margin-bottom: 0;
+	}
+
+}
+
+.image_neckless img{
+    flex-shrink: 0;
+    width: 100%;
+    /* height: 100%; */
+    object-fit: cover;
+}
+
+
+
+/* .image_neckless{
+
+	background-image: url("/static/media/22520033_1938060076521099_943879990165977722_o.jpg");
+	width: 800px;
+    height: 440px;
+	object-fit: cover;
+	background-position: 50% 50%;
+	background-size: 110%;
+	-webkit-background-size: 110%; 
+	-moz-background-size: 110%;
+	-o-background-size: 110%; 
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: hidden;
+
+	@media (max-width: 768px) {
+
+		background-position: 50% 50%;
+		background-size: 110%;
+		width: 110%;
+		height: 240px;
+
+	}
+} */
+
 
 
 
@@ -939,7 +1137,7 @@ path.toto, path.logo_dot, path.circle_fill{
 }
 
 .second_home_container{
-	height: 100svh;
+	min-height:100svh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
