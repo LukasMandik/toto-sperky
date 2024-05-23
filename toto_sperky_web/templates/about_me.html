@@ -17,16 +17,14 @@
             </svg>
         </div>
         <div class="text-about-me1"> 
-        <p>
-            Ahoj, som Ivana <span>tvorím autorské diela</span> zo striebra a šperkárskeho cínu.
-            <br/>Tvorím intuitívne, v dielach sa odráža moja osobnosť a nálada. 
-            <br/>Šperky osobne navrhujem na mieru a podľa <span>požiadavky zákazníka</span>.
-        </p>
+            <p>
+                Ahoj, som Ivana <span>tvorím autorské diela</span> zo striebra a šperkárskeho cínu.
+                <br/>Tvorím intuitívne, v dielach sa odráža moja osobnosť a nálada. 
+                <br/>Šperky osobne navrhujem na mieru a podľa <span>požiadavky zákazníka</span>.
+            </p>
         </div>
-        <div class="carusel">
-            <img class="image" src="{% static 'media/334585617_1237302626877504_8496103734322680263_n_WzUhuWU.jpg' %}" />
-            <img class="image" src="{% static 'media/labradorit_privesok_97qOkIR.jpg' %}" />
-            <img class="image" src="{% static 'media/306945892_485843796889101_1746532509153375008_n_cG8d8Va.jpg' %}" />
+        <div class="image_neckless">
+            <img src="{% static 'media/nahrdelnik.jpg' %}" />
         </div>
         <div class="text-about-me">
             <p>
@@ -34,10 +32,6 @@
                 Šperky sú vyrábané s precíznosťou a <span>jemnosťou</span> a dušu im dodávajú polodrahokamy, ktoré osobne vyberám,
                 ktoré majú <span>výnimočné</span> tvary, farby, veľkosti, aj vďaka tomu nie je možné vyrobiť rovnaký šperk. 
             </p>
-        </div>
-            <div class="image_neckless">
-            <img src="{% static 'media/nahrdelnik.jpg' %}" />
-
         </div>
         <div class="text-about-me">
             <p>
@@ -47,15 +41,20 @@
                 Pri tvorení s radosťou využívam aj moje znalosti z 
                 obdobia štúdia na <span>Technickej univerzite</span> v Bratislave zo zameraním na
                 Krajinnú architektúru a krajinné plánovanie.
-                <br />K šperku mám veľmi blízko a v spojení mojich štúdii som si našla moju <span>„prácu snov“</span>
+                <br />K šperku mám veľmi blízko a v spojení mojich štúdii som si našla moju <span>prácu snov</span>
                 <br /><span>Inšpirujú ma rôzne</span> situácie, ľudia, miesta, podnety... 
             </p>
         </div>
     </div>
 </div>
-
 {% endblock %}
-static/media/334585617_1237302626877504_8496103734322680263_n_WzUhuWU.jpg
-static/media/labradorit_privesok_97qOkIR.jpg
-static/media/306945892_485843796889101_1746532509153375008_n_cG8d8Va.jpg
 
+
+
+<div class="container_home starter">
+    {% for product in products %}
+    <div class="box_home">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>  
+    {% endfor %}
+</div>

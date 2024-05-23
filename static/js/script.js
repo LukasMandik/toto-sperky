@@ -252,14 +252,14 @@ $(document).ready(function() {
       });
   
       lines.forEach((line) => {
-        Timeline.from(line, { opacity: 0, y: 20,duration: 0.35},0.5,0);
+        Timeline.from(line, { opacity: 0, y: 20,scale: 0.9,duration: 0.35},0.5,0);
       });
     });
   });
 
   $(document).ready(function() {
     gsap.utils.toArray('.content-about-me').forEach((elem) => {
-        let lines = elem.querySelectorAll('.carusel');
+        let lines = elem.querySelectorAll('.image_neckless img');
   
         let Timeline = gsap.timeline({
           scrollTrigger: {
@@ -273,11 +273,35 @@ $(document).ready(function() {
       });
   
       lines.forEach((line) => {
-        Timeline.from(line, { opacity: 0, y: 20,duration: 0.35},0.8,0);
+        Timeline.from(line, {
+           opacity: 0,
+           y: 20, 
+           duration: 0.35,
+           },0.8,0);
       });
     });
   });
-
+  $(document).ready(function() {
+    gsap.utils.toArray('.container_about_me').forEach((elem) => {
+        let lines = elem.querySelectorAll('.image_neckless');
+  
+        lines.forEach((line) => {
+            let Timeline = gsap.timeline({
+                ease: "slowMo.ease",
+                scrollTrigger: {
+                    trigger: line,
+                    start: "top 650svh",
+                    end: "bottom 0svh",
+                    scrub: true,
+                    // markers: true,
+                    // toggleActions: "restart none none reverse",
+                }
+            });
+  
+            Timeline.to(line, { scale: 1.15,});
+        });
+    });
+  });
 
   $(document).ready(function() {
     gsap.utils.toArray('.text-about-me').forEach((elem) => {
@@ -295,12 +319,31 @@ $(document).ready(function() {
       });
   
       lines.forEach((line) => {
-        Timeline.from(line, { opacity: 0, y: 20,duration: 0.35});
+        Timeline.from(line, { opacity: 0, y: 20,scale: 0.9,duration: 0.35});
       });
     });
   });
 
+  $(document).ready(function() {
 
+    gsap.set(".box2", {
+      x: (i) => i * 155
+    });
+    
+    
+    gsap.to(".box2", {
+      duration: 30,
+      ease: "none",
+      x: "+=775", //move each box 500px to right
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % 775) //force x value to be between 0 and 500 using modulus
+      },
+      repeat: -1
+    });
+    
+    
+
+  });
 
 
   // $(document).ready(function() {
@@ -594,27 +637,6 @@ $(document).ready(function() {
   });
 });
 
-$(document).ready(function() {
-  gsap.utils.toArray('.container_about_me').forEach((elem) => {
-      let lines = elem.querySelectorAll('.image_neckless');
-
-      lines.forEach((line) => {
-          let Timeline = gsap.timeline({
-              ease: "slowMo.ease",
-              scrollTrigger: {
-                  trigger: line,
-                  start: "top 650svh",
-                  end: "bottom 0svh",
-                  scrub: true,
-                  // markers: true,
-                  // toggleActions: "restart none none reverse",
-              }
-          });
-
-          Timeline.to(line, { scale: 1.2,});
-      });
-  });
-});
 
 
 
