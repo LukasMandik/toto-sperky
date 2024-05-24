@@ -932,6 +932,7 @@ height: 200px;
 	/* padding: 12px; */
 	z-index: 100;
 	/* border: solid 1px red; */
+	/* box-shadow: 0px 3px 10px rgba(43, 43, 43, 0.1) */
 }
 
 
@@ -995,9 +996,9 @@ height: 200px;
 	text-align: right;
 	color: black;
 	/* text-transform: uppercase; */
-	font-size: 0.92rem;
+	font-size: 1.1rem;
 	letter-spacing: 3px;
-	font-weight: 100;
+	font-weight: 200;
 }
 
 .main_navbar .menu ul li::after{
@@ -1056,7 +1057,7 @@ height: 200px;
 .main_home_container{
 	position: relative;
 	width: 100%;
-	height: 100svh;
+	/* height: 100svh; */
 	overflow-x: hidden;
 	/* overflow-y: hidden; */
 }
@@ -1081,11 +1082,13 @@ height: 200px;
 .main_home_container .main_image_container{
 	/* position: absolute; */
 	background-image: url("/static/media/kristal_pecka.jpg");
-    height: 100svh;
+    height: 110svh;
+	border-bottom-right-radius: 35px; /* Zaoblenie vpravo dole */
+    border-bottom-left-radius: 35px; /* Zaoblenie vlavo dole */
 	/* width: 100%; */
 	background-position: 50% 0%;
 	background-repeat: no-repeat;
-	background-attachment: fixed;
+	/* background-attachment: fixed; */
 	background-size: center 100svw;
 	/* -webkit-background-size: fill; 
 	-moz-background-size: fill;
@@ -1096,6 +1099,7 @@ height: 200px;
 	position: relative;
 	overflow-x: hidden;
 	overflow-y: hidden;
+	
 
 	@media (max-width: 768px) {
 
@@ -1107,7 +1111,7 @@ height: 200px;
 		/* -webkit-background-position: 50% 50%; 
 		-moz-background-position: 50% 50%; 
 		-o-background-position: 50% 50%; */
-		background-attachment: initial;
+		/* background-attachment: initial; */
 	}
 }
 
@@ -1179,20 +1183,146 @@ path.toto, path.logo_dot, path.circle_fill{
 	flex-direction: column;
 	justify-content: space-around;
 	/* border: red solid 1px; */
+	overflow: hidden;
 }
 .line_center{
 	height: 100px;
 	/* rotate: 180deg; */
 }
 
-.text_home_about_jewelry{
+/* .text_home_about_jewelry{
 	padding: 0px 40px 10px 40px;
 	max-width: 600px;
+	width: 90%;
 	text-align: center;
-	font-size: 20px;
+	font-size: 60px;
+	font-weight: 900;
 	margin: 10px auto 10px auto;
 	z-index: 12;
+} */
+
+.text_home_about_jewelry{
+	display: flex;
+	flex-direction: column;
+	/* align-items: flex-end; */
+	/* gap: 10px; */
+	/* padding: 0px 40px 10px 40px; */
+	max-width: 600px;
+	width: 90%;
+	margin: 10px auto 10px auto;
+	z-index: 12;
+	/* overflow: hidden; */
 }
+
+.text_home_about_jewelry p:first-child{
+	text-align: left;
+	font-size: 42px;
+	font-weight: 800;
+	line-height: 105%;
+}
+.text_home_about_jewelry .ellipse_group{
+	height: 140px;
+	position: relative;
+}
+.text_home_about_jewelry .ellipse_group p.ring{
+	display: flex;
+	
+	align-items: center;
+	justify-content: center;
+	text-align: center;   
+	width: 200px;
+    height: 170px;
+	border-radius: 50%;
+	font-size: 22px;
+	font-weight: 300;
+	line-height: 95%;
+	letter-spacing: 2px;
+	position: absolute;
+	/* transform: translateX(50%);
+	transform: translateY(50%); */
+	top: -35px;
+	right: -15px;
+
+	/* padding: 5px; */
+	/* height: 0.03rem; */
+}
+/* .text_home_about_jewelry p.ring::after{
+	content: '';
+	width: 270px;
+
+	aspect-ratio: 1/1;
+	border-radius: 150px;
+
+	display: block;
+	transition: 0.5s;
+	position: absolute;
+	top: -50px;
+	right: -40px;
+	border: solid 0.074rem var(--primary-BodyTextBlack);
+} */
+
+
+.ellipse-1 {
+	background: rgba(0, 0, 0, 0.00);
+	border-radius: 50%;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 0.074rem;
+	width: 267px;
+	height: 257px;
+	position: absolute;
+	/* transform: translateX(50%);
+	transform: translateY(50%); */
+	top: -75px;
+	right: -50px;
+	}
+.ellipse-2 {
+	background: rgba(0, 0, 0, 0.00);
+	border-radius: 50%;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 0.074rem;
+	width: 273px;
+	height: 273px;
+	position: absolute;
+	/* transform: translateX(50%); */
+	/* transform: translateY(50%); */
+	top: -94px;
+	right: -67px;
+	}
+.ellipse-3 {
+	background: rgba(0, 0, 0, 0.00);
+	border-radius: 50%;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 0.047rem;
+	width: 257px;
+	height: 257px;
+	position: absolute;
+	/* transform: translateX(50%);
+	transform: translateY(50%); */
+	top: -89px;
+	right: -36px;
+	}
+
+
+
+/* .text_home_about_jewelry p:hover::after{
+	width: 100%;
+} */
+
+
+
+
+
+.text_home_about_jewelry p:last-child{
+	text-align: left;
+	font-size: 28px;
+	font-weight: 800;
+	line-height: 105%;
+}
+
+
 
 .third_home_container{
 	display: flex;

@@ -30,6 +30,7 @@ $(document).ready(function() {
       gsap.to(".main_navbar", {
         // height: 100,
         backgroundColor: "rgba(251, 251, 251, 1)",
+        boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
         duration: 0.4,
         ease: "power2.out",
         scrollTrigger: {
@@ -192,8 +193,6 @@ $(document).ready(function() {
     });
   });
 
-  
-
   $(document).ready(function() {
     gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
         let lines = elem.querySelectorAll('.text_home_about_jewelry p');
@@ -210,7 +209,90 @@ $(document).ready(function() {
       });
   
       lines.forEach((line) => {
-        Timeline.from(line, { opacity: 0, y: 100,duration: 0.35 });
+        Timeline.from(line, { opacity: 0, x: 150,duration: 0.45 });
+      });
+    });
+  });
+
+  $(document).ready(function() {
+    gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
+        let lines = elem.querySelectorAll('.text_home_about_jewelry .ellipse_group');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 610svh",
+              end: "center 620svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, x: 150,duration: 0.35 },0.2,0);
+      });
+    });
+  });
+
+
+  $(document).ready(function() {
+    gsap.utils.toArray('.second_home_container').forEach((elem) => {
+        let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-1');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 610svh",
+              end: "center 120svh",
+              scrub: true,
+              // toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, {x: 5,duration: 0.35 });
+      });
+    });
+  });
+  $(document).ready(function() {
+    gsap.utils.toArray('.second_home_container').forEach((elem) => {
+        let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-2');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 610svh",
+              end: "center 120svh",
+              scrub: true,
+              // toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, {y: 5,duration: 0.35 });
+      });
+    });
+  });
+  $(document).ready(function() {
+    gsap.utils.toArray('.second_home_container').forEach((elem) => {
+        let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-3');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 610svh",
+              end: "center 120svh",
+              scrub: true,
+              // toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, {scale: 1.03, x: -5,duration: 0.35 });
       });
     });
   });
@@ -606,7 +688,7 @@ $(document).ready(function() {
               }
           });
 
-          Timeline.to(line, { backgroundPosition: "51% 35%" });
+          Timeline.to(line, { backgroundPosition: "51% 75%" });
       });
   });
 });
