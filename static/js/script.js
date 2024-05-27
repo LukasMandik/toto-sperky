@@ -414,7 +414,7 @@ $(document).ready(function() {
     
     
     gsap.to(".box2", {
-      duration: 30,
+      duration: 10,
       ease: "none",
       x: "+=775", //move each box 500px to right
       modifiers: {
@@ -422,9 +422,6 @@ $(document).ready(function() {
       },
       repeat: -1
     });
-    
-    
-
   });
 
 
