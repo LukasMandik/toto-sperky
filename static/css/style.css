@@ -269,7 +269,7 @@ input[type=search]::-webkit-search-cancel-button {
 
 
 
-.container .box img{  
+.container .box img, .container .box video{  
 	width: 100%;
 	height: 100%;
 	box-sizing: none;
@@ -312,7 +312,7 @@ input[type=search]::-webkit-search-cancel-button {
  /* max-height: 300px; */
 }
 
-.product_detail_container img{
+.product_detail_container img, .product_detail_container video{
 
 	width: 100%;
 	aspect-ratio: 1 / 1;
@@ -608,7 +608,7 @@ input[type=search]::-webkit-search-cancel-button {
   
   .wrapper3::after {
 	  right: 0;
-	  top: 0;
+	  top: 0;box
 
 	  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.908)); 
   } */

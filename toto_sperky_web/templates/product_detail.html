@@ -2,13 +2,17 @@
 {% load static %}
 {% block title %}{{ product.name }}{% endblock %}
 
-
-
 {% block content %}
-
 <div class="product_detail_container">
     <div class="product_detail_image">
+        {% if product.video %}
+        <video controls autoplay="" loop muted playsinline>
+            <source src="{{ product.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        {% else %}
         <img src="{{ product.image.url }}" alt="{{ product.name }}" slug="{{ product.slug }}">
+        {% endif %}
     </div>
     <div class="product_detail_text">
         <h1>{{ product.name }}</h1>
@@ -27,7 +31,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     function handleBackButton() {
@@ -55,7 +58,6 @@
 }
 
 </script>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -91,5 +93,4 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
   </script>
-
 {% endblock %}
