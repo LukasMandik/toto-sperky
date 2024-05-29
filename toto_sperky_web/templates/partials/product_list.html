@@ -18,11 +18,7 @@
             <a href="{{ product.get_absolute_url }}">
                 {% if product.video %}
                 <video 
-
-
                 autoplay="" loop muted playsinline
-              
-                
                 >
                     <source src="{{ product.video.url }}" type="video/mp4">
                     Your browser does not support the video tag.
@@ -43,7 +39,9 @@
         </div>
         {% endfor %}
     </div>
-    
+    {% if user.is_authenticated %}
+        <a href="{% url 'add_product' %}">Přidat produkt</a>
+    {% endif %}
 </div>
 
 

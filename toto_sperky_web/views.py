@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+
 from .models import Category ,Product
+from .forms import ProductForm
 from django.http import JsonResponse
 from django.db.models import Q
 # Create your views here.
@@ -49,7 +51,15 @@ def gallery(request):
     return render(request, 'gallery.html', context)
 
 
-
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('gallery')  # Přesměrování na stránku s úspěchem
+    else:
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})
 
 
 def ProductDetailView(request, slug):

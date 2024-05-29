@@ -282,6 +282,17 @@ input[type=search]::-webkit-search-cancel-button {
 }
 
 
+.container_add_product{
+	margin: 120px auto 0 auto;
+	width: 600px;
+	/* display: flex;
+	flex-direction: column; */
+	/* align-items: center; */
+}
+
+
+
+
 .product_detail_container{
 	display: flex;
 	justify-content: center;

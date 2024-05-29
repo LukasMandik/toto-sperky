@@ -20,11 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from toto_sperky_web import views
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('gallery/', views.gallery, name='gallery'),
     path('', include('toto_sperky_web.urls')),
     path('search/', views.search_results, name='search_results'),
+    path('add_product/', views.add_product, name='add_product'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
