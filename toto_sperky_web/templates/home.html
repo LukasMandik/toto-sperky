@@ -116,10 +116,22 @@
             <div class="boxes">
                 {% for product in products %}
                 <a href="{{ product.get_absolute_url }}">
-                <div class="box2">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                </div>
-                </a>
+                    <div class="box2">
+                        {% if product.video %}
+                        <video autoplay="" loop muted playsinline>
+                            {% if product.video_thumbnail %}
+                            <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
+                            {% endif %}
+                            <source src="{{ product.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        {% else %}
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% endif %}
+                        {% endif %}
+                        </div>
+                        </a>
                 {% endfor %}
             </div>
         </div>

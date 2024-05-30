@@ -63,9 +63,11 @@ class Product(models.Model):
 
         # Zpracování videa
         if self.video:
+
             print("Before saving video:", self.video.size / (1024 * 1024), "MB")
             super().save(*args, **kwargs)
             # Open the video file
+            # ogiginal_video = (self.video.path)
             cap = cv2.VideoCapture(self.video.path)
 
             # Define the codec for the output video
@@ -78,7 +80,7 @@ class Product(models.Model):
             print("Original video dimensions:", width, "x", height)
 
             # Define the maximum side length
-            max_side_length = 1200
+            max_side_length = 1800
 
             # Calculate new dimensions while preserving aspect ratio
             if width > height:
@@ -132,29 +134,89 @@ class Product(models.Model):
             # Release the video capture and writer
             cap.release()
             out.release()
-
             os.remove(self.video.path)
             self.video.name = 'resized_' + os.path.basename(self.video.name)
             print("Resized video dimensions:", new_width, "x", new_height)
             print("After saving video:", self.video.size / (1024 * 1024), "MB")
 
             # Vytvoření náhledového videa
-            video_capture = cv2.VideoCapture(self.video.path)
-            success, frame = video_capture.read()
-            if success:
-                # Zmenšení na rozměr 120x120
-                thumbnail_path = os.path.join(os.path.dirname(self.video.path), 'thumbnail_' + os.path.basename(self.video.path) + '.mp4')
-                thumbnail_out = cv2.VideoWriter(thumbnail_path, fourcc, framerate, (120, 120), isColor=True)
+         
+       
+            if self.video:
+                print("Before saving video thumbnail:", self.video.size / (1024 * 1024), "MB")
+                # Open the video file
+                cap = cv2.VideoCapture(self.video.path)
 
-                # Zapiš pouze první frame, který bude náhledem videa
-                thumbnail_out.write(frame)
+                # Define the codec for the output video
+                fourcc = cv2.VideoWriter_fourcc(*'avc1')  # Updated codec to 'avc1'
 
-                # Uvolni náhledový writer
-                thumbnail_out.release()
+                # Get the frame width and height
+                width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-                # Přiřazení náhledového videa k poli video_thumbnail
-                self.video_thumbnail = 'thumbnail_' + os.path.basename(self.video.name) + '.mp4'
-                print("After saving video thumbnail:", self.video_thumbnail.size / (1024 * 1024), "MB")
+                print("Original video dimensions thumbnail:", width, "x", height)
+
+                # Define the maximum side length
+                max_side_length = 600
+
+                # Calculate new dimensions while preserving aspect ratio
+                if width > height:
+                    new_width = max_side_length
+                    new_height = int(height * (max_side_length / width))
+                else:
+                    new_height = max_side_length
+                    new_width = int(width * (max_side_length / height))
+
+                # Define the dimensions for the resized video
+                dim = (new_width, new_height)
+
+                # Define the bitrate (bitovou hloubku) and framerate (rychlost snímání)
+                bitrate = 1000000  # Zde můžete nastavit požadovanou bitovou hloubku
+                framerate = 30.0  # Zde můžete nastavit požadovanou rychlost snímání
+
+                # Create a VideoWriter object for the resized video
+                resized_video_path = os.path.join(os.path.dirname(self.video.path), 'thumbnail_' + os.path.basename(self.video.path))
+                out = cv2.VideoWriter(resized_video_path, fourcc, framerate, dim, isColor=True)
+
+                # Set bitrate
+                out.set(cv2.CAP_PROP_BITRATE, bitrate)
+
+                # Get the total number of frames in the video
+                total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+                # Read and resize each frame, then write it to the resized video
+                prev_frame = None
+                processed_frames = 0
+                while True:
+                    ret, frame = cap.read()
+                    if not ret:
+                        break
+                    resized_frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+                    
+                    # Apply video stabilization (average neighboring frames)
+                    if prev_frame is not None:
+                        resized_frame = cv2.addWeighted(resized_frame, 0.5, prev_frame, 0.5, 0)
+                    
+                    out.write(resized_frame)
+                    prev_frame = resized_frame
+                    
+                    # Increment processed frames count
+                    processed_frames += 1
+                    
+                    # Calculate and display progress
+                    progress = (processed_frames / total_frames) * 100
+                    sys.stdout.write(f"\rProgress: {progress:.2f}%")
+                    sys.stdout.flush()  # Flush the output buffer to ensure immediate display
+
+                # Release the video capture and writer
+                cap.release()
+                out.release()
+
+                
+                self.video_thumbnail.name = 'thumbnail_' + os.path.basename(self.video.name)
+                print("Resized video dimensions:", new_width, "x", new_height)
+                print("After saving video:", self.video_thumbnail.size / (1024 * 1024), "MB")
+
 
 
 
