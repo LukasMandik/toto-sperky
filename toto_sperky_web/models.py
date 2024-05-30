@@ -11,6 +11,7 @@ import os
 import tempfile
 from moviepy.editor import VideoFileClip
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
 from PIL import Image
 from io import BytesIO
 import cv2
@@ -35,12 +36,18 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField(null=True, blank=True)
-    video = models.FileField(null=True,blank=True)   # Nové pole pre video súbor
+    video = models.FileField(null=True, blank=True)   # Nové pole pro video soubor
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     available = models.BooleanField(default=True)
+    
+    # Nové pole pro náhledový obrázek videa
+    video_thumbnail = models.FileField(null=True, blank=True)
+    
+    # Nové pole pro náhledový obrázek produktu
+    image_thumbnail = models.ImageField(null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('toto_sperky_web:product_detail', args=[self.slug])
@@ -54,6 +61,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
 
+        # Zpracování videa
         if self.video:
             print("Before saving video:", self.video.size / (1024 * 1024), "MB")
             super().save(*args, **kwargs)
@@ -67,19 +75,32 @@ class Product(models.Model):
             width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-            # Define the desired scale percentage (e.g., 20%)
-            scale_percent = 20
+            print("Original video dimensions:", width, "x", height)
 
-            # Calculate the new width and height
-            new_width = int(width * scale_percent / 100)
-            new_height = int(height * scale_percent / 100)
+            # Define the maximum side length
+            max_side_length = 1200
+
+            # Calculate new dimensions while preserving aspect ratio
+            if width > height:
+                new_width = max_side_length
+                new_height = int(height * (max_side_length / width))
+            else:
+                new_height = max_side_length
+                new_width = int(width * (max_side_length / height))
 
             # Define the dimensions for the resized video
             dim = (new_width, new_height)
 
+            # Define the bitrate (bitovou hloubku) and framerate (rychlost snímání)
+            bitrate = 1000000  # Zde můžete nastavit požadovanou bitovou hloubku
+            framerate = 30.0  # Zde můžete nastavit požadovanou rychlost snímání
+
             # Create a VideoWriter object for the resized video
             resized_video_path = os.path.join(os.path.dirname(self.video.path), 'resized_' + os.path.basename(self.video.path))
-            out = cv2.VideoWriter(resized_video_path, fourcc, 30.0, dim)
+            out = cv2.VideoWriter(resized_video_path, fourcc, framerate, dim, isColor=True)
+
+            # Set bitrate
+            out.set(cv2.CAP_PROP_BITRATE, bitrate)
 
             # Get the total number of frames in the video
             total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -114,32 +135,98 @@ class Product(models.Model):
 
             os.remove(self.video.path)
             self.video.name = 'resized_' + os.path.basename(self.video.name)
+            print("Resized video dimensions:", new_width, "x", new_height)
             print("After saving video:", self.video.size / (1024 * 1024), "MB")
 
+            # Vytvoření náhledového videa
+            video_capture = cv2.VideoCapture(self.video.path)
+            success, frame = video_capture.read()
+            if success:
+                # Zmenšení na rozměr 120x120
+                thumbnail_path = os.path.join(os.path.dirname(self.video.path), 'thumbnail_' + os.path.basename(self.video.path) + '.mp4')
+                thumbnail_out = cv2.VideoWriter(thumbnail_path, fourcc, framerate, (120, 120), isColor=True)
+
+                # Zapiš pouze první frame, který bude náhledem videa
+                thumbnail_out.write(frame)
+
+                # Uvolni náhledový writer
+                thumbnail_out.release()
+
+                # Přiřazení náhledového videa k poli video_thumbnail
+                self.video_thumbnail = 'thumbnail_' + os.path.basename(self.video.name) + '.mp4'
+                print("After saving video thumbnail:", self.video_thumbnail.size / (1024 * 1024), "MB")
+
+
+
+
+        # Zpracování obrázku
         if self.image:
             print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-            # Získání velikosti souboru v bajtech
+            # Získanie veľkosti súboru v bajtoch
             file_size = self.image.size
-
-            # Výpočet koeficientu komprese na základě velikosti obrázku
-            target_size = 5 * 1024 * 1024  # Maximální cílová velikost 5 MB
-            compression_ratio = target_size / file_size
-            compression_quality = int(100 / compression_ratio)
-
-            # Otevření obrázku
-            img = Image.open(self.image)
-
-            # Úprava velikosti obrázku na třetinu
-            # img.thumbnail((img.width / 3, img.height / 3), Image.LANCZOS)
-
-            # Uložení obrázku s danou úrovní komprese
-            buffer = BytesIO()
-            img.save(buffer, format='JPEG', quality=compression_quality)
-            self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.jpg", 'image/jpeg', buffer.tell(), None)
-            print(f"compression_ratio:{compression_ratio}")
+            
+            # Podmienka pre veľkosť súboru 2 MB
+            if file_size > 2 * 1024 * 1024:  # 2 MB prevedené na bajty
+                img = Image.open(self.image)
+                # Získání původních rozměrů obrázku
+                orig_width, orig_height = img.size
+                # Zjistit orientaci obrazku
+                if orig_width > orig_height:
+                    # Zmenit velikost na max. 1200x...
+                    new_width = 1200
+                    new_height = int((orig_height / orig_width) * new_width)
+                else:
+                    # Zmenit velikost na max. ...x1200
+                    new_height = 1200
+                    new_width = int((orig_width / orig_height) * new_height)
+                img.thumbnail((new_width, new_height), Image.LANCZOS)
+                buffer = BytesIO()
+                img.save(buffer, format='PNG')
+                self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
+                
             print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+            
+            # Vytvoření náhledového obrázku
+            img = Image.open(self.image)
+            img.thumbnail((300, 300), Image.LANCZOS)
+            thumbnail_buffer = BytesIO()
+            img.save(thumbnail_buffer, format='PNG')
+            self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
+            print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
         super().save(*args, **kwargs)
-      
+        # if self.image:
+        #     print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+            
+        #     # Získání velikosti souboru v bajtech
+        #     file_size = self.image.size
+            
+        #     # Cílová velikost souboru pro kompresi (v bajtech)
+        #     target_size = 3 * 1024 * 1024  # 2 MB
+            
+        #     # Rozdíl mezi aktuální a cílovou velikostí
+        #     size_difference = target_size - file_size
+            
+        #     # Procentuální změna velikosti
+        #     size_change_percentage = size_difference / file_size
+            
+        #     # Výpočet kvality komprese na základě procentuální změny velikosti
+        #     compression_quality = int(100 * (1 + size_change_percentage))
+            
+        #     # Otevření obrázku
+        #     img = Image.open(self.image)
+            
+        #     # Změna velikosti obrázku (volitelné, upravte podle potřeby)
+        #     img.thumbnail((img.width / 3, img.height / 3), Image.LANCZOS)
+            
+        #     # Uložení obrázku s určitou kvalitou komprese a formátem
+        #     buffer = BytesIO()
+        #     img.save(buffer, format='PNG', quality=compression_quality)
+        #     self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
+            
+        #     # Výpis detailů komprese pro ladění
+        #     print(f"Compression quality: {compression_quality}")
+            
+        #     print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
       
 
     # def save(self, *args, **kwargs):

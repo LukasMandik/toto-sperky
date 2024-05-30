@@ -17,14 +17,19 @@
         <div class="box">
             <a href="{{ product.get_absolute_url }}">
                 {% if product.video %}
-                <video 
-                autoplay="" loop muted playsinline
-                >
+                <video autoplay="" loop muted playsinline>
+                    {% if product.video_thumbnail %}
+                    <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
+                    {% endif %}
                     <source src="{{ product.video.url }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 {% else %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% if product.image_thumbnail %}
+                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% endif %}
                 {% endif %}
             </a>
             <div class="line_center_short">

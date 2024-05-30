@@ -14,7 +14,9 @@
             {% for category in categories %}
             <div class="categories_item">
                 <li {% if category.name == selected_category %} class="selected"{% endif %}><a  class="category-link" href="/gallery?category={{ category.name }}">{{ category.name }}</a>
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
+                    {% if category.image %}
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
+                    {% endif %}
                 </li>
             </div>
             {% endfor %}
