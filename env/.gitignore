@@ -1,6 +1,6 @@
 # created by virtualenv automatically
-staticfiles/
-static/
+staticfiles/media/*
+static/media/*
 
 # te
 
