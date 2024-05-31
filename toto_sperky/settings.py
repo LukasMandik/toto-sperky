@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'livereload',
     'django.contrib.staticfiles',
+    'django_cleanup.apps.CleanupConfig',
     'toto_sperky_web',
 ]
 

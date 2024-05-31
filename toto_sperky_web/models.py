@@ -16,6 +16,8 @@ from PIL import Image
 from io import BytesIO
 import cv2
 import sys
+from django.db.models.signals import pre_delete, pre_save
+from django.dispatch import receiver
 # Create your models here.
 
 
@@ -223,39 +225,80 @@ class Product(models.Model):
 
         # Zpracování obrázku
         if self.image:
-            print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-            # Získanie veľkosti súboru v bajtoch
-            file_size = self.image.size
-            
-            # Podmienka pre veľkosť súboru 2 MB
-            if file_size > 2 * 1024 * 1024:  # 2 MB prevedené na bajty
-                img = Image.open(self.image)
-                # Získání původních rozměrů obrázku
-                orig_width, orig_height = img.size
-                # Zjistit orientaci obrazku
-                if orig_width > orig_height:
-                    # Zmenit velikost na max. 1200x...
-                    new_width = 1200
-                    new_height = int((orig_height / orig_width) * new_width)
-                else:
-                    # Zmenit velikost na max. ...x1200
-                    new_height = 1200
-                    new_width = int((orig_width / orig_height) * new_height)
-                img.thumbnail((new_width, new_height), Image.LANCZOS)
-                buffer = BytesIO()
-                img.save(buffer, format='PNG')
-                self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
-                
-            print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-            
             # Vytvoření náhledového obrázku
-            img = Image.open(self.image)
-            img.thumbnail((300, 300), Image.LANCZOS)
-            thumbnail_buffer = BytesIO()
-            img.save(thumbnail_buffer, format='PNG')
-            self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
-            print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+            with Image.open(self.image) as img:
+                # Získanie veľkosti súboru v bajtoch
+                file_size = self.image.size
+                print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                if file_size > 2 * 1024 * 1024:  # 2 MB prevedené na bajty
+                        # Získání původních rozměrů obrázku
+                        orig_width, orig_height = img.size
+                        # Zjistit orientaci obrazku
+                        if orig_width > orig_height:
+                            # Zmenit velikost na max. 1200x...
+                            new_width = 1200
+                            new_height = int((orig_height / orig_width) * new_width)
+                        else:
+                            # Zmenit velikost na max. ...x1200
+                            new_height = 1200
+                            new_width = int((orig_width / orig_height) * new_height)
+                        img.thumbnail((new_width, new_height), Image.LANCZOS)
+                        buffer = BytesIO()
+                        img.save(buffer, format='PNG')
+                        self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
+                print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                if self.image_thumbnail:
+                    # file_size_thumb = self.image_thumbnail.size
+                    # if file_size_thumb > 0.1 * 1024 * 1024:   
+                    if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png": 
+                        img.thumbnail((300, 300), Image.LANCZOS)
+                        thumbnail_buffer = BytesIO()
+                        img.save(thumbnail_buffer, format='PNG')
+                        self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
+                        print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+                else:
+                    img.thumbnail((300, 300), Image.LANCZOS)
+                    thumbnail_buffer = BytesIO()
+                    img.save(thumbnail_buffer, format='PNG')
+                    self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
+                    print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+                
+        if not self.image:
+            self.image_thumbnail = None
         super().save(*args, **kwargs)
+@receiver(pre_save, sender=Product)
+def update_product_images(sender, instance, **kwargs):
+    if not instance.image:
+        instance.image_thumbnail = None
+# @receiver(pre_delete, sender=Product)
+# def delete_product_images(sender, instance, **kwargs):
+#     # Získajte príslušné fotografie spojené s produktom a vymažte ich
+#     if instance.image:
+#         instance.image.delete()
+#     if instance.image_thumbnail:
+#         instance.image_thumbnail.delete()
+#     if instance.video:
+#         instance.video.delete()
+#     if instance.video_thumbnail:
+#         instance.video_thumbnail.delete()
+# @receiver(pre_save, sender=Product)
+# def update_product_images(sender, instance, **kwargs):
+#     # Skontrolujte, či sa zmenila fotka a ak áno, odstráňte starú a vytvorte novú
+#     if instance.pk:
+#         try:
+#             old_instance = Product.objects.get(pk=instance.pk)
+#             if old_instance.image != instance.image:
+#                 if old_instance.image:
+#                     old_instance.image.delete()
+#                 if old_instance.image_thumbnail:
+#                     old_instance.image_thumbnail.delete()
+#         except Product.DoesNotExist:
+#             pass
+
+    # Tu pridajte váš kód pre spracovanie nového obrázku
+  
+        # Vytváranie náhľadového obrá
+           
         # if self.image:
         #     print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
             

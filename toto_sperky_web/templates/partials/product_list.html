@@ -28,7 +28,9 @@
                     {% if product.image_thumbnail %}
                     <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}">
                     {% else %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             </a>

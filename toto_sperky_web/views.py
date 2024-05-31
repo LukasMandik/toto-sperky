@@ -61,6 +61,23 @@ def add_product(request):
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
 
+def update_product(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('gallery')  # Presmerovanie na stránku s úspechom
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'update_product.html', {'form': form})
+
+def delete_product(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('gallery')  # Presmerovanie na stránku s úspechom
+    return render(request, 'delete_product.html', {'product': product})
 
 def ProductDetailView(request, slug):
     product = get_object_or_404(Product, slug=slug)

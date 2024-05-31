@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Upraviť produkt{% endblock %}
+
+{% block content %}
+<div class="container_add_product">
+    <h1>Upraviť produkt</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Uložiť zmeny</button>
+        <div id="loading-message" style="display: none;">Produkt se nahrává, prosím čekejte...</div>
+    </form>
+</div>
+
+<!-- <script>
+    // Získání formuláře
+    const form = document.getElementById('product-form');
+    // Získání tlačítka "Save"
+    const saveButton = document.getElementById('save-button');
+    // Získání zprávy o nahrávání
+    const loadingMessage = document.getElementById('loading-message');
+
+    // Přidání posluchače události na formulář pro deaktivaci tlačítka "Save" při odesílání formuláře
+    form.addEventListener('submit', function(event) {
+        // Deaktivace tlačítka "Save"
+        saveButton.disabled = true;
+        // Zobrazení zprávy o nahrávání
+        loadingMessage.style.display = 'block';
+    });
+
+    // Přidání posluchače události na pole "video" pro povolení / zakázání tlačítka "Save" v závislosti na tom, zda je vybráno video pro nahrání
+    const videoField = document.getElementById('id_video');
+    videoField.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            // Pokud je vybráno video, povolíme tlačítko "Save"
+            saveButton.disabled = false;
+        } else {
+            // Pokud není vybráno žádné video, zakážeme tlačítko "Save"
+            saveButton.disabled = true;
+        }
+    });
+</script> -->
+{% endblock %}

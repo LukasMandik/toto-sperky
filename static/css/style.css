@@ -247,6 +247,11 @@ input[type=search]::-webkit-search-cancel-button {
 
 
 }
+.container .box a{  
+	width: 100%;
+	min-height: 100px;
+
+}
 
 .container .box h3.product_name{
 	display: flex;

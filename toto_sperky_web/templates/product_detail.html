@@ -11,12 +11,18 @@
             Your browser does not support the video tag.
         </video>
         {% else %}
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" slug="{{ product.slug }}">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" slug="{{ product.slug }}">
+          {% endif %}
         {% endif %}
     </div>
     <div class="product_detail_text">
         <h1>{{ product.name }}</h1>
         <p>{{ product.description }}</p>
+    </div>
+    <div class="product_buttons">
+      <a href="{% url 'update_product' product.slug %}"><button>Upraviť</button></a>
+      <a href="{% url 'delete_product' product.slug %}"><button>Odstrániť</button></a>
     </div>
     <div class="button_back">
         <button onclick="handleBackButton()">Späť</button>
