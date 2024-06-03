@@ -13,7 +13,7 @@ urlpatterns = [
     path('product/<slug:slug>/', ProductDetailView, name='product_detail'),
     path('cookies/', cookies, name='cookies'),
     path('product/<slug:slug>/data/', product_data, name='product_data'),
-    path('add_product/', add_product, name='add_product'),
+    # path('add_product/', add_product, name='add_product'),
     # path('product/<slug:slug>/update/', update_product, name='update_product'),
     # path('product/<slug:slug>/delete/', delete_product, name='delete_product'),
 ]

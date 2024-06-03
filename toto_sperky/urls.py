@@ -28,6 +28,10 @@ urlpatterns = [
     path('add_product/', views.add_product, name='add_product'),
     path('product/<slug:slug>/update/', views.update_product, name='update_product'),
     path('product/<slug:slug>/delete/', views.delete_product, name='delete_product'),
+    path('add_category/', views.add_category, name='add_category'),
+    path('category/<slug:slug>/update/', views.update_category, name='update_category'),
+    path('category/<slug:slug>/delete/', views.delete_category, name='delete_category'),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

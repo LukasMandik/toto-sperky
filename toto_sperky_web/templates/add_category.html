@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Pridat kategóriu{% endblock %}
+
+{% block content %}
+<div class="container_add_product">
+    <h1>Add category</h1>
+    <form id="category-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button id="save-button" type="submit" >Save</button>
+        <div id="loading-message" style="display: none;">Produkt se nahrává, prosím čekejte...</div>
+    </form>
+</div>
+{% endblock %}

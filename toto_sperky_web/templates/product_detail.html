@@ -20,10 +20,12 @@
         <h1>{{ product.name }}</h1>
         <p>{{ product.description }}</p>
     </div>
-    <div class="product_buttons">
-      <a href="{% url 'update_product' product.slug %}"><button>Upraviť</button></a>
-      <a href="{% url 'delete_product' product.slug %}"><button>Odstrániť</button></a>
-    </div>
+    {% if user.is_authenticated %}
+      <div class="product_buttons btn">
+        <a href="{% url 'update_product' product.slug %}"><button>Upraviť</button></a>
+        <a href="{% url 'delete_product' product.slug %}"><button>Odstrániť</button></a>
+      </div>
+    {% endif %}
     <div class="button_back">
         <button onclick="handleBackButton()">Späť</button>
     </div>

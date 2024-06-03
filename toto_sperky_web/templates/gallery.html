@@ -13,9 +13,13 @@
             </div>
             {% for category in categories %}
             <div class="categories_item">
-                <li {% if category.name == selected_category %} class="selected"{% endif %}><a  class="category-link" href="/gallery?category={{ category.name }}">{{ category.name }}</a>
+                <li {% if category.name == selected_category %} class="selected"{% endif %}>
+                    <a  class="category-link" href="/gallery?category={{ category.name }}">{{ category.name }}</a>
+                    {% if user.is_authenticated %}
+                        <a class="category_update" href="{% url 'update_category' category.slug %}">Upraviť</a>
+                    {% endif %}
                     {% if category.image %}
-                        <img src="{{ category.image.url }}" alt="{{ category.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
                     {% endif %}
                 </li>
             </div>
@@ -34,89 +38,122 @@
  
 <!-- test -->
 
-
 <script>
-function initializeGSAPAnimations() {
-    gsap.utils.toArray('.container').forEach((elem) => {
-        let lines = elem.querySelectorAll('.container .box');
+    function initializeGSAPAnimations() {
+        gsap.utils.toArray('.container').forEach((elem) => {
+            let lines = elem.querySelectorAll('.container .box');
 
-        lines.forEach((line) => {
-            let timeline = gsap.timeline({
-                ease: "elastic",
+            lines.forEach((line) => {
+                let timeline = gsap.timeline({
+                    ease: "elastic",
+                    scrollTrigger: {
+                        trigger: line,
+                        start: "top 630svh",
+                        end: "bottom 600svh",
+                        scrub: false,
+                        toggleActions: "restart none none reverse",
+                    },
+                });
+
+                timeline.from(line, { opacity: 0, y: 20 });
+            });
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.line_center_short').forEach((elem) => {
+            let line = elem.querySelector('.line');
+            let lineLength = line.getTotalLength();
+
+            line.style.strokeDasharray = lineLength;
+            line.style.strokeDashoffset = lineLength;
+
+            let Timeline = gsap.timeline({
                 scrollTrigger: {
-                    trigger: line,
-                    start: "top 630svh",
-                    end: "bottom 600svh",
-                    scrub: false,
-                    // markers: true,
-                    toggleActions: "restart none none reverse",
-                },
+                    trigger: elem,
+                    easy: "linear",
+                    start: "top 500svh",
+                    end: "bottom 300svh",
+                    scrub: true,
+                }
             });
 
-            timeline.from(line, { opacity: 0, y: 20 });
+            Timeline
+                .to(line, { strokeDashoffset: 0 })
+        });
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeGSAPAnimations();
+
+        document.querySelectorAll('.category-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                var url = this.getAttribute('href');
+
+                fetch(url, { method: 'GET' })
+                    .then(response => response.text())
+                    .then(html => {
+                        var newContent = $(html).find('.gallery_container').html();
+                        $('.gallery_container').html(newContent);
+
+                        document.querySelectorAll('.category-link').forEach(l => {
+                            l.parentElement.classList.remove('selected');
+                        });
+
+                        this.parentElement.classList.add('selected');
+
+                        initializeGSAPAnimations();
+
+                        // Pridá triedy wide/tall po načítaní obsahu AJAX-om
+                        checkAspectRatio();
+                    })
+                    .catch(error => console.error('Chyba pri načítaní produktov:', error));
+            });
         });
     });
 
-    gsap.registerPlugin(ScrollTrigger);
-  
-  gsap.utils.toArray('.line_center_short').forEach((elem) => {
-    let line = elem.querySelector('.line');
-    let lineLength = line.getTotalLength();
+    // Funkcia na zistenie tried wide/tall
+    function checkAspectRatio() {
+        const videos = document.querySelectorAll('.container .box a video');
 
-    // Nastavte strokeDasharray a počiatočný offset
-    line.style.strokeDasharray = lineLength;
-    line.style.strokeDashoffset = lineLength; // Začne od stredu
+        videos.forEach(video => {
+            const width = video.videoWidth;
+            const height = video.videoHeight;
 
-    // Vytvorte časovú os pre animáciu
-    let Timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: elem,
-        easy:"linear",
-        start: "top 500svh",
-        end: "bottom 300svh",
-        scrub: true,
-        // markers: true,
-        // toggleActions: "restart none none reverse",  
-      }
-    });
-
-    // Animačný efekt, ktorý zobrazí čiaru od stredu po oba konce
-    Timeline
-      .to(line, { strokeDashoffset: 0 }) // Záporná hodnota pre animáciu oboma smermi
-  });
-
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    initializeGSAPAnimations(); // Spustí animácie GSAP
-
-    document.querySelectorAll('.category-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();  // Zabránite úplnému obnoveniu stránky
-            var url = this.getAttribute('href');  // Získa cieľový odkaz
-
-            // AJAX na načítanie produktov
-            fetch(url, { method: 'GET' })
-                .then(response => response.text())  // Získa HTML
-                .then(html => {
-                    var newContent = $(html).find('.gallery_container').html();  // Získa partial
-                    $('.gallery_container').html(newContent);  // Aktualizuje zoznam produktov
-                    
-                    // Odstráni starý "selected" a pridá nový
-                    document.querySelectorAll('.category-link').forEach(l => {
-                        l.parentElement.classList.remove('selected');  // Odstráni "selected"
-                    });
-
-                    this.parentElement.classList.add('selected');  // Pridá "selected" na vybranú kategóriu
-
-                    // Znovu inicializuje GSAP animácie
-                    initializeGSAPAnimations();  // Spustí animácie GSAP po obnovení obsahu
-                })
-                .catch(error => console.error('Chyba pri načítaní produktov:', error));
+            // Ak je šírka väčšia ako výška, pridaj triedu wide, inak pridaj triedu tall
+            if (width > height) {
+                video.closest('.box').classList.add('wide');
+            } else {
+                video.closest('.box').classList.add('tall');
+            }
         });
-    });
-});
+
+        const images = document.querySelectorAll('.container .box a img');
+
+        images.forEach(image => {
+            const width = image.naturalWidth;
+            const height = image.naturalHeight;
+
+            // Ak je šírka väčšia ako výška, pridaj triedu wide, inak pridaj triedu tall
+            if (width > height) {
+                image.closest('.box').classList.add('wide');
+            } else {
+                image.closest('.box').classList.add('tall');
+            }
+        });
+    }
+
+    // Spustíme funkciu po načítaní stránky
+    window.onload = checkAspectRatio;
 </script>
+
+
+</script>
+
+
+
 
 
 

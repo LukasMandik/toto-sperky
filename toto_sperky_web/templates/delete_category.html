@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Odstrániť kategóriu{% endblock %}
+
+{% block content %}
+<div class="container_add_product">
+    <h1>Odstrániť kategóriu</h1>
+    <p>Naozaj si prajete odstrániť kategóriu "{{ category.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Áno, odstrániť</button>
+    </form>
+</div>
+
+{% endblock %}

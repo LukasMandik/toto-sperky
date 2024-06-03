@@ -3,9 +3,11 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from .models import Category ,Product
-from .forms import ProductForm
+from .forms import ProductForm, CategoryForm
 from django.http import JsonResponse
 from django.db.models import Q
+from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -50,34 +52,95 @@ def gallery(request):
     # Inak vráťte celú šablónu
     return render(request, 'gallery.html', context)
 
-
+@login_required
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('gallery')  # Přesměrování na stránku s úspěchem
+            image_file = request.FILES.get('image')
+            if image_file and image_file.size > 15 * 1024 * 1024:  # Veľkosť v bajtoch, 15 MB = 15 * 1024 * 1024 bajtov
+                form.add_error('image', "The image size must be less than 15 MB.")
+            else:
+                video_file = request.FILES.get('video')
+                if video_file and video_file.size > 120 * 1024 * 1024:  # Veľkosť v bajtoch, 120 MB = 120 * 1024 * 1024 bajtov
+                    form.add_error('video', "The video size must be less than 120 MB.")
+                else:
+                    form.save()
+                    return redirect('gallery')  # Přesměrování na stránku s úspěchem
     else:
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
 
+@login_required
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            image_file = request.FILES.get('image')
+            if image_file and image_file.size > 15 * 1024 * 1024:  # Veľkosť v bajtoch, 15 MB = 15 * 1024 * 1024 bajtov
+                form.add_error('image', "The image size must be less than 15 MB.")
+            else:
+                form.save()
+                return redirect('gallery')  # Přesměrování na stránku s úspěchem
+    else:
+        form = CategoryForm()
+    return render(request, 'add_category.html', {'form': form})
+
+
+@login_required
 def update_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
-            form.save()
-            return redirect('gallery')  # Presmerovanie na stránku s úspechom
+            image_file = request.FILES.get('image')
+            if image_file and image_file.size > 15 * 1024 * 1024:  # Veľkosť v bajtoch, 15 MB = 15 * 1024 * 1024 bajtov
+                form.add_error('image', "The image size must be less than 15 MB.")
+            else:
+                video_file = request.FILES.get('video')
+                if video_file and video_file.size > 120 * 1024 * 1024:  # Veľkosť v bajtoch, 120 MB = 120 * 1024 * 1024 bajtov
+                    form.add_error('video', "The video size must be less than 120 MB.")
+                else:
+                    form.save()
+                    return redirect('gallery')  # Presmerovanie na stránku s úspechom
     else:
         form = ProductForm(instance=product)
     return render(request, 'update_product.html', {'form': form})
 
+@login_required
+def update_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            image_file = request.FILES.get('image')
+            if image_file and image_file.size > 15 * 1024 * 1024:  # Veľkosť v bajtoch, 15 MB = 15 * 1024 * 1024 bajtov
+                form.add_error('image', "The image size must be less than 15 MB.")
+            else:
+            
+                form.save()
+                return redirect('gallery')  # Presmerovanie na stránku s úspechom
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, 'update_category.html', {'form': form, 'category': category})
+
+
+@login_required
 def delete_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
         product.delete()
         return redirect('gallery')  # Presmerovanie na stránku s úspechom
     return render(request, 'delete_product.html', {'product': product})
+
+@login_required
+def delete_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    if request.method == 'POST':
+        category.delete()
+        return redirect('gallery')  # Presmerovanie na stránku s úspechom
+    return render(request, 'delete_category.html', {'category': category})
+
 
 def ProductDetailView(request, slug):
     product = get_object_or_404(Product, slug=slug)
@@ -87,7 +150,7 @@ def ProductDetailView(request, slug):
     }
     return render(request, 'product_detail.html', context)
 
-
+@login_required
 def product_data(request, slug):
     product = get_object_or_404(Product, slug=slug)
     data = {

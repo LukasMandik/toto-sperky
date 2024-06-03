@@ -32,6 +32,33 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        # Zpracování obrázku
+        if self.image:
+            # Vytvoření náhledového obrázku
+            with Image.open(self.image) as img:
+                # Získanie veľkosti súboru v bajtoch
+                file_size = self.image.size
+                print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                if file_size > 0.1 * 1024 * 1024:  # 0.1 MB prevedené na bajty
+                        # Získání původních rozměrů obrázku
+                        orig_width, orig_height = img.size
+                        # Zjistit orientaci obrazku
+                        if orig_width > orig_height:
+                            # Zmenit velikost na max. 1200x...
+                            new_width = 220
+                            new_height = int((orig_height / orig_width) * new_width)
+                        else:
+                            # Zmenit velikost na max. ...x1200
+                            new_height = 220
+                            new_width = int((orig_width / orig_height) * new_height)
+                        img.thumbnail((new_width, new_height), Image.LANCZOS)
+                        buffer = BytesIO()
+                        img.save(buffer, format='PNG')
+                        self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_category_thumbnail.png", 'image/png', buffer.tell(), None)
+                        print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+        super().save(*args, **kwargs)
 
 
 class Product(models.Model):
@@ -266,6 +293,9 @@ class Product(models.Model):
         if not self.image:
             self.image_thumbnail = None
         super().save(*args, **kwargs)
+
+
+
 @receiver(pre_save, sender=Product)
 def update_product_images(sender, instance, **kwargs):
     if not instance.image:

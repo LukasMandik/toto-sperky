@@ -1,23 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Pridat produkt{% endblock %}
+{% block title %}Upraviť kategóriu{% endblock %}
 
 {% block content %}
 <div class="container_add_product">
-    <h1>Add Product</h1>
-    <form id="product-form" method="post" enctype="multipart/form-data">
+    <h1>Upraviť kategóriu</h1>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <div id="progress-container">
-            <!-- <progress id="progress-bar" value="{{ product.progress }}" max="100"></progress> -->
-            <!-- <span id="progress-label">{{ product.progress }}%</span> -->
-        </div>
-        <button id="save-button" type="submit" >Save</button>
-        <div id="loading-message" style="display: none;">Produkt se nahrává, prosím čekejte...</div>
+        <button type="submit">Uložiť zmeny</button>
+        <a href="{% url 'delete_category' category.slug %}" class="delete-category-button">Odstrániť kategóriu</a>
+        <div id="loading-message" style="display: none;">Kategória se nahrává, prosím čekejte...</div>
     </form>
-    {% if user.is_authenticated %}
-    <a href="{% url 'add_category' %}">Pridat novú kategóriu</a>
-    {% endif %}
+    
 </div>
 
 <script>

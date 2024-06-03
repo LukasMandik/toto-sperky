@@ -21,6 +21,9 @@ $(document).ready(function() {
   })
 
 
+  
+
+
 
   $(document).ready(function() {
     // Check if screen width is greater than 748px using media query
