@@ -35,15 +35,14 @@ def about_me(request):
     return render(request, 'about_me.html', context)
 
 def gallery(request):
-    category_name = request.GET.get('category', '')
-    products = Product.objects.filter(category__name=category_name) if category_name else Product.objects.all()
+    category_slug = request.GET.get('category', '')
+    products = Product.objects.filter(category__slug=category_slug) if category_slug else Product.objects.all()
 
     context = {
         'products': products,
         'categories': Category.objects.all(),
-        'selected_category': category_name,
+        'selected_category': category_slug,
     }
-
     # Skontrolujte, či je požiadavka AJAX
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # Ak je to AJAX, vráťte iba partial
@@ -94,18 +93,18 @@ def update_product(request, slug):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             image_file = request.FILES.get('image')
-            if image_file and image_file.size > 15 * 1024 * 1024:  # Veľkosť v bajtoch, 15 MB = 15 * 1024 * 1024 bajtov
+            if image_file and image_file.size > 15 * 1024 * 1024:  
                 form.add_error('image', "The image size must be less than 15 MB.")
             else:
                 video_file = request.FILES.get('video')
-                if video_file and video_file.size > 120 * 1024 * 1024:  # Veľkosť v bajtoch, 120 MB = 120 * 1024 * 1024 bajtov
+                if video_file and video_file.size > 120 * 1024 * 1024: 
                     form.add_error('video', "The video size must be less than 120 MB.")
                 else:
                     form.save()
-                    return redirect('gallery')  # Presmerovanie na stránku s úspechom
+                    return redirect('gallery')
     else:
         form = ProductForm(instance=product)
-    return render(request, 'update_product.html', {'form': form})
+    return render(request, 'update_product.html', {'form': form, 'product': product})
 
 @login_required
 def update_category(request, slug):

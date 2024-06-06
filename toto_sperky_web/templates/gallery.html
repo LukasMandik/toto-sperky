@@ -13,8 +13,8 @@
             </div>
             {% for category in categories %}
             <div class="categories_item">
-                <li {% if category.name == selected_category %} class="selected"{% endif %}>
-                    <a  class="category-link" href="/gallery?category={{ category.name }}">{{ category.name }}</a>
+                <li {% if category.slug == selected_category %} class="selected"{% endif %}>
+                    <a  class="category-link" href="/gallery?category={{ category.slug }}">{{ category.name }}</a>
                     {% if user.is_authenticated %}
                         <a class="category_update" href="{% url 'update_category' category.slug %}">Upraviť</a>
                     {% endif %}

@@ -8,7 +8,10 @@
     <p>Naozaj si prajete odstrániť kategóriu "{{ category.name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Áno, odstrániť</button>
+        <button type="submit" class="btn delete">Áno, odstrániť</button>
+        <a href="{% url 'update_category' category.slug %}" class="">
+            <button class="btn cancel" type="button">Nie</button>
+        </a>
     </form>
 </div>
 
