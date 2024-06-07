@@ -53,9 +53,9 @@ class ProductForm(forms.ModelForm):
             # 'image': forms.HiddenInput(),
             # 'image': CustomFileInput(),
             'name': forms.TextInput(attrs={
-                'class': "form-control-name",
+                # 'class': "form-control-name",
                 # 'style': 'max-width: 100px;',
-                'placeholder': 'Názov'
+                'placeholder': 'Názov produktu'
                 }),
             # 'available': forms.CheckboxInput(attrs={
             #     'class': "form-control-input",

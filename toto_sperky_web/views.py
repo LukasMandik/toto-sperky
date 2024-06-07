@@ -8,8 +8,8 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 # Create your views here.
-
 
 def home(request):
 
@@ -34,22 +34,67 @@ def about_me(request):
 
     return render(request, 'about_me.html', context)
 
+
+
+
 def gallery(request):
     category_slug = request.GET.get('category', '')
-    products = Product.objects.filter(category__slug=category_slug) if category_slug else Product.objects.all()
+    page_number = request.GET.get('page', 1)
+    items_per_page = request.GET.get('itemsPerPage', 1)  # Defaultne nastavené na 5 položiek na stránku
 
+    if category_slug:
+        products = Product.objects.filter(category__slug=category_slug)
+    else:
+        products = Product.objects.all()
+
+    paginator = Paginator(products, items_per_page)
+    page_obj = paginator.get_page(page_number)
+
+    # Vypočítať rozsah stránok
+    current_page = page_obj.number
+    total_pages = paginator.num_pages
+    first_range = []
+    middle_range = []
+    last_range = []
+
+    if total_pages <= 7:
+        first_range = range(1, total_pages + 1)
+    elif current_page <= 4:
+        first_range = range(1, 6)
+        last_range = range(total_pages - 1, total_pages + 1)
+    elif current_page >= total_pages - 3:
+        first_range = range(1, 3)
+        last_range = range(total_pages - 4, total_pages + 1)
+    else:
+        first_range = range(1, 3)
+        middle_range = range(current_page - 1, current_page + 2)
+        last_range = range(total_pages - 1, total_pages + 1)
+
+    # Pridanie kontextu
     context = {
-        'products': products,
+        'products': page_obj,
         'categories': Category.objects.all(),
         'selected_category': category_slug,
+        'first_range': first_range,
+        'middle_range': middle_range,
+        'last_range': last_range,
+        'paginator': paginator,  # Pridáme paginator do kontextu
     }
+
     # Skontrolujte, či je požiadavka AJAX
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        # Ak je to AJAX, vráťte iba partial
+        # Ak je to AJAX, vráťte iba čiastočnú šablónu
         return render(request, 'partials/product_list.html', context)
 
     # Inak vráťte celú šablónu
     return render(request, 'gallery.html', context)
+
+
+
+
+
+
+
 
 @login_required
 def add_product(request):

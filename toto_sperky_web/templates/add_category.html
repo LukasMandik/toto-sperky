@@ -15,6 +15,10 @@
         <div class="form-group">
             <label for="id_image">Obrázok:</label>
             {{ form.image }}
+            <div id="image-preview">
+                <p id="file-name-image"></p>
+                <img id="image-thumb" style="display: none; max-width: 200px; max-height: 200px;">
+            </div>
             {% if form.errors.image %}
                 <div class="alert alert-danger">{{ form.errors.image }}</div>
             {% endif %}
@@ -35,4 +39,34 @@
         <div id="loading-message" style="display: none;">Produkt se nahrává, prosím čekejte...</div>
     </form>
 </div>
+
+
+
+<script>
+    document.getElementById('id_image').addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        const fileName = document.getElementById('file-name-image');
+        const imageThumb = document.getElementById('image-thumb');
+    
+        if (file) {
+            // Display the file name
+            fileName.textContent = file.name;
+    
+            // Create a URL for the selected file and display the image preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imageThumb.src = e.target.result;
+                imageThumb.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            // Clear the file name and hide the image preview if no file is selected
+            fileName.textContent = '';
+            imageThumb.style.display = 'none';
+            imageThumb.src = '';
+        }
+    });
+    
+    </script>
 {% endblock %}

@@ -336,6 +336,45 @@ input[type=search]::-webkit-search-cancel-button {
 
 
 
+.pagination{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+.pagination span.step-links {
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+
+
+
+}
+
+
+.pagination span.step-links a {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 50px;
+	font-size: 12px;
+
+	border: solid 0.068rem black;
+
+}
+
+
+.pagination span.step-links a.current-page {
+    width: 25px; /* Zväčšená šírka */
+    height: 25px; /* Zväčšená výška */
+	font-size: 14px;
+    font-weight: bold; /* Prípadné ďalšie štýly pre zvýraznenie aktuálnej stránky */
+}
+
 
 
 
@@ -1486,6 +1525,7 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
+	width: 300px;
 	/* display: flex;
 	flex-direction: column; */
 	/* align-items: center; */
@@ -1538,10 +1578,7 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	  margin-bottom: 5px;
 	} */
 
-#file-upload-button{
-	width: 200px;
-	height: 100px;
-}
+
 
 .container_add_product form .form-group select#id_category{
 		display: flex;
@@ -1577,16 +1614,54 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 
 	.container_add_product form .form-group input#id_image, .container_add_product form .form-group input#id_video{
 		/* display: none; */
-		width: 100%;
-		height: 100%;
+		display: flex;
+		margin: 0 auto;
+		text-align: center;
+		/* width: 100%; */
+
 
 	}	
+
+	.container_add_product form .form-group input#file_upload{
+		/* display: none; */
+		display: flex;
+		margin: 0 auto;
+		/* width: 100%; */
+		height: 100px;
+	}
+	::-webkit-file-upload-button, ::file-selector-button {
+		display: hide;
+		height: 40px;
+		width: 120px;
+		border-radius: 50px;
+		border: solid 0.068rem black;
+		background-color: transparent;
+		color: #0a0a0a;
+	 }
+
+	 input[type=file]::file-selector-button {
+		visibility: hidden;
+	}	 
+	 input#id_image, input#id_video {
+		display: inline-block;
+		width: 100%;
+		padding: 120px 0 0 0;
+		height: 80px;
+		overflow: hidden;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png') center center no-repeat #e4e4e4;
+		border-radius: 20px;
+		background-size: 60px 60px;
+	  }
+
 	/* -webkit-transform: rotate(360deg);
 	-moz-transform: rotate(360deg);
 	-o-transform: rotate(360deg);
 	-ms-transform: rotate(360deg); */
   
-  .container_add_product form .form-group:nth-child(3), .container_add_product form .form-group:nth-child(4)  {
+  .container_add_product form .form-group:nth-child(4), .container_add_product form .form-group:nth-child(5)  {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -1604,6 +1679,25 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	margin-bottom: 5px;
   }
   
+  .container_add_product form .form-group #image-preview{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  }
+
+  .container_add_product form .form-group #image-preview p{
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; */
+  }
+
+/* 
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
   .container_add_product form .form-group label{
 	display: flex;
 	flex-direction: column;
@@ -1622,7 +1716,6 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	background-color: red;
 
   }
-
 
 .loading-screen {
 	position: fixed;
