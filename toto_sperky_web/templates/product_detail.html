@@ -1,43 +1,104 @@
 {% extends 'base.html' %}
+{% load custom_filters %} 
 {% load static %}
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
 <div class="product_detail_container">
-    <div class="product_detail_image">
-        {% if product.video %}
-        <video controls autoplay="" loop muted playsinline>
-            <source src="{{ product.video.url }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        {% else %}
-          {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" slug="{{ product.slug }}">
-          {% endif %}
+  
+  <div class="product_detail_text_h1">
+    <h1>{{ product.name }}</h1>
+
+  </div>
+
+  <div class="product_detail_image">
+      {% if product.video %}
+      <video controls autoplay="" loop muted playsinline preload="auto">
+          <source src="{{ product.video.url }}" type="video/mp4">
+          Your browser does not support the video tag.
+      </video>
+      {% else %}
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" slug="{{ product.slug }}">
         {% endif %}
+      {% endif %}
+  </div>
+  <div class="product_detail_text_p">
+      <p id="productDescription" >{{ product.description }}</p>
+
+      <div class="scroll-downs">
+        <div class="mousey">
+            <div class="scroller"></div>
+        </div>
     </div>
-    <div class="product_detail_text">
-        <h1>{{ product.name }}</h1>
-        <p>{{ product.description }}</p>
+  </div>
+  {% if user.is_authenticated %}
+    <div class="button_update">
+      <a href="{% url 'update_product' product.slug %}" class="btn">Upraviť</a>
     </div>
-    {% if user.is_authenticated %}
-      <div class="">
-        <a href="{% url 'update_product' product.slug %}" class="btn">Upraviť</a>
+  {% endif %}
+  <div class="button_back">
+      <button onclick="handleBackButton()">Späť</button>
+  </div>
+  <!-- <div class="main__action">
+      <div class="main__scroll-box">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+   
+          <path d="M11.9997 13.1716L7.04996     8.22186L5.63574 9.63607L11.9997 16L18.3637 9.63607L16.9495 8.22186L11.9997 13.1716Z" fill="rgba(28,28,30,1)">
+          </path>
+      </svg>
       </div>
-    {% endif %}
-    <div class="button_back">
-        <button onclick="handleBackButton()">Späť</button>
-    </div>
+  </div> -->
 </div>
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close-button">&times;</span>
 
         <div class="modal-body">
-            <img src="" class="modal-img" alt="">
+            <img src="" class="modal-img" alt="" loading="lazy">
         </div>
     </div>
 </div>
+
+<script>
+const productDescription = document.getElementById('productDescription');
+const lines = productDescription.innerText.split('\n').length; // Rozdelí text na riadky podľa znaku nového riadku '\n' a spočíta ich
+const scrollDowns = document.querySelector('.scroll-downs');
+const productDetailTextP = document.querySelector('.product_detail_text_p p');
+
+// Funkcia na zobrazenie scroll-downs
+function showScrollDowns() {
+    scrollDowns.style.opacity = '0.9';
+}
+
+if (lines > 11) {
+    showScrollDowns(); // Zobraziť, ak je viac ako 11 riadkov
+} else {
+    scrollDowns.style.opacity = '0'; // Skryť, ak je 11 alebo menej riadkov
+}
+
+// Skrytie scroll-downs pri scrollovaní
+productDetailTextP.addEventListener('scroll', function() {
+    scrollDowns.style.opacity = '0';
+});
+
+// Znovu zobrazenie scroll-downs po 5 sekundách, ak sa nevykoná scrollovanie
+let timeout;
+productDetailTextP.addEventListener('scroll', function() {
+    clearTimeout(timeout);
+    timeout = setTimeout(showScrollDowns, 5000); // 5 sekúnd
+});
+
+// Zobrazenie scroll-downs pri nascrollovaní na začiatok
+productDetailTextP.addEventListener('scroll', function() {
+    if (productDetailTextP.scrollTop === 0) {
+        showScrollDowns();
+    }
+});
+
+
+
+</script>
 
 <script>
     function handleBackButton() {

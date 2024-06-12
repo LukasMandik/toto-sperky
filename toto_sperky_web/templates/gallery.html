@@ -19,7 +19,7 @@
                         <a class="category_update" href="{% url 'update_category' category.slug %}">Upraviť</a>
                     {% endif %}
                     {% if category.image %}
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}" class="gallery-image"  data-slug="{{ product.slug }}">
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" loading="lazy" class="gallery-image"  data-slug="{{ product.slug }}">
                     {% endif %}
                 </li>
             </div>

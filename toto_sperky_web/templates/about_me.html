@@ -24,7 +24,7 @@
             </p>
         </div>
         <div class="image_neckless">
-            <img src="{% static 'media/nahrdelnik.jpg' %}" />
+            <img src="{% static 'media/nahrdelnik.jpg' %}" loading="lazy"/>
         </div>
         <div class="text-about-me">
             <p>
@@ -54,7 +54,7 @@
 <div class="container_home starter">
     {% for product in products %}
     <div class="box_home">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
     </div>  
     {% endfor %}
 </div>

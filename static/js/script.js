@@ -32,7 +32,7 @@ $(document).ready(function() {
   
       gsap.to(".main_navbar", {
         // height: 100,
-        backgroundColor: "rgba(251, 251, 251, 1)",
+        backgroundColor: "#FBF8F5",
         boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
         duration: 0.4,
         ease: "power2.out",

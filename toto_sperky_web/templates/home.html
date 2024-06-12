@@ -94,7 +94,7 @@
     </div>
     <div class="search_form">
         <form method="GET" action="{% url 'search_results' %}">
-            <input id="s" type="text" name="q" placeholder="Vyhladaj product" required>
+            <input id="s" type="text" name="q" placeholder="Vyhladaj product" required minlength="3">
             <!-- <button class="btn" type="submit"><i class='bx bx-search'></i></button> -->
         </form>
     </div>
@@ -118,7 +118,7 @@
                 <a href="{{ product.get_absolute_url }}">
                     <div class="box2">
                         {% if product.video %}
-                        <video autoplay="" loop muted playsinline>
+                        <video autoplay="" loop muted playsinline preload="auto">
                             {% if product.video_thumbnail %}
                             <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
                             {% endif %}
@@ -126,8 +126,8 @@
                             Your browser does not support the video tag.
                         </video>
                         {% else %}
-                            {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% if product.image_thumbnail %}
+                                <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
                             {% endif %}
                         {% endif %}
                         </div>

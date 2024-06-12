@@ -37,10 +37,14 @@ def about_me(request):
 
 
 
+
+
 def gallery(request):
     category_slug = request.GET.get('category', '')
     page_number = request.GET.get('page', 1)
-    items_per_page = request.GET.get('itemsPerPage', 1)  # Defaultne nastavené na 5 položiek na stránku
+    
+    # Získanie uloženej hodnoty počtu položiek na stránku z session, alebo použitie defaultnej hodnoty (15)
+    items_per_page = request.session.get('items_per_page', 15)
 
     if category_slug:
         products = Product.objects.filter(category__slug=category_slug)
@@ -81,6 +85,12 @@ def gallery(request):
         'paginator': paginator,  # Pridáme paginator do kontextu
     }
 
+    # Uloženie vybranej hodnoty počtu položiek na stránku do session
+    if 'itemsPerPage' in request.GET:
+        items_per_page = int(request.GET['itemsPerPage'])
+        request.session['items_per_page'] = items_per_page
+        return redirect(request.path)
+
     # Skontrolujte, či je požiadavka AJAX
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # Ak je to AJAX, vráťte iba čiastočnú šablónu
@@ -88,8 +98,6 @@ def gallery(request):
 
     # Inak vráťte celú šablónu
     return render(request, 'gallery.html', context)
-
-
 
 
 
