@@ -9,16 +9,19 @@ let menu = document.querySelector(".menu");
 
 })
 
-$(document).ready(function() {
 
-  let hamburger = document.querySelector(".hamburger");
-  let toggle = document.querySelector("#toggle");
+
+$(document).ready(function() {
+    let hamburger = document.querySelector(".hamburger");
+    let toggle = document.querySelector("#toggle");
+
+    hamburger.addEventListener("click", function() {
+        toggle.classList.toggle("active");
+        document.body.classList.toggle("no-scroll");
+    });
+});
   
-    hamburger.addEventListener("click", function(){
-      toggle.classList.toggle("active");
-    })
-  
-  })
+
 
 
   
@@ -157,6 +160,32 @@ $(document).ready(function() {
           easy:"linear",
           start: "top 200svh",
           end: "bottom 200svh",
+          scrub: false,
+          // markers: true,
+          toggleActions: "restart none none reverse",  
+        }
+      });
+      Timeline
+        .to(line, { strokeDashoffset: 0 })
+    });
+  });
+  $(document).ready(function() {
+    gsap.registerPlugin(ScrollTrigger);
+  
+    gsap.utils.toArray('.line_center_detail_product').forEach((elem) => {
+      let line = elem.querySelector('.line');
+      let lineLength = line.getTotalLength();
+  
+
+      line.style.strokeDasharray = lineLength;
+      line.style.strokeDashoffset = lineLength; 
+
+      let Timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: elem,
+          easy:"linear",
+          start: "top 700svh",
+          end: "bottom 700svh",
           scrub: false,
           // markers: true,
           toggleActions: "restart none none reverse",  
@@ -508,7 +537,7 @@ $(document).ready(function() {
     // y: 2,
     // rotate: 1,
     stagger: 0.03,  
-    duration: 1, 
+    duration: 0.7, 
     // repeat: -1,
     // yoyo: true, 
     ease: 'power2.inOut' // Smooth easing function
@@ -522,18 +551,37 @@ $(document).on("click", ".hamburger", function() {
 // Create an animation loop using GSAP
 gsap.from(Container, {
   x: -340,
-  delay: 0.5, 
+  delay: 0.3, 
   opacity: 0, 
   // y: 2,
   // rotate: 1,
   stagger: 0.03,  
-  duration: 0.8, 
+  duration: 0.6, 
   // repeat: -1,
   // yoyo: true, 
   ease: 'power2.inOut' // Smooth easing function
 });
 }
 });
+$(document).on("click", ".hamburger", function() {
+  if ($(".menu").hasClass("active")) {
+  const Container = document.querySelectorAll('.switch-box');
+// Create an animation loop using GSAP
+gsap.from(Container, {
+  x: -340,
+  delay: 0.3, 
+  opacity: 0, 
+  // y: 2,
+  // rotate: 1,
+  stagger: 0.03,  
+  duration: 0.6, 
+  // repeat: -1,
+  // yoyo: true, 
+  ease: 'power2.inOut' // Smooth easing function
+});
+}
+});
+
 
   
   $(document).ready(function() {
@@ -689,6 +737,28 @@ $(document).ready(function() {
           });
 
           Timeline.to(line, { backgroundPosition: "51% 75%" });
+      });
+  });
+});
+
+$(document).ready(function() {
+  gsap.utils.toArray('body').forEach((elem) => {
+      let lines = elem.querySelectorAll('.main_home_container');
+
+      lines.forEach((line) => {
+          let Timeline = gsap.timeline({
+              ease: "slowMo.ease",
+              scrollTrigger: {
+                  trigger: line,
+                  start: "top -0svh",
+                  end: "bottom -600svh",
+                  scrub: true,
+                  // markers: true,
+                  // toggleActions: "restart none none reverse",
+              }
+          });
+
+          Timeline.to(line, { y: -300 });
       });
   });
 });

@@ -45,7 +45,9 @@
             {{ form.category }}
         </div>
         {% if user.is_authenticated %}
-        <a href="{% url 'add_category' %}" class="btn">Nová kategória</a>
+        <div class="home_buttons">
+            <a href="{% url 'add_category' %}" class="btn type1">Nová kategória</a>
+        </div>
         {% endif %}
         <div class="form-group">
             <label for="id_description">Popis:</label>
@@ -56,7 +58,7 @@
             {{ form.available }}
         </div>
         <!-- {{ form.as_p }} -->
-        <button type="submit" class="btn">Uložiť zmeny</button>
+        <button type="submit" class="btn type1">Uložiť zmeny</button>
         <div id="loading-message" style="display: none;">Produkt se nahrává, prosím čekejte...</div>
     </form>
     
