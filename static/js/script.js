@@ -12,13 +12,25 @@ let menu = document.querySelector(".menu");
 
 
 $(document).ready(function() {
-    let hamburger = document.querySelector(".hamburger");
-    let toggle = document.querySelector("#toggle");
 
-    hamburger.addEventListener("click", function() {
-        toggle.classList.toggle("active");
-        document.body.classList.toggle("no-scroll");
-    });
+        $(document).ready(function() {
+            let hamburger = document.querySelector(".hamburger");
+            let toggle = document.querySelector("#toggle");
+
+            hamburger.addEventListener("click", function() {
+                toggle.classList.toggle("active");
+                if (toggle.classList.contains("active")) {
+                    document.body.style.overflow = 'hidden';
+                    document.body.style.position = 'fixed';
+                    document.body.style.width = '100%';
+                } else {
+                    document.body.style.overflow = '';
+                    document.body.style.position = '';
+                    document.body.style.width = '';
+                }
+            });
+        });
+
 });
   
 
@@ -54,7 +66,27 @@ $(document).ready(function() {
     }
   });
   
-
+  $(document).ready(function() {
+    gsap.utils.toArray('.second_home_container').forEach((elem) => {
+        let lines = elem.querySelectorAll('.background_wrapper');
+  
+        lines.forEach((line) => {
+            let Timeline = gsap.timeline({
+                ease: "slowMo.ease",
+                scrollTrigger: {
+                    trigger: line,
+                    start: "top 100svh",
+                    end: "bottom 50svh",
+                    scrub: true,
+                    // markers: true,
+                    // toggleActions: "restart none none reverse",
+                }
+            });
+  
+            Timeline.from(line, { backgroundPositionX: "200", rotation:"120deg"});
+        });
+    });
+  });
 
   // $(document).ready(function() {
   // // Inicializuj ScrollTrigger
