@@ -40,31 +40,60 @@ $(document).ready(function() {
 
 
 
-  $(document).ready(function() {
-    // Check if screen width is greater than 748px using media query
-    if (window.matchMedia('(min-width: 768px)').matches) {
-      gsap.registerPlugin(ScrollTrigger);
-  
-      gsap.to(".main_navbar", {
-        // height: 100,
-        backgroundColor: "#FBF8F5",
-        boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
-        duration: 0.4,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".endpoint",
-          start: "center 390svh ",
-          end: "center 390svh",
-          // toggleClass: "black",
-          scrub: false,
-          // markers: true,
-          // pin: true,
-          toggleActions: "restart none none reset ",
-          // play pause resume reverse restart reset complete
-        }
-      });
-    }
-  });
+$(document).ready(function() {
+  // Získajte názov aktuálneho súboru
+  const currentPath = window.location.pathname;
+
+  // Podmienka na kontrolu, či sme na hlavnej stránke
+  if (currentPath === "/") {
+      // Nastavenie pre hlavnú stránku
+      if (window.matchMedia('(min-width: 768px)').matches) {
+          gsap.registerPlugin(ScrollTrigger);
+
+          gsap.to(".main_navbar", {
+              backgroundColor: "#FBF8F5",
+              boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
+              duration: 0.2,
+              ease: "power2.out",
+              scrollTrigger: {
+                  trigger: ".main_image_container",
+                  start: "center -25% ",
+                  end: "center -25%",
+                  scrub: false,
+                  // markers: true,
+                  toggleActions: "restart none none reverse",
+              }
+          });
+      }
+  } else {
+      // Nastavenie pre ostatné stránky
+      if (window.matchMedia('(min-width: 768px)').matches) {
+          gsap.registerPlugin(ScrollTrigger);
+
+          gsap.to(".main_navbar", {
+              backgroundColor: "#FBF8F5",
+              boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
+              duration: 0.2,
+              ease: "power2.out",
+              scrollTrigger: {
+                  trigger: ".wrapper",
+                  start: "center 50svh ",
+                  end: "center 0svh",
+                  scrub: false,
+                  // markers: true,
+                  toggleActions: "restart none none reverse",
+              }
+          });
+      }
+  }
+});
+
+
+
+
+
+
+
   
   $(document).ready(function() {
     gsap.utils.toArray('.second_home_container').forEach((elem) => {
@@ -145,8 +174,29 @@ $(document).ready(function() {
       
     });
   });
+  $(document).ready(function() {
+    gsap.registerPlugin(ScrollTrigger);
   
-
+    gsap.utils.toArray('.logo_svg_container_footer').forEach((elem) => {
+      // Predpokladáme, že každý prvok má niečo ako čiaru alebo iný element na animovanie
+      let line = elem.querySelectorAll('.logo_dot'); // Prvok, ktorý budeme animovať
+  
+      // Vytvoríme GSAP časovú os
+      let timeline = gsap.timeline({
+        ease: "bounce",
+        repeat: 100, // Opakovanie nekonečne
+        yoyo: true, // Animácia sa opakuje opačným smerom
+      });
+  
+      // Pridáme animáciu na Timeline
+      timeline
+        .from(line[0], { rotation: "-=360_cw", transformOrigin: "7220px 2000px", duration: 260 }, 0)
+        .from(line[1], { rotation: "-=360_cw", transformOrigin: "7620px 2000px", duration: 527 }, 0)
+        .from(line[2], { rotation: "-=360_cw", transformOrigin: "-5370px -4250px", duration: 211 }, 0)
+        .from(line[3], { rotation: "-=360_cw", transformOrigin: "4020px 6220px", duration: 220}, 0);
+    });
+  });
+  
 
   $(document).ready(function() {
     gsap.registerPlugin(ScrollTrigger);
@@ -190,8 +240,8 @@ $(document).ready(function() {
         scrollTrigger: {
           trigger: elem,
           easy:"linear",
-          start: "top 200svh",
-          end: "bottom 200svh",
+          start: "top 600svh",
+          end: "bottom 600svh",
           scrub: false,
           // markers: true,
           toggleActions: "restart none none reverse",  
@@ -243,7 +293,7 @@ $(document).ready(function() {
         scrollTrigger: {
           trigger: elem,
           easy:"linear",
-          start: "top 500svh",
+          start: "top 600svh",
           end: "bottom 300svh",
           scrub: true,
           // markers: true,
@@ -257,9 +307,10 @@ $(document).ready(function() {
     });
   });
 
+
   $(document).ready(function() {
     gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
-        let lines = elem.querySelectorAll('.text_home_about_jewelry p');
+        let lines = elem.querySelectorAll('.text_home_about_jewelry p.first_text, .text_home_about_jewelry p.last_text');
   
         let Timeline = gsap.timeline({
           scrollTrigger: {
@@ -273,7 +324,7 @@ $(document).ready(function() {
       });
   
       lines.forEach((line) => {
-        Timeline.from(line, { opacity: 0, x: 150,duration: 0.45 });
+        Timeline.from(line, { opacity: 0, x: -150,duration: 0.45 });
       });
     });
   });
@@ -382,6 +433,61 @@ $(document).ready(function() {
     });
   });
 
+
+//   $(document).ready(function() {
+//     gsap.utils.toArray('.gallery_container .container').forEach((elem) => {
+//         let lines = elem.querySelectorAll('.box a');
+  
+//         let Timeline = gsap.timeline({
+//             scrollTrigger: {
+//                 trigger: elem,
+//                 start: "center 100svh",
+//                 end: "center 100svh",
+//                 scrub: false,
+//                 toggleActions: "restart none none reverse",
+//                 markers: true,
+//             }
+//         });
+  
+//         lines.forEach((line) => {
+//             Timeline.to(line, { className: '+=hover' }, 0.5); // pridanie triedy 'hover'
+//         });
+//     });
+// });
+
+
+  
+$(document).ready(function() {
+  // Funkcia na detekciu šírky obrazovky
+  function isMobileScreen() {
+      return window.matchMedia("(max-width: 768px)").matches;
+  }
+
+  if (isMobileScreen()) {
+      let links = gsap.utils.toArray('.box');
+
+      links.forEach((link) => {
+          link.addEventListener('click', function(event) {
+              if (!link.classList.contains('hover')) {
+                  event.preventDefault(); // Zabraňuje predvolenému správaniu (navigácia)
+                  links.forEach(l => l.classList.remove('hover')); // Odstráni 'hover' z ostatných prvkov
+                  link.classList.add('hover'); // Pridá triedu 'hover'
+              } else {
+                  link.classList.remove('hover'); // Odstráni triedu 'hover' pri druhom kliknutí
+              }
+          });
+      });
+
+      window.addEventListener('scroll', function() {
+          links.forEach((link) => {
+              link.classList.remove('hover'); // Odstráni triedu 'hover' pri skrolovaní
+          });
+      });
+  }
+});
+
+
+
   $(document).ready(function() {
     gsap.utils.toArray('.text-about-me1').forEach((elem) => {
         let lines = elem.querySelectorAll('.text-about-me1 p');
@@ -389,8 +495,8 @@ $(document).ready(function() {
         let Timeline = gsap.timeline({
           scrollTrigger: {
               trigger: elem,
-              start: "center 450svh",
-              end: "center 450svh",
+              start: "center 750svh",
+              end: "center 750svh",
               scrub: false,
               toggleActions: "restart none none reverse",
               // markers: true,
@@ -478,8 +584,8 @@ $(document).ready(function() {
     
     
     gsap.to(".box2", {
-      duration: 10,
-      ease: "none",
+      duration: 40,
+      ease: "linear",
       x: "+=775", //move each box 500px to right
       modifiers: {
         x: gsap.utils.unitize(x => parseFloat(x) % 775) //force x value to be between 0 and 500 using modulus
@@ -768,14 +874,15 @@ $(document).ready(function() {
               }
           });
 
-          Timeline.to(line, { backgroundPosition: "51% 75%" });
+          Timeline.to(line, { backgroundPosition: "64% 30%" });
       });
   });
 });
 
+
 $(document).ready(function() {
   gsap.utils.toArray('body').forEach((elem) => {
-      let lines = elem.querySelectorAll('.main_home_container');
+      let lines = elem.querySelectorAll('.main_image_container');
 
       lines.forEach((line) => {
           let Timeline = gsap.timeline({
@@ -796,30 +903,30 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
-  gsap.utils.toArray('.starter').forEach((elem) => {
-      let lines = elem.querySelectorAll('.main_image_container img');
+// $(document).ready(function() {
+//   gsap.utils.toArray('.starter').forEach((elem) => {
+//       let lines = elem.querySelectorAll('.main_image_container img');
 
-      lines.forEach((line) => {
-          let Timeline = gsap.timeline({
-              ease: "ease.inOut",
-              scrollTrigger: {
-                  trigger: line,
-                  start: "top 50svh",
-                  end: "bottom -500svh",
-                  scrub: true,
-                  // markers: true,
-                  // toggleActions: "restart none none reverse",
-              }
-          });
+//       lines.forEach((line) => {
+//           let Timeline = gsap.timeline({
+//               ease: "ease.inOut",
+//               scrollTrigger: {
+//                   trigger: line,
+//                   start: "top 50svh",
+//                   end: "bottom -500svh",
+//                   scrub: true,
+//                   // markers: true,
+//                   // toggleActions: "restart none none reverse",
+//               }
+//           });
 
-          // Timeline.to(line, {width: 270, y: 350 , rotate: -3},0,0)
-          // Timeline.to(line, {  });
-          Timeline.to(line, { width: 330, y: 380})
-          // Timeline.to(line, {  });
-      });
-  });
-});
+//           // Timeline.to(line, {width: 270, y: 350 , rotate: -3},0,0)
+//           // Timeline.to(line, {  });
+//           Timeline.to(line, { width: 330, y: 380})
+//           // Timeline.to(line, {  });
+//       });
+//   });
+// });
 
 
 

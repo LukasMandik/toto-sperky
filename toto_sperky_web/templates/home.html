@@ -3,15 +3,15 @@
 {% block title %}Toto{% endblock %}
 
 
-
 {% block content %}
+
 
 
 
 <div class="main_home_container starter">
     <div class="main_image_container starter2">
             <!-- <img src="{% static 'media/logo_biele.png' %}" alt="logo"> -->
-            
+            <div class="circles_gradient"></div>
             <div class="logo_svg_container starterdot">
                 <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="-1000 -1000 19853.7 19063.3" width="100%" >
                     <defs/>
@@ -46,13 +46,10 @@
                     </g>
                 </svg>
             </div>
-            
-        </div>
-        
     </div>
     
     <div class="second_home_container">
-        <div class="background_wrapper"></div>
+        <!-- <div class="background_wrapper"></div> -->
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs/>
@@ -62,12 +59,10 @@
             </svg>
         </div>
         <div class="text_home_about_jewelry">
-            <p>
-                Cínované šperky vyrábané <br>s precíznosťou a jemnosťou. 
-                
+            <p class="first_text">
+                Cínované šperky vyrábané s precíznosťou a jemnosťou 
             </p>
-            <div class="ellipse_group">
-                
+            <div class="ellipse_group">  
                 <p class="ring">
                     Výnimočné <br>tvary polodrahokamov vsadených <br>v bezolovnatom šperkárskom <br>cíne 
                     s prímesou striebra.
@@ -76,10 +71,9 @@
                 <div class="ellipse-3"></div>
                 <div class="ellipse-2"></div>
             </div>
-            <p>  
-                Jedinečné šperky,<br> doplnky a ozdôbky <br>vyrobené iba pre teba. 
+            <p class="last_text">  
+                Jedinečné <br>doplnky <br>a ozdôbky <br>vyrobené <br> iba pre teba. 
             </p>
-            
         </div>
         
         
@@ -102,8 +96,11 @@
                 <input id="s" type="text" name="q" placeholder="Vyhladaj product" required minlength="3">
                 <!-- <button class="btn" type="submit"><i class='bx bx-search'></i></button> -->
             </form>
-        </div> 
-        <div class="third_home_container">
+        </div>
+    </div>
+    
+    
+    <div class="third_home_container">
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs/>
@@ -113,8 +110,22 @@
             </svg>
         </div> 
         <p>Najnovšie pridané</p>
+        <div class="carousel_wrapper">
+        <div class="card-carousel">
+            {% for product in products %}
+            <div class="my-card">
+                {% if product.image_thumbnail %}
+                <a href="{{ product.get_absolute_url }}"></a>
+                
+                <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
+    
         
-        <div class="wrapper3">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+     </div>
+        <!-- <div class="wrapper3">
             <div class="boxes">
                 {% for product in products %}
                 <a href="{{ product.get_absolute_url }}">
@@ -136,20 +147,15 @@
                 </a>
                 {% endfor %}
             </div>
-        </div>
+        </div> -->
         <div class="home_buttons">
             <!-- <button>Viac</button> -->
             <a href="/gallery" class="btn type1">Celá galeria</a>
         </div>
-        
-    </div>
     </div>
     
-    
-   
-    
-
-    
+    {% include 'about_me_content.html' %}
+</div>
     
     <script>
     document.getElementsByClassName('type1').addEventListener('click', function(event) {
@@ -162,6 +168,50 @@
         }, 300); // 0.3 sekundy oneskorenie
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script> 
+<script>
+    $num = $('.my-card').length;
+$even = $num / 2;
+$odd = ($num + 1) / 2;
 
+if ($num % 2 == 0) {
+  $('.my-card:nth-child(' + $even + ')').addClass('active');
+  $('.my-card:nth-child(' + $even + ')').prev().addClass('prev');
+  $('.my-card:nth-child(' + $even + ')').next().addClass('next');
+} else {
+  $('.my-card:nth-child(' + $odd + ')').addClass('active');
+  $('.my-card:nth-child(' + $odd + ')').prev().addClass('prev');
+  $('.my-card:nth-child(' + $odd + ')').next().addClass('next');
+}
+
+$('.my-card').click(function() {
+  $slide = $('.active').width();
+  console.log($('.active').position().left);
+  
+  if ($(this).hasClass('next')) {
+    $('.card-carousel').stop(false, true).animate({left: '-=' + $slide});
+  } else if ($(this).hasClass('prev')) {
+    $('.card-carousel').stop(false, true).animate({left: '+=' + $slide});
+  }
+  
+  $(this).removeClass('prev next');
+  $(this).siblings().removeClass('prev active next');
+  
+  $(this).addClass('active');
+  $(this).prev().addClass('prev');
+  $(this).next().addClass('next');
+});
+
+
+// Keyboard nav
+$('html body').keydown(function(e) {
+  if (e.keyCode == 37) { // left
+    $('.active').prev().trigger('click');
+  }
+  else if (e.keyCode == 39) { // right
+    $('.active').next().trigger('click');
+  }
+});
+</script>
 
 {% endblock %}

@@ -34,7 +34,16 @@ def about_me(request):
 
     return render(request, 'about_me.html', context)
 
+def contact(request):
 
+    products = Product.objects.filter(available=True).order_by('-created')[:5]
+    context = {
+
+        'products': products,
+    
+    }
+
+    return render(request, 'contact.html', context)
 
 
 
@@ -47,9 +56,15 @@ def gallery(request):
     items_per_page = request.session.get('items_per_page', 15)
 
     if category_slug:
-        products = Product.objects.filter(category__slug=category_slug)
+        if request.user.is_authenticated:
+            products = Product.objects.filter(category__slug=category_slug)
+        else:
+            products = Product.objects.filter(category__slug=category_slug, available=True)
     else:
-        products = Product.objects.all()
+        if request.user.is_authenticated:
+            products = Product.objects.all()
+        else:
+            products = Product.objects.filter(available=True)
 
     paginator = Paginator(products, items_per_page)
     page_obj = paginator.get_page(page_number)
@@ -83,6 +98,7 @@ def gallery(request):
         'middle_range': middle_range,
         'last_range': last_range,
         'paginator': paginator,  # Pridáme paginator do kontextu
+        # 'show_footer': True, 
     }
 
     # Uloženie vybranej hodnoty počtu položiek na stránku do session
@@ -198,7 +214,7 @@ def ProductDetailView(request, slug):
     product = get_object_or_404(Product, slug=slug)
     context = {
         'product': product,
-        'show_footer': True, 
+        # 'show_footer': True, 
     }
     return render(request, 'product_detail.html', context)
 

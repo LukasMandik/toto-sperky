@@ -1,12 +1,15 @@
+
+
+{% load static %}
+
 <div class="gallery_container">
     {% if not selected_category %}
-    <h3 class="navigation">Galeria/Všetko</h3>
-    {% endif %}
-
-    {% for category in categories %}
-    {% if category.slug == selected_category %}
-    <h3 class="navigation">Galeria/{{ category.name }}</h3>
-    {% endif %}
+        <h3 class="navigation">Galeria/Všetko</h3>
+        {% endif %}
+        {% for category in categories %}
+        {% if category.slug == selected_category %}
+        <h3 class="navigation">Galeria/{{ category.name }}</h3>
+        {% endif %}
     {% endfor %}
 
     <div class="container starter">
@@ -26,99 +29,102 @@
                     <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}">
                     {% endif %}
                 {% endif %}
-                <div class="line_center_short">
-                    <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 150" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <defs/>
-                        <g id="Layer-1">
-                            <path d="M15.4714 0L15.3701 150" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1" class="line"/>
-                        </g>
-                    </svg>
-                </div> 
-                <h3 class="product_name">{{ product.name }}</h3>
+                <div class="description_card">
+
+                    <h3 class="product_name">{{ product.name }}</h3>
+                    <p class="product_description">{{ product.description }}</p>
+                    <div class="button_description">
+
+                        <button class="learn-more">
+                            <span class="circle" aria-hidden="true">
+                            <span class="icon arrow"></span>
+                            </span>
+                  
+                        </button>
+                    </div>
+                </div>
             </a>
         </div>
         {% endfor %}
     </div>
 
     <div class="pagination">
-
-        
         <span class="step-links">
             <!-- {% if products.has_previous %}
                 <a href="?category={{ selected_category }}&page={{ products.previous_page_number }}"> < </a>
                 {% endif %} -->
                 
-                {% for num in first_range %}
-                {% if num == products.number %}
-                <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-                {% else %}
-                <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-                {% endif %}
-                {% endfor %}
-                
-                {% if first_range|last < paginator.num_pages|add:'-3' and products.number < paginator.num_pages|add:'-3' %}
-                <span>...</span>
-                {% endif %}
-                
-                {% for num in middle_range %}
-                {% if num == products.number %}
-                <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-                {% else %}
-                <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-                {% endif %}
-                {% endfor %}
-                
-                {% if last_range|first > 3 and products.number >= 5 %}
-                <span>...</span>
-                {% endif %}
-                
-                {% for num in last_range %}
-                {% if num == products.number %}
-                <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-                {% else %}
-                <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-                {% endif %}
-                {% endfor %}
-                
-                <!-- {% if products.has_next %}
-                    <a href="?category={{ selected_category }}&page={{ products.next_page_number }}"> > </a>
-                    {% endif %} -->
-                </span>
-                
-                <!-- <span class="current">
-                    Stránka {{ products.number }} s {{ products.paginator.num_pages }}.
-                </span> -->
-                
-                <details id="details-element">
-                    <summary id="details-summary">Viac možnosti</summary>
-                    <span class="items-per-page">
-                        <form method="get">
-                            <label for="itemsPerPage">Položiek na stránke:</label>
-                            <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
-                                <option value="1" {% if products.paginator.per_page == 1 %} selected {% endif %}>1</option>
-                                <option value="5" {% if products.paginator.per_page == 5 %} selected {% endif %}>5</option>
-                                <option value="15" {% if products.paginator.per_page == 15 %} selected {% endif %}>15</option>
-                                <option value="25" {% if products.paginator.per_page == 25 %} selected {% endif %}>25</option>
-                                <option value="50" {% if products.paginator.per_page == 50 %} selected {% endif %}>50</option>
-                            </select>
-                        </form>
-                    </span>
-                    <span class="go-to-page">
-                        <form method="get">
-                            <label for="goToPage">Ísť na stránku:</label>
-                            <input type="number" name="page" id="goToPage" min="1" max="{{ products.paginator.num_pages }}">
-                            <button type="submit">Ísť</button>
-                        </form>
-                    </span>
-                </details>
-                
-                
-            </div>
-        {% if user.is_authenticated %}
-        <div class="home_buttons">
-            <a href="{% url 'add_product' %}" class="btn type1">Pridať produkt</a>
-        </div>
+        {% for num in first_range %}
+        {% if num == products.number %}
+        <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+        {% else %}
+        <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
         {% endif %}
+        {% endfor %}
+        
+        {% if first_range|last < paginator.num_pages|add:'-3' and products.number < paginator.num_pages|add:'-3' %}
+        <span>...</span>
+        {% endif %}
+        
+        {% for num in middle_range %}
+        {% if num == products.number %}
+        <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+        {% else %}
+        <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
+        
+        {% if last_range|first > 3 and products.number >= 5 %}
+        <span>...</span>
+        {% endif %}
+        
+        {% for num in last_range %}
+        {% if num == products.number %}
+        <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+        {% else %}
+        <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
+        
+        <!-- {% if products.has_next %}
+            <a href="?category={{ selected_category }}&page={{ products.next_page_number }}"> > </a>
+            {% endif %} -->
+        </span>
+        
+        <!-- <span class="current">
+            Stránka {{ products.number }} s {{ products.paginator.num_pages }}.
+        </span> -->
+        
+        <details id="details-element">
+            <summary id="details-summary">Viac možnosti</summary>
+            <span class="items-per-page">
+                <form method="get">
+                    <label for="itemsPerPage">Položiek na stránke:</label>
+                    <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
+                        <option value="1" {% if products.paginator.per_page == 1 %} selected {% endif %}>1</option>
+                        <option value="5" {% if products.paginator.per_page == 5 %} selected {% endif %}>5</option>
+                        <option value="15" {% if products.paginator.per_page == 15 %} selected {% endif %}>15</option>
+                        <option value="25" {% if products.paginator.per_page == 25 %} selected {% endif %}>25</option>
+                        <option value="50" {% if products.paginator.per_page == 50 %} selected {% endif %}>50</option>
+                    </select>
+                </form>
+            </span>
+            <span class="go-to-page">
+                <form method="get">
+                    <label for="goToPage">Ísť na stránku:</label>
+                    <input type="number" name="page" id="goToPage" min="1" max="{{ products.paginator.num_pages }}">
+                    <button type="submit">Ísť</button>
+                </form>
+            </span>
+        </details>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="home_buttons">
+        <a href="{% url 'add_product' %}" class="btn type1">Pridať produkt</a>
+    </div>
+    {% endif %}
+
+</div>
 
         
             

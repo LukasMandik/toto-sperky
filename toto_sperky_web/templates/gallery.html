@@ -3,7 +3,6 @@
 {% block title %}Galllery{% endblock %}
 
 {% block content %}
-
 <div class="gallery_content_page">
     <div class="categories">
         <h3 class="h3_category">Kategórie</h3>
@@ -33,14 +32,13 @@
             {% endfor %}
         </ul>
     </div>
-    {% include "partials/product_list.html" %}
+
+        {% include "partials/product_list.html" %}
+
     
         {% if not products %}
         <p>No products found.</p>
         {% endif %}
-
-    </div>
-
 </div>
  
 <!-- test -->
