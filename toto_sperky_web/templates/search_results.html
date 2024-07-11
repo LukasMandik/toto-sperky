@@ -1,25 +1,71 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="search-results">
-    <div class="results-text">
-        <div class="results"> Výsledky hľadania pre "{{ query }}" </div>
-    </div>
-    {% for product in results %}
-    <div class="result-item">
-       
-        <img class="image_result" src="{{ product.image.url }}" alt="{{ product.name }}" />
-        <div class="name-and-description">
-            <div class="name"> {{ product.name }} </div>
-            <div class="description"> {{ product.description|truncatechars:180}}</div>
+<div class="search_results_wrapper">
+    <div class="search-results">
+        <div class="results-text">
+            <div class="results"> Výsledky hľadania pre "{{ query }}" </div>
         </div>
-   
+        {% if results %}
+        {% for product in results %}
+            <a href="{{ product.get_absolute_url }}">
+                <div class="result-item">
+                    <img class="image_result" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    <div class="name-and-description">
+                        <div class="name"> {{ product.name }} </div>
+                        <p class="description"> {{ product.description}}</p>
+                        <span>Najdené podľa: {{ product.search_type }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+            <p>Žiadny vysledok pre "{{ query }}".</p>
+        {% endif %}
+        <div class="button_back">
+            <button class="back" onclick="handleBackButton()">
+            <p>Späť</p>
+            <div class="svg_button_back">
+                
+                <svg class="svgIcon" viewBox="0 0 384 512">
+                
+                <path
+                d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" stroke-width="1.1" >
+                </path>
+            </svg>
+            </div>
+            </button>
+        </div>
+        
     </div>
-    {% endfor %}
-    <!-- <div class="results-text">
-        <div class="v-sledky-h-adania-pre-an"> Výsledky hľadania pre "{{ query }}" </div>
-    </div> -->
 </div>
+<script>
+    function handleBackButton() {
+        setTimeout(() => {
+            if (history.scrollRestoration === 'auto') {
+                // If history restoration is enabled, use it to go back to the previous scroll position
+                history.scrollRestoration = 'manual'; // Disable automatic scroll restoration
+                history.back(); // Go back in history
+                history.scrollRestoration = 'auto'; // Re-enable automatic scroll restoration
+            } else {
+                // If history restoration is not supported, manually set the scroll position
+                const scrollPosition = history.state?.scrollPosition; // Get the scroll position from history state
+                if (scrollPosition) {
+                    window.scrollTo({
+                        top: scrollPosition.y,
+                        behavior: 'smooth' // Animate the scroll for a smooth transition
+                    });
+                } else {
+                    // If scroll position is not available, go back to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }, 300); // 0,3-sekundové oneskorenie
+    }
+  </script>
 
 {% endblock %}
 

@@ -1413,8 +1413,13 @@ input#goToPage{
 }
 
 
-
+.search_results_wrapper{
+	width: 100%;
+	height: auto;
+	background-color: var(--background-color-light);
+}
 .search-results {
+	margin: 120px auto 0 auto;
 
     min-height: 100svh;
     position: relative;
@@ -1422,17 +1427,23 @@ input#goToPage{
 	flex-direction: column;
 	align-items: center;
 	background-color: var(--background-color-light);
+	width: 420px;
+	@media (max-width: 768px) {
+		width: 90%;
+	
+}
 }
 
 .results-text {
-    width: 380px;
+    width: 100%;
     height: 49px;
+	margin: 0 auto;
     /* position: absolute;
     left: calc(50% - 188px);
     top: 65px; */
     /* overflow: hidden; */
-	margin-top: 120px;
-	margin-bottom: 20px;
+	/* margin-top: 120px;
+	margin-bottom: 20px; */
 }
 
 .results {
@@ -1444,28 +1455,38 @@ input#goToPage{
     /* position: absolute;
     left: calc(50% - 175px);
     top: 0px; */
-    width: 351px;
+    width: 70%;
     height: 49px;
+	margin: 0 auto;
 }
 
 .result-item {
     display: flex;
     flex-direction: row;
-    gap: 20px;
     align-items: center;
     justify-content: flex-start;
-    width: 420px;
+    width: 90%;
+	height: 130px;
+
+	margin: 0 auto;
+	gap: 5px;
     /* position: absolute;
     left: 16px;
     top: 129px; */
 	margin-bottom: 30px;
+
+	@media (max-width: 768px) {
+		width: 100%;
+	
+}
 }
 
 .image_result {
     border-radius: 100px;
     flex-shrink: 0;
-    width: 100px;
-    height: 100px;
+    width: 30%;
+    aspect-ratio: 1/1;
+	margin: 0 auto;
     position: relative;
     object-fit: cover;
 }
@@ -1473,11 +1494,12 @@ input#goToPage{
 .name-and-description {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
     align-items: flex-start;
     justify-content: flex-start;
     flex-shrink: 0;
-    width: 300px;
+    width: 60%;
+	margin: 0 auto;
     position: relative;
 }
 
@@ -1485,16 +1507,16 @@ input#goToPage{
 	color: var(--text-color-dark);
     text-align: left;
 
-    font-size: 18px;
+    font-size: 16px;
 	font-weight: 800;
 	letter-spacing: 1px;
 
     position: relative;
-    width: 251px;
-    height: 24px;
+    width: 100%;
+
 }
 
-.description {
+.name-and-description p.description {
 	color: var(--text-color-dark);
     text-align: left;
 
@@ -1502,10 +1524,20 @@ input#goToPage{
     line-height: 110%;
 
     position: relative;
-    width: 300px;
-    height: 84px;
-}
+    width: 100%;
 
+	display: -webkit-box;
+    -webkit-line-clamp: 4; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+
+}
+.result-item span{
+	font-size: 11px;
+	color: var(--text-color-dark);
+}
 
 
 /* About me */
