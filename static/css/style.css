@@ -2190,7 +2190,7 @@ width: calc(100%-20px);
 
 .main_home_container .main_image_container{
 	position: relative;
-	background-image: url("/static/media/krystal s fantomovkov.jpg");
+	background-image: url("/static/assets/images/krystal s fantomovkov.jpg"); 
 	/* filter: grayscale(50%); */
 	/* background-image: url("/static/media/IMG_20170921_093620.jpg"); */
     height: 110svh;
