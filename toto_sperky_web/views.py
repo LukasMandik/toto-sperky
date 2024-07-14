@@ -13,7 +13,7 @@ from django.core.paginator import Paginator
 
 def home(request):
 
-    products = Product.objects.filter(available=True).order_by('-created')[:5]
+    products = Product.objects.filter(available=True).order_by('-created')[:10]
     context = {
 
         'products': products,
@@ -25,7 +25,7 @@ def home(request):
 
 def about_me(request):
 
-    products = Product.objects.filter(available=True).order_by('-created')[:5]
+    products = Product.objects.filter(available=True).order_by('-created')[:10]
     context = {
 
         'products': products,

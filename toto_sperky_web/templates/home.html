@@ -110,21 +110,42 @@
             </svg>
         </div> 
         <p>Najnovšie pridané</p>
-        <div class="carousel_wrapper">
-        <div class="card-carousel">
+        <div class="carusel">
             {% for product in products %}
-            <div class="my-card">
-                {% if product.image_thumbnail %}
-                <a href="{{ product.get_absolute_url }}"></a>
-                
-                <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
-    
-        
-                {% endif %}
-            </div>
+            <a href="{{ product.get_absolute_url }}">
+                <div class="carousel_items">
+                    {% if product.video %}
+                    <video autoplay="" loop muted playsinline preload="auto">
+                        {% if product.video_thumbnail %}
+                        <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
+                        {% endif %}
+                        <source src="{{ product.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% else %}
+                    {% if product.image_thumbnail %}
+                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </a>
             {% endfor %}
         </div>
-     </div>
+        <!-- <div class="carousel_wrapper">
+            <div class="card-carousel">
+                {% for product in products %}
+                <div class="my-card">
+                    {% if product.image_thumbnail %}
+                    <a href="{{ product.get_absolute_url }}"></a>
+                    
+                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
+        
+            
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div> -->
         <!-- <div class="wrapper3">
             <div class="boxes">
                 {% for product in products %}
@@ -212,6 +233,41 @@ $('html body').keydown(function(e) {
     $('.active').next().trigger('click');
   }
 });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.carusel');
+    const images = carousel.querySelectorAll('.carusel a .carousel_items');
+
+    function updateImageScales() {
+        const carouselRect = carousel.getBoundingClientRect();
+        const carouselCenter = carouselRect.left + carouselRect.width / 2;
+        const tolerance = carouselRect.width * 0.1; // 10% tolerance
+
+        images.forEach(img => {
+            const imgRect = img.getBoundingClientRect();
+            const imgCenter = imgRect.left + imgRect.width / 2;
+            const distanceFromCenter = Math.abs(carouselCenter - imgCenter);
+            const maxDistance = (carouselRect.width / 2) - tolerance;
+
+            let scale;
+            if (distanceFromCenter < tolerance) {
+                scale = 1.17;
+            } else {
+                scale = 1.17 - ((distanceFromCenter - tolerance) / maxDistance * 0.1);
+                scale = Math.max(scale, 1); // Ensure the scale doesn't go below 1
+            }
+
+            img.style.transform = `scale(${scale})`;
+        });
+    }
+
+    carousel.addEventListener('scroll', updateImageScales);
+    window.addEventListener('resize', updateImageScales);
+
+    updateImageScales(); // Initial call to set the scales
+});
+
 </script>
 
 {% endblock %}
