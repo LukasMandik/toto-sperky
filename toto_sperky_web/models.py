@@ -219,7 +219,7 @@ class Product(models.Model):
             print("After saving video:", os.path.getsize(resized_video_path) / (1024 * 1024), "MB")
 
             # Spracovanie náhľadu videa
-            super().save(*args, **kwargs)
+        
             cap = cv2.VideoCapture(resized_video_path)
             fourcc = cv2.VideoWriter_fourcc(*'avc1')
 
@@ -228,7 +228,7 @@ class Product(models.Model):
         
 
             print("Original video dimensions for thumbnail:", width, "x", height)
-
+            super().save(*args, **kwargs)
             max_side_length = 600
             if width > height:
                 new_width = max_side_length
