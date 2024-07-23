@@ -219,11 +219,13 @@ class Product(models.Model):
             print("After saving video:", os.path.getsize(resized_video_path) / (1024 * 1024), "MB")
 
             # Spracovanie náhľadu videa
+            super().save(*args, **kwargs)
             cap = cv2.VideoCapture(resized_video_path)
             fourcc = cv2.VideoWriter_fourcc(*'avc1')
 
             width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        
 
             print("Original video dimensions for thumbnail:", width, "x", height)
 
