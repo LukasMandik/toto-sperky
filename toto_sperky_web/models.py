@@ -203,7 +203,7 @@ class Product(models.Model):
         if not self.image:
             self.image_thumbnail = None
 
-        super().save(*args, **kwargs)
+
 
         # Processing the video
         if self.video:
@@ -212,116 +212,123 @@ class Product(models.Model):
 
             # Spracovanie hlavného videa
             with transaction.atomic():
-                cap = cv2.VideoCapture(self.video.path)
-                fourcc = cv2.VideoWriter_fourcc(*'avc1')
+                try:
+                    cap = cv2.VideoCapture(self.video.path)
+                    fourcc = cv2.VideoWriter_fourcc(*'avc1')
 
-                width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-                height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-                print("Original video dimensions:", width, "x", height)
+                    print("Original video dimensions:", width, "x", height)
 
-                max_side_length = 1800
-                if width > height:
-                    new_width = max_side_length
-                    new_height = int(height * (max_side_length / width))
-                else:
-                    new_height = max_side_length
-                    new_width = int(width * (max_side_length / height))
+                    max_side_length = 1800
+                    if width > height:
+                        new_width = max_side_length
+                        new_height = int(height * (max_side_length / width))
+                    else:
+                        new_height = max_side_length
+                        new_width = int(width * (max_side_length / height))
 
-                dim = (new_width, new_height)
-                bitrate = 1000000
-                framerate = 30.0
+                    dim = (new_width, new_height)
+                    bitrate = 1000000
+                    framerate = 30.0
 
-                with NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
-                    resized_video_path = temp_file.name
-                    out = cv2.VideoWriter(resized_video_path, fourcc, framerate, dim, isColor=True)
-                    out.set(cv2.CAP_PROP_BITRATE, bitrate)
+                    with NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
+                        resized_video_path = temp_file.name
+                        out = cv2.VideoWriter(resized_video_path, fourcc, framerate, dim, isColor=True)
+                        out.set(cv2.CAP_PROP_BITRATE, bitrate)
 
-                    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-                    prev_frame = None
-                    processed_frames = 0
+                        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+                        prev_frame = None
+                        processed_frames = 0
 
-                    while True:
-                        ret, frame = cap.read()
-                        if not ret:
-                            break
-                        resized_frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-                        if prev_frame is not None:
-                            resized_frame = cv2.addWeighted(resized_frame, 0.5, prev_frame, 0.5, 0)
-                        out.write(resized_frame)
-                        prev_frame = resized_frame
+                        while True:
+                            ret, frame = cap.read()
+                            if not ret:
+                                break
+                            resized_frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+                            if prev_frame is not None:
+                                resized_frame = cv2.addWeighted(resized_frame, 0.5, prev_frame, 0.5, 0)
+                            out.write(resized_frame)
+                            prev_frame = resized_frame
 
-                        processed_frames += 1
-                        progress = (processed_frames / total_frames) * 100
-                        sys.stdout.write(f"\rProgress: {progress:.2f}%")
-                        sys.stdout.flush()
+                            processed_frames += 1
+                            progress = (processed_frames / total_frames) * 100
+                            sys.stdout.write(f"\rProgress: {progress:.2f}%")
+                            sys.stdout.flush()
 
-                    cap.release()
-                    out.release()
+                        cap.release()
+                        out.release()
 
-                with open(resized_video_path, 'rb') as f:
-                    self.video.save('resized_' + os.path.basename(self.video.name), File(f), save=False)
+                    with open(resized_video_path, 'rb') as f:
+                        self.video.save('resized_' + os.path.basename(self.video.name), File(f), save=False)
 
-                print("Resized video dimensions:", new_width, "x", new_height)
-                print("After saving video:", self.video.size / (1024 * 1024), "MB")
+                    print("Resized video dimensions:", new_width, "x", new_height)
+                    print("After saving video:", self.video.size / (1024 * 1024), "MB")
 
-                # Spracovanie náhľadu videa
-                cap = cv2.VideoCapture(resized_video_path)
-                fourcc = cv2.VideoWriter_fourcc(*'avc1')
+                    # Spracovanie náhľadu videa
+                    cap = cv2.VideoCapture(resized_video_path)
+                    fourcc = cv2.VideoWriter_fourcc(*'avc1')
 
-                width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-                height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-                print("Original video dimensions for thumbnail:", width, "x", height)
+                    print("Original video dimensions for thumbnail:", width, "x", height)
 
-                max_side_length = 600
-                if width > height:
-                    new_width = max_side_length
-                    new_height = int(height * (max_side_length / width))
-                else:
-                    new_height = max_side_length
-                    new_width = int(width * (max_side_length / height))
+                    max_side_length = 600
+                    if width > height:
+                        new_width = max_side_length
+                        new_height = int(height * (max_side_length / width))
+                    else:
+                        new_height = max_side_length
+                        new_width = int(width * (max_side_length / height))
 
-                dim = (new_width, new_height)
-                bitrate = 1000000
-                framerate = 30.0
+                    dim = (new_width, new_height)
+                    bitrate = 1000000
+                    framerate = 30.0
 
-                with NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
-                    thumbnail_video_path = temp_file.name
-                    out = cv2.VideoWriter(thumbnail_video_path, fourcc, framerate, dim, isColor=True)
-                    out.set(cv2.CAP_PROP_BITRATE, bitrate)
+                    with NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
+                        thumbnail_video_path = temp_file.name
+                        out = cv2.VideoWriter(thumbnail_video_path, fourcc, framerate, dim, isColor=True)
+                        out.set(cv2.CAP_PROP_BITRATE, bitrate)
 
-                    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-                    prev_frame = None
-                    processed_frames = 0
+                        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+                        prev_frame = None
+                        processed_frames = 0
 
-                    while True:
-                        ret, frame = cap.read()
-                        if not ret:
-                            break
-                        resized_frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-                        if prev_frame is not None:
-                            resized_frame = cv2.addWeighted(resized_frame, 0.5, prev_frame, 0.5, 0)
-                        out.write(resized_frame)
-                        prev_frame = resized_frame
+                        while True:
+                            ret, frame = cap.read()
+                            if not ret:
+                                break
+                            resized_frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+                            if prev_frame is not None:
+                                resized_frame = cv2.addWeighted(resized_frame, 0.5, prev_frame, 0.5, 0)
+                            out.write(resized_frame)
+                            prev_frame = resized_frame
 
-                        processed_frames += 1
-                        progress = (processed_frames / total_frames) * 100
-                        sys.stdout.write(f"\rProgress: {progress:.2f}%")
-                        sys.stdout.flush()
+                            processed_frames += 1
+                            progress = (processed_frames / total_frames) * 100
+                            sys.stdout.write(f"\rProgress: {progress:.2f}%")
+                            sys.stdout.flush()
 
-                    cap.release()
-                    out.release()
+                        cap.release()
+                        out.release()
 
-                with open(thumbnail_video_path, 'rb') as f:
-                    self.video_thumbnail.save('thumbnail_' + os.path.basename(self.video.name), File(f), save=False)
+                    with open(thumbnail_video_path, 'rb') as f:
+                        self.video_thumbnail.save('thumbnail_' + os.path.basename(self.video.name), File(f), save=False)
 
-                print("Resized video dimensions for thumbnail:", new_width, "x", new_height)
-                print("After saving video thumbnail:", self.video_thumbnail.size / (1024 * 1024), "MB")
+                    print("Resized video dimensions for thumbnail:", new_width, "x", new_height)
+                    print("After saving video thumbnail:", self.video_thumbnail.size / (1024 * 1024), "MB")
 
-                # Odstránenie dočasných súborov
-                os.remove(resized_video_path)
-                os.remove(thumbnail_video_path)
+                except Exception as e:
+                    print(f"An error occurred: {e}")
+
+                finally:
+                    # Odstránenie dočasných súborov
+                    if os.path.exists(resized_video_path):
+                        os.remove(resized_video_path)
+                    if os.path.exists(thumbnail_video_path):
+                        os.remove(thumbnail_video_path)
 
         super().save(*args, **kwargs)
 
