@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Pridať blog{% endblock %}
+
+{% block content %}
+<div class="container_add_product">
+    <h1>Pridať blog</h1>
+    <form id="blog-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_name">Názov:</label>
+            {{ form.name }}
+        </div>
+        {{ form.slug }}
+        <div class="form-group">
+            <label for="id_description">Popis:</label>
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            <label for="id_available">Dostupné:</label>
+            {{ form.available }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_images">Obrázky:</label>
+            {% for image_form in image_forms %}
+                <div class="image-upload">
+                    {{ image_form.image }}
+                    {% if image_form.image.errors %}
+                        <div class="error">{{ image_form.image.errors }}</div>
+                    {% endif %}
+                    <div class="image-preview">
+                        <p class="file-name"></p>
+                        <img class="image-thumb" style="display: none; max-width: 200px; max-height: 200px;">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button class="btn type1" id="save-button" type="submit">Uložiť</button>
+        <div id="loading-message" style="display: none;">
+            Blog sa nahráva, prosím čakajte...
+            <div class="chaotic-orbit"></div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('input[type="file"]').forEach(fileInput => {
+            fileInput.addEventListener('change', function(event) {
+                const fileInput = event.target;
+                const file = fileInput.files[0];
+                const fileNameElement = fileInput.closest('.image-upload').querySelector('.file-name');
+                const imageThumbElement = fileInput.closest('.image-upload').querySelector('.image-thumb');
+
+                if (file) {
+                    // Display the file name
+                    fileNameElement.textContent = file.name;
+
+                    // Create a URL for the selected file and display the image preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imageThumbElement.src = e.target.result;
+                        imageThumbElement.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    // Clear the file name and hide the image preview if no file is selected
+                    fileNameElement.textContent = '';
+                    imageThumbElement.style.display = 'none';
+                    imageThumbElement.src = '';
+                }
+            });
+        });
+
+        const form = document.getElementById('blog-form');
+        const saveButton = document.getElementById('save-button');
+        const loadingMessage = document.getElementById('loading-message');
+
+        form.addEventListener('submit', function(event) {
+            // Disable the "Save" button
+            saveButton.disabled = true;
+            // Show the loading message
+            loadingMessage.style.display = 'flex';
+        });
+    });
+</script>
+{% endblock %}

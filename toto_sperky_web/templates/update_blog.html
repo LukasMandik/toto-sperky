@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Upraviť blog{% endblock %}
+
+{% block content %}
+<div class="container_add_product">
+    <h1>Upraviť blog</h1>
+    <form id="blog-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        
+        <div class="form-group">
+            <label for="id_name">Názov:</label>
+            {{ form.name }}
+        </div>
+        {{ form.slug }}
+        <div class="form-group">
+            <label for="id_description">Popis:</label>
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            <label for="id_available">Dostupné:</label>
+            {{ form.available }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_images">Obrázky:</label>
+            
+            <!-- Display existing images with delete and replace options -->
+            {% for image in existing_images %}
+            <div class="image-upload">
+                <div class="image-preview">
+                    <p class="file-name">{{ image.image.name }}</p>
+                    <img class="image-thumb" src="{{ image.image.url }}" style="max-width: 200px; max-height: 200px;">
+                </div>
+                <div class="delete-checkbox">
+                    <label for="delete_image_{{ image.id }}">Vymazať:</label>
+                    <input type="checkbox" name="delete_image_{{ image.id }}" id="delete_image_{{ image.id }}">
+                </div>
+                <div class="replace-input">
+                    <label for="replace_image_{{ image.id }}">Zameniť:</label>
+                    <input type="file" name="replace_image_{{ image.id }}" id="replace_image_{{ image.id }}">
+                </div>
+                {% if form.non_field_errors %}
+                    <div class="error-message">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                </div>
+            {% endfor %}
+
+            <!-- Display forms for new image uploads if allowed -->
+            {% for image_form in image_forms %}
+                <div class="image-upload">
+                    {{ image_form.image }}
+                    {% if image_form.image.errors %}
+                        <div class="error-message">
+                            {% for error in image_form.image.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="image-preview">
+                        <p class="file-name"></p>
+                        <img class="image-thumb" style="display: none; max-width: 200px; max-height: 200px;">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button class="btn type1" id="save-button" type="submit">Uložiť zmeny</button>
+        <div id="loading-message" style="display: none;">
+            Blog sa nahráva, prosím čakajte...
+            <div class="chaotic-orbit"></div>
+        </div>
+    </form>
+    <div class="delete-button" id="delete-button" type="submit">
+        <a id="delete-link" href="{% url 'delete_blog' blog.slug %}"></a>
+        <svg class="delete-svgIcon" viewBox="0 0 448 512">
+            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+        </svg>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('input[type="file"]').forEach(fileInput => {
+            fileInput.addEventListener('change', function(event) {
+                const fileInput = event.target;
+                const file = fileInput.files[0];
+                const fileNameElement = fileInput.closest('.image-upload').querySelector('.file-name');
+                const imageThumbElement = fileInput.closest('.image-upload').querySelector('.image-thumb');
+
+                if (file) {
+                    // Display the file name
+                    fileNameElement.textContent = file.name;
+
+                    // Create a URL for the selected file and display the image preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imageThumbElement.src = e.target.result;
+                        imageThumbElement.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    // Clear the file name and hide the image preview if no file is selected
+                    fileNameElement.textContent = '';
+                    imageThumbElement.style.display = 'none';
+                    imageThumbElement.src = '';
+                }
+            });
+        });
+
+        document.getElementById('delete-link').addEventListener('click', function(event) {
+            // Prevent the default link behavior
+            event.preventDefault();
+
+            // Delay opening the link by 0.3 seconds
+            setTimeout(function() {
+                window.location.href = event.target.href;
+            }, 300); // 0.3-second delay
+        });
+
+        const form = document.getElementById('blog-form');
+        const saveButton = document.getElementById('save-button');
+        const loadingMessage = document.getElementById('loading-message');
+
+        form.addEventListener('submit', function(event) {
+            // Disable the "Save" button
+            saveButton.disabled = true;
+            // Show the loading message
+            loadingMessage.style.display = 'flex';
+        });
+    });
+</script>
+{% endblock %}

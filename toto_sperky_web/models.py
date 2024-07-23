@@ -21,6 +21,78 @@ from django.dispatch import receiver
 # Create your models here.
 
 
+class Blog(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+    description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    available = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = 'blogs'
+        ordering = ('-created',)
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('toto_sperky_web:blog_detail', args=[self.slug])
+
+
+class BlogImage(models.Model):
+    blog = models.ForeignKey(Blog, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(null=True, blank=True)
+    image_thumbnail = models.ImageField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            with Image.open(self.image) as img:
+                # Získanie veľkosti súboru v bajtoch
+                file_size = self.image.size
+                print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                if file_size > 2 * 1024 * 1024:  # 2 MB prevedené na bajty
+                    # Získanie pôvodných rozmerov obrázku
+                    orig_width, orig_height = img.size
+                    # Zistenie orientácie obrázku
+                    if orig_width > orig_height:
+                        # Zmena veľkosti na max. 1200x...
+                        new_width = 1200
+                        new_height = int((orig_height / orig_width) * new_width)
+                    else:
+                        # Zmena veľkosti na max. ...x1200
+                        new_height = 1200
+                        new_width = int((orig_width / orig_height) * new_height)
+                    img.thumbnail((new_width, new_height), Image.LANCZOS)
+                    buffer = BytesIO()
+                    img.save(buffer, format='PNG')
+                    self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
+                print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                if self.image_thumbnail:
+                    if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png": 
+                        img.thumbnail((300, 300), Image.LANCZOS)
+                        thumbnail_buffer = BytesIO()
+                        img.save(thumbnail_buffer, format='PNG')
+                        self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
+                        print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+                else:
+                    img.thumbnail((300, 300), Image.LANCZOS)
+                    thumbnail_buffer = BytesIO()
+                    img.save(thumbnail_buffer, format='PNG')
+                    self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
+                    print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+        if not self.image:
+            self.image_thumbnail = None
+        super().save(*args, **kwargs)
+
+@receiver(pre_save, sender=BlogImage)
+def update_blog_image_thumbnails(sender, instance, **kwargs):
+    if not instance.image:
+        instance.image_thumbnail = None
+
+
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -300,6 +372,8 @@ class Product(models.Model):
 def update_product_images(sender, instance, **kwargs):
     if not instance.image:
         instance.image_thumbnail = None
+
+
 # @receiver(pre_delete, sender=Product)
 # def delete_product_images(sender, instance, **kwargs):
 #     # Získajte príslušné fotografie spojené s produktom a vymažte ich

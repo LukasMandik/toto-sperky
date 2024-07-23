@@ -2,7 +2,8 @@
 from django.utils.text import slugify
 from django import forms
 from django.forms import ImageField
-from .models import Product, Category
+from .models import Product, Category, Blog, BlogImage
+
 import random
 
 class CategoryForm(forms.ModelForm):
@@ -98,6 +99,56 @@ class ProductForm(forms.ModelForm):
         if 'image' in self.changed_data and not cleaned_data.get('image'):
             cleaned_data['image_thumbnail'] = None
         return cleaned_data
-    
-    
+
+
+
+class BlogImageForm(forms.ModelForm):
+    class Meta:
+        model = BlogImage
+        fields = ['image']
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Vyber fotku'
+            })
+        }
+
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ['name', 'slug', 'description', 'available']
+        widgets = {
+            'slug': forms.HiddenInput(),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Názov článku'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Obsah článku'
+            }),
+            'available': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            })
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'slug' in self.fields:
+            self.fields['slug'].widget.attrs['readonly'] = True
+            self.fields['slug'].required = False
+
+    def clean_slug(self):
+        slug = self.cleaned_data['slug']
+        if not slug:
+            name = self.cleaned_data['name']
+            slug = slugify(name)
+            self.instance.slug = slug
+        if self.instance.pk:
+            if Blog.objects.filter(slug=slug).exclude(pk=self.instance.pk).exists():
+                slug += f'{random.randint(1, 100)}'
+        else:
+            while Blog.objects.filter(slug=slug).exists():
+                slug += f'{random.randint(1, 100)}'
+        return slug
     

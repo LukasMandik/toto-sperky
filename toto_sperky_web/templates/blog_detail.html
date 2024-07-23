@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load custom_filters %} 
+{% load static %}
+{% block title %}{{blog.name }}{% endblock %}
+
+{% block content %}
+<div class="product_detail_container_wrapper">
+<div class="product_detail_container">
+  
+  <div class="product_detail_text_p">
+    <h1 class="mobile_screen">{{ blog.name }}</h1>
+  </div>
+
+  <div class="product_detail_image">
+
+                    {% for image in blog.images.all %}
+                        <img src="{{ image.image_thumbnail.url }}" alt="Image for {{ blog.name }}">
+                    {% endfor %}
+          
+      {% if user.is_authenticated %}
+      <div class="button_update">
+        <a href="{% url 'update_blog' blog.slug %}" class="btn_update">
+          <svg height="1em" viewBox="0 0 512 512">
+            <path
+              d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"
+            ></path>
+          </svg>
+          
+        </a>
+      </div>
+    {% endif %}
+  </div>
+  <div class="line_center_detail_product" >
+    <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs/>
+        <g id="Layer-1">
+        <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
+        </g>
+    </svg>
+  </div>
+  <div class="product_detail_text_p"> 
+  <div class="product_detail_scroll_wrap" id="productDescription">
+    <h1 class="desktop_screen">{{ blog.name }}</h1>
+    <p >{{ blog.description }}</p>
+
+    <div class="scroll-downs">
+      <div class="mousey">
+          <div class="scroller"></div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- <div class="main__action">
+      <div class="main__scroll-box">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+   
+          <path d="M11.9997 13.1716L7.04996     8.22186L5.63574 9.63607L11.9997 16L18.3637 9.63607L16.9495 8.22186L11.9997 13.1716Z" fill="rgba(28,28,30,1)">
+          </path>
+      </svg>
+      </div>
+  </div> -->
+  <div class="button_back">
+      <button class="back" onclick="handleBackButton()">
+        <p>Späť</p>
+        <div class="svg_button_back">
+          
+          <svg class="svgIcon" viewBox="0 0 384 512">
+            
+            <path
+            d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" stroke-width="1.1" >
+          </path>
+        </svg>
+      </div>
+      </button>
+  </div>
+</div>
+</div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <img src="" class="modal-img" alt="" loading="lazy">
+        <span class="close-button">&times;</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+const productDescription = document.getElementById('productDescription');
+const lines = productDescription.innerText.split('\n').length; // Rozdelí text na riadky podľa znaku nového riadku '\n' a spočíta ich
+const scrollDowns = document.querySelector('.scroll-downs');
+const productDetailTextP = document.querySelector('.product_detail_text_p .product_detail_scroll_wrap');
+
+// Funkcia na zobrazenie scroll-downs
+function showScrollDowns() {
+    scrollDowns.style.opacity = '0.9';
+}
+
+if (lines > 14) {
+    showScrollDowns(); // Zobraziť, ak je viac ako 11 riadkov
+} else {
+    scrollDowns.style.opacity = '0'; // Skryť, ak je 11 alebo menej riadkov
+}
+
+// Skrytie scroll-downs pri scrollovaní
+productDetailTextP.addEventListener('scroll', function() {
+    scrollDowns.style.opacity = '0';
+});
+
+// Znovu zobrazenie scroll-downs po 5 sekundách, ak sa nevykoná scrollovanie
+let timeout;
+// productDetailTextP.addEventListener('scroll', function() {
+//     clearTimeout(timeout);
+//     timeout = setTimeout(showScrollDowns, 5000); // 5 sekúnd
+// });
+
+// Zobrazenie scroll-downs pri nascrollovaní na začiatok
+// productDetailTextP.addEventListener('scroll', function() {
+//     if (productDetailTextP.scrollTop === 0) {
+//         showScrollDowns();
+//     }
+// });
+
+
+
+</script>
+
+<script>
+  function handleBackButton() {
+      setTimeout(() => {
+          if (history.scrollRestoration === 'auto') {
+              // If history restoration is enabled, use it to go back to the previous scroll position
+              history.scrollRestoration = 'manual'; // Disable automatic scroll restoration
+              history.back(); // Go back in history
+              history.scrollRestoration = 'auto'; // Re-enable automatic scroll restoration
+          } else {
+              // If history restoration is not supported, manually set the scroll position
+              const scrollPosition = history.state?.scrollPosition; // Get the scroll position from history state
+              if (scrollPosition) {
+                  window.scrollTo({
+                      top: scrollPosition.y,
+                      behavior: 'smooth' // Animate the scroll for a smooth transition
+                  });
+              } else {
+                  // If scroll position is not available, go back to top
+                  window.scrollTo({
+                      top: 0,
+                      behavior: 'smooth'
+                  });
+              }
+          }
+      }, 300); // 0,3-sekundové oneskorenie
+  }
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('modal');
+  const modalContent = document.querySelector('.modal-content img');
+  const galleryImages = document.querySelectorAll('.product_detail_image img');
+  const body = document.querySelector('body');  // Get the body element
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', function () {
+      const imageUrl = this.getAttribute('src');
+      modalContent.setAttribute('src', imageUrl);
+      modal.style.display = 'flex';
+
+      // Disable body scrolling when modal is open
+      body.style.overflow = 'hidden';  // Add this line
+    });
+  });
+
+  const closeButton = document.querySelector('.close-button');
+  closeButton.addEventListener('click', function () {
+    modal.style.display = 'none';
+
+    // Re-enable body scrolling when modal is closed
+    body.style.overflow = 'auto';  // Add this line
+  });
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      body.style.overflow = 'auto';  // Re-enable scrolling on modal close
+    }
+  });
+});
+  </script>
+
+
+
+{% endblock %}

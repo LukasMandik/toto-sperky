@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-
-from .models import Category ,Product
-from .forms import ProductForm, CategoryForm
+from django.forms import modelformset_factory
+from .models import Category ,Product, Blog, BlogImage
+from .forms import ProductForm, CategoryForm, BlogForm, BlogImageForm
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.exceptions import ValidationError
@@ -33,6 +33,155 @@ def about_me(request):
     }
 
     return render(request, 'about_me.html', context)
+
+def blog_view(request):
+    blogs = Blog.objects.filter(available=True).order_by('-created')[:10]
+    context = {
+        'blogs': blogs,
+    }
+    return render(request, 'blog.html', context)
+
+# @login_required
+# def add_blog(request):
+#     ImageFormSet = modelformset_factory(BlogImage, form=BlogImageForm, extra=3)  # Adjust 'extra' to allow multiple images
+#     if request.method == 'POST':
+#         form = BlogForm(request.POST)
+#         formset = ImageFormSet(request.POST, request.FILES, queryset=BlogImage.objects.none())
+        
+#         if form.is_valid() and formset.is_valid():
+#             blog = form.save(commit=False)
+#             blog.save()
+
+#             for form in formset.cleaned_data:
+#                 if form:
+#                     image = form['image']
+#                     photo = BlogImage(blog=blog, image=image)
+#                     photo.save()
+                    
+#             return redirect('blog')
+#     else:
+#         form = BlogForm()
+#         formset = ImageFormSet(queryset=BlogImage.objects.none())
+    
+#     return render(request, 'add_blog.html', {'form': form, 'image_forms': formset})
+
+
+@login_required
+def add_blog(request):
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        image_forms = [BlogImageForm(request.POST, request.FILES, prefix=str(i)) for i in range(5)]
+
+        if form.is_valid() and all([img_form.is_valid() for img_form in image_forms]):
+            valid = True
+            for img_form in image_forms:
+                image_file = img_form.cleaned_data.get('image')
+                if image_file and image_file.size > 15 * 1024 * 1024:  # 15 MB size limit
+                    img_form.add_error('image', "The image size must be less than 15 MB.")
+                    valid = False
+
+            if valid:
+                blog = form.save()
+                for img_form in image_forms:
+                    if img_form.cleaned_data.get('image'):
+                        image = img_form.save(commit=False)
+                        image.blog = blog
+                        image.save()
+                return redirect('/blog')  # Redirect to the blog list page
+
+    else:
+        form = BlogForm()
+        image_forms = [BlogImageForm(prefix=str(i)) for i in range(5)]
+
+    context = {
+        'form': form,
+        'image_forms': image_forms
+    }
+    return render(request, 'add_blog.html', context)
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import BlogForm, BlogImageForm
+from .models import Blog, BlogImage
+
+@login_required
+def update_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+    
+    # Retrieve existing images for this blog
+    existing_images = blog.images.all()
+    num_existing_images = existing_images.count()
+    
+    max_images = 5
+    num_new_image_forms = max_images - num_existing_images
+    
+    if request.method == 'POST':
+        form = BlogForm(request.POST, instance=blog)
+        image_forms = [BlogImageForm(request.POST, request.FILES, prefix=str(i)) for i in range(num_new_image_forms)]
+        
+        valid = True  # Flag to check overall validity
+        
+        # Validate existing image replacements
+        for image in existing_images:
+            replacement_file = request.FILES.get(f'replace_image_{image.id}')
+            if replacement_file and replacement_file.size > 15 * 1024 * 1024:  # 15 MB size limit
+                form.add_error(None, f"The image size must be less than 15 MB.")
+                valid = False
+        
+        # Validate new image uploads
+        if form.is_valid() and all([img_form.is_valid() for img_form in image_forms]):
+            for img_form in image_forms:
+                image_file = img_form.cleaned_data.get('image')
+                if image_file and image_file.size > 15 * 1024 * 1024:  # 15 MB size limit
+                    img_form.add_error('image', "The image size must be less than 15 MB.")
+                    valid = False
+            
+            if valid:
+                blog = form.save()
+
+                # Handle image replacements and deletions
+                for image in existing_images:
+                    if request.POST.get(f'delete_image_{image.id}'):
+                        image.delete()
+                    elif request.FILES.get(f'replace_image_{image.id}'):
+                        image.image = request.FILES.get(f'replace_image_{image.id}')
+                        image.save()
+
+                # Handle new image uploads
+                for img_form in image_forms:
+                    if img_form.cleaned_data.get('image'):
+                        new_image = img_form.save(commit=False)
+                        new_image.blog = blog
+                        new_image.save()
+
+                return redirect('/blog')  # Redirect to the blog list page
+    else:
+        form = BlogForm(instance=blog)
+        image_forms = [BlogImageForm(prefix=str(i)) for i in range(num_new_image_forms)]
+
+    context = {
+        'form': form,
+        'image_forms': image_forms,
+        'existing_images': existing_images,
+        'blog': blog,  # Ensure blog is passed to the template
+    }
+    return render(request, 'update_blog.html', context)
+
+
+
+
+
+
+
+@login_required
+def delete_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+    if request.method == 'POST':
+        blog.delete()
+        return redirect('/blog')  # Presmerovanie na stránku s úspechom
+    return render(request, 'delete_blog.html', {'blog': blog})
+
 
 def contact(request):
 
@@ -210,6 +359,7 @@ def delete_category(request, slug):
     return render(request, 'delete_category.html', {'category': category})
 
 
+
 def ProductDetailView(request, slug):
     product = get_object_or_404(Product, slug=slug)
     context = {
@@ -217,6 +367,14 @@ def ProductDetailView(request, slug):
         # 'show_footer': True, 
     }
     return render(request, 'product_detail.html', context)
+
+def BlogDetailView(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+    context = {
+        'blog': blog,
+        # 'show_footer': True, 
+    }
+    return render(request, 'blog_detail.html', context)
 
 @login_required
 def product_data(request, slug):

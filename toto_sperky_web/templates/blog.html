@@ -1,11 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}O mne{% endblock %}
+{% block title %}Blog{% endblock %}
 
 {% block content %}
 
 
-
-
+<div class="container_blog">
+    <div class="title_blog"> Blog </div>
+    <div class="line_center_about_me" >
+        <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs/>
+            <g id="Layer-1">
+            <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
+            </g>
+        </svg>
+    </div>
+    {% for blog in blogs %}
+    <a href="{{ blog.get_absolute_url }}">
+        <div class="blog-post">
+            <h2>{{ blog.name }}</h2>
+            <p>{{ blog.description }}</p>
+            {% if blog.images.exists %}
+                <div class="blog-images">
+                    {% with blog.images.first as first_image %}
+                        <img src="{{ first_image.image_thumbnail.url }}" alt="Image for {{ blog.name }}">
+                    {% endwith %}
+                </div>
+            {% endif %}
+        </div>
+    </a>
+    {% endfor %}
+    
+    <div class="home_buttons">
+        <a href="{% url 'add_blog' %}" class="btn type1">Pridať článok</a>
+    </div>
+</div>
+{% if user.is_authenticated %}
+{% endif %}
 
 {% endblock %}

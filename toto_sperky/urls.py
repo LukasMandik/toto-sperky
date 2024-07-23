@@ -25,6 +25,11 @@ urlpatterns = [
     path('gallery/', views.gallery, name='gallery'),
     path('', include('toto_sperky_web.urls')),
     path('search/', views.search_results, name='search_results'),
+    path('add_blog/', views.add_blog, name='add_blog'),
+    path('blog/<slug:slug>/update/', views.update_blog, name='update_blog'),
+
+    path('blog/<slug:slug>/delete/', views.delete_blog, name='delete_blog'),
+
     path('add_product/', views.add_product, name='add_product'),
     path('product/<slug:slug>/update/', views.update_product, name='update_product'),
     path('product/<slug:slug>/delete/', views.delete_product, name='delete_product'),
