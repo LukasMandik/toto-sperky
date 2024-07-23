@@ -161,49 +161,11 @@ class Product(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        # Processing the image
-        if self.image:
-            # Create a thumbnail image
-            with Image.open(self.image) as img:
-                file_size = self.image.size
-                print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-                if file_size > 2 * 1024 * 1024:  # 2 MB in bytes
-                    orig_width, orig_height = img.size
-                    if orig_width > orig_height:
-                        new_width = 1200
-                        new_height = int((orig_height / orig_width) * new_width)
-                    else:
-                        new_height = 1200
-                        new_width = int((orig_width / orig_height) * new_height)
-                    img.thumbnail((new_width, new_height), Image.LANCZOS)
-                    buffer = BytesIO()
-                    img.save(buffer, format='PNG')
-                    self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
-                print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-                if self.image_thumbnail:
-                    if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png":
-                        img.thumbnail((300, 300), Image.LANCZOS)
-                        thumbnail_buffer = BytesIO()
-                        img.save(thumbnail_buffer, format='PNG')
-                        self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
-                        print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
-                else:
-                    img.thumbnail((300, 300), Image.LANCZOS)
-                    thumbnail_buffer = BytesIO()
-                    img.save(thumbnail_buffer, format='PNG')
-                    self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
-                    print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
 
-        if not self.image:
-            self.image_thumbnail = None
-
-        super().save(*args, **kwargs)
-
-        # Processing the video
+        # Zpracování videa
         if self.video:
             print("Before saving video:", self.video.size / (1024 * 1024), "MB")
-            super().save(*args, **kwargs)
-
+            
             # Spracovanie hlavného videa
             cap = cv2.VideoCapture(self.video.path)
             fourcc = cv2.VideoWriter_fourcc(*'avc1')
@@ -212,10 +174,6 @@ class Product(models.Model):
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
             print("Original video dimensions:", width, "x", height)
-
-            # Skontrolujte, či rozmery nie sú nulové
-            if width == 0 or height == 0:
-                raise ValueError("Video dimensions are zero, cannot process video.")
 
             max_side_length = 1800
             if width > height:
@@ -268,10 +226,6 @@ class Product(models.Model):
 
             print("Original video dimensions for thumbnail:", width, "x", height)
 
-            # Skontrolujte, či rozmery nie sú nulové
-            if width == 0 or height == 0:
-                raise ValueError("Resized video dimensions are zero, cannot process thumbnail.")
-
             max_side_length = 600
             if width > height:
                 new_width = max_side_length
@@ -284,7 +238,7 @@ class Product(models.Model):
             bitrate = 1000000
             framerate = 30.0
 
-            thumbnail_video_path = os.path.join(os.path.dirname(resized_video_path), 'thumbnail_' + os.path.basename(self.video.path))
+            thumbnail_video_path = os.path.join(os.path.dirname(self.video.path), 'thumbnail_' + os.path.basename(self.video.path))
             out = cv2.VideoWriter(thumbnail_video_path, fourcc, framerate, dim, isColor=True)
             out.set(cv2.CAP_PROP_BITRATE, bitrate)
 
@@ -315,8 +269,54 @@ class Product(models.Model):
             print("Resized video dimensions for thumbnail:", new_width, "x", new_height)
             print("After saving video thumbnail:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
 
-        super().save(*args, **kwargs)
 
+
+
+
+
+        # Zpracování obrázku
+        if self.image:
+            # Vytvoření náhledového obrázku
+            with Image.open(self.image) as img:
+                # Získanie veľkosti súboru v bajtoch
+                file_size = self.image.size
+                print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                if file_size > 2 * 1024 * 1024:  # 2 MB prevedené na bajty
+                        # Získání původních rozměrů obrázku
+                        orig_width, orig_height = img.size
+                        # Zjistit orientaci obrazku
+                        if orig_width > orig_height:
+                            # Zmenit velikost na max. 1200x...
+                            new_width = 1200
+                            new_height = int((orig_height / orig_width) * new_width)
+                        else:
+                            # Zmenit velikost na max. ...x1200
+                            new_height = 1200
+                            new_width = int((orig_width / orig_height) * new_height)
+                        img.thumbnail((new_width, new_height), Image.LANCZOS)
+                        buffer = BytesIO()
+                        img.save(buffer, format='PNG')
+                        self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
+                print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                if self.image_thumbnail:
+                    # file_size_thumb = self.image_thumbnail.size
+                    # if file_size_thumb > 0.1 * 1024 * 1024:   
+                    if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png": 
+                        img.thumbnail((300, 300), Image.LANCZOS)
+                        thumbnail_buffer = BytesIO()
+                        img.save(thumbnail_buffer, format='PNG')
+                        self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
+                        print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+                else:
+                    img.thumbnail((300, 300), Image.LANCZOS)
+                    thumbnail_buffer = BytesIO()
+                    img.save(thumbnail_buffer, format='PNG')
+                    self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
+                    print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+                
+        if not self.image:
+            self.image_thumbnail = None
+        super().save(*args, **kwargs)
 
 
 
