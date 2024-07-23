@@ -203,7 +203,7 @@ class Product(models.Model):
         if self.video:
             print("Before saving video:", self.video.size / (1024 * 1024), "MB")
             super().save(*args, **kwargs)
-            
+
             # Spracovanie hlavného videa
             cap = cv2.VideoCapture(self.video.path)
             fourcc = cv2.VideoWriter_fourcc(*'avc1')
@@ -212,6 +212,10 @@ class Product(models.Model):
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
             print("Original video dimensions:", width, "x", height)
+
+            # Skontrolujte, či rozmery nie sú nulové
+            if width == 0 or height == 0:
+                raise ValueError("Video dimensions are zero, cannot process video.")
 
             max_side_length = 1800
             if width > height:
@@ -264,6 +268,10 @@ class Product(models.Model):
 
             print("Original video dimensions for thumbnail:", width, "x", height)
 
+            # Skontrolujte, či rozmery nie sú nulové
+            if width == 0 or height == 0:
+                raise ValueError("Resized video dimensions are zero, cannot process thumbnail.")
+
             max_side_length = 600
             if width > height:
                 new_width = max_side_length
@@ -276,7 +284,7 @@ class Product(models.Model):
             bitrate = 1000000
             framerate = 30.0
 
-            thumbnail_video_path = os.path.join(os.path.dirname(self.video.path), 'thumbnail_' + os.path.basename(self.video.path))
+            thumbnail_video_path = os.path.join(os.path.dirname(resized_video_path), 'thumbnail_' + os.path.basename(self.video.path))
             out = cv2.VideoWriter(thumbnail_video_path, fourcc, framerate, dim, isColor=True)
             out.set(cv2.CAP_PROP_BITRATE, bitrate)
 
