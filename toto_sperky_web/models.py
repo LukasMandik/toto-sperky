@@ -164,6 +164,7 @@ class Product(models.Model):
 
         # Zpracování videa
         if self.video:
+            super().save(*args, **kwargs)
             print("Before saving video:", self.video.size / (1024 * 1024), "MB")
             
             # Spracovanie hlavného videa
