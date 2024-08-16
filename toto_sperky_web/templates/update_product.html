@@ -5,25 +5,21 @@
 {% block content %}
 <div class="container_add_product">
     <h1>Upraviť produkt</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form id="product-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-       
        
         <div class="form-group">
             <label for="id_name">Názov:</label>
             {{ form.name }}
         </div>
-            {{ form.slug }}
+        {{ form.slug }}
         <div class="form-group">
             <label for="id_image">Obrázok:</label>
-
             {{ form.image }}
-
             <div id="image-preview">
                 <p id="file-name-image"></p>
                 <img id="image-thumb" style="display: none; max-width: 200px; max-height: 200px;">
             </div>
-            
             {% if form.errors.image %}
                 <div class="alert alert-danger">{{ form.errors.image }}</div>
             {% endif %}
@@ -35,7 +31,6 @@
                 <p id="file-name"></p>
                 <video id="video-thumb" controls style="display: none; max-width: 200px; max-height: 200px;"></video>
             </div>
-
             {% if form.errors.video %}
                 <div class="alert alert-danger">{{ form.errors.video }}</div>
             {% endif %}
@@ -57,8 +52,7 @@
             <label for="id_available">Dostupné:</label>
             {{ form.available }}
         </div>
-        <!-- {{ form.as_p }} -->
-        <button type="submit" class="btn type1">Uložiť zmeny</button>
+        <button id="save-button" type="submit" class="btn type1">Uložiť zmeny</button>
         <div id="loading-message" style="display: none;">Produkt se nahrává, prosím čekejte...</div>
     </form>
     
@@ -68,98 +62,90 @@
             <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
         </svg>
     </div>
-
 </div>
 
 
 <script>
-document.getElementById('id_image').addEventListener('change', function(event) {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-    const fileName = document.getElementById('file-name-image');
-    const imageThumb = document.getElementById('image-thumb');
-
-    if (file) {
-        // Display the file name
-        fileName.textContent = file.name;
-
-        // Create a URL for the selected file and display the image preview
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imageThumb.src = e.target.result;
-            imageThumb.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
-    } else {
-        // Clear the file name and hide the image preview if no file is selected
-        fileName.textContent = '';
-        imageThumb.style.display = 'none';
-        imageThumb.src = '';
-    }
-});
-
-</script>
-
-<script>
-    document.getElementById('delete-link').addEventListener('click', function(event) {
-        // Zabráni predvolenému správaniu odkazu
-        event.preventDefault();
-
-        // Oneskorí otvorenie odkazu o 0.3 sekundy
-        setTimeout(function() {
-            window.location.href = event.target.href;
-        }, 300); // 0.3 sekundy oneskorenie
-    });
-</script>
-
-
-<!-- <script>
-    document.getElementById('delete-button').addEventListener('click', function() {
-        this.classList.add('active');
-    });
+    // JavaScript pre zobrazenie náhľadov obrázkov
+    document.getElementById('id_image').addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        const fileName = document.getElementById('file-name-image');
+        const imageThumb = document.getElementById('image-thumb');
     
-  
-
-    // Odstráni aktívny efekt, ak používateľ klikne mimo tlačidla
-    window.addEventListener('click', function(event) {
-        var deleteButton = document.getElementById('delete-button');
-        if (event.target !== deleteButton) {
-            deleteButton.classList.remove('active');
+        if (file) {
+            // Zobrazenie názvu súboru
+            fileName.textContent = file.name;
+    
+            // Vytvorenie URL pre vybraný súbor a zobrazenie náhľadu obrázka
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imageThumb.src = e.target.result;
+                imageThumb.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            // Vymazanie názvu súboru a skrytie náhľadu obrázka, ak nie je vybraný žiadny súbor
+            fileName.textContent = '';
+            imageThumb.style.display = 'none';
+            imageThumb.src = '';
         }
     });
-</script> -->
 
-<script>
-    // Získání formuláře
+    // JavaScript pre zobrazenie náhľadov videí a vymazanie starého náhľadu videa
+    document.getElementById('id_video').addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        const fileName = document.getElementById('file-name');
+        const videoThumb = document.getElementById('video-thumb');
+
+        if (file) {
+            // Vymazanie starého náhľadu videa, ak existuje
+            videoThumb.src = '';
+            videoThumb.style.display = 'none';
+
+            // Zobrazenie názvu súboru
+            fileName.textContent = file.name;
+
+            // Vytvorenie URL pre vybraný súbor a zobrazenie náhľadu videa
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                videoThumb.src = e.target.result;
+                videoThumb.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            // Vymazanie názvu súboru a skrytie náhľadu videa, ak nie je vybraný žiadny súbor
+            fileName.textContent = '';
+            videoThumb.style.display = 'none';
+            videoThumb.src = '';
+        }
+    });
+
+    // JavaScript pre deaktiváciu tlačidla "Save" počas odosielania formulára
     const form = document.getElementById('product-form');
-    // Získání tlačítka "Save"
     const saveButton = document.getElementById('save-button');
-    // Získání zprávy o nahrávání
     const loadingMessage = document.getElementById('loading-message');
 
-    // Přidání posluchače události na formulář pro deaktivaci tlačítka "Save" při odesílání formuláře
     form.addEventListener('submit', function(event) {
-        // Deaktivace tlačítka "Save"
+        // Deaktivácia tlačidla "Save"
         saveButton.disabled = true;
-        // Zobrazení zprávy o nahrávání
-        loadingMessage.style.display = 'block';
+        // Zobrazenie správy o nahrávaní
+        loadingMessage.style.display = 'flex';
     });
 
-    // Přidání posluchače události na pole "video" pro povolení / zakázání tlačítka "Save" v závislosti na tom, zda je vybráno video pro nahrání
+    // JavaScript pre povolenie alebo zakázanie tlačidla "Save" v závislosti od toho, či je vybrané video
     const videoField = document.getElementById('id_video');
     videoField.addEventListener('change', function() {
         if (this.files.length > 0) {
-            // Pokud je vybráno video, povolíme tlačítko "Save"
+            // Povolenie tlačidla "Save", ak je vybrané video
             saveButton.disabled = false;
         } else {
-            // Pokud není vybráno žádné video, zakážeme tlačítko "Save"
+            // Zakázanie tlačidla "Save", ak nie je vybrané žiadne video
             saveButton.disabled = true;
         }
     });
 </script>
-<script>
-    var my_button = document.getElementById("myH1");
 
-my_button.style.backgroundColor = "red";
-</script>
+
 {% endblock %}
