@@ -14,9 +14,11 @@ from django.core.paginator import Paginator
 def home(request):
 
     products = Product.objects.filter(available=True).order_by('-created')[:10]
+    last_product = Product.objects.filter(available=True).order_by('-created')[9]
     context = {
 
         'products': products,
+        'last_product': last_product,
     
     }
 

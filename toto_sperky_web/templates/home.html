@@ -49,7 +49,6 @@
     </div>
     
     <div class="second_home_container">
-        <!-- <div class="background_wrapper"></div> -->
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs/>
@@ -111,6 +110,26 @@
         </div> 
         <p>Najnovšie pridané</p>
         <div class="carusel">
+                    
+            {% if last_product %}
+            <a href="{{ last_product.get_absolute_url }}">
+                <div class="carousel_items">
+                    {% if last_product.video %}
+                    <video autoplay="" loop muted playsinline preload="auto">
+                        {% if last_product.video_thumbnail %}
+                        <source src="{{ last_product.video_thumbnail.url }}" type="video/mp4">
+                        {% endif %}
+                        <source src="{{ last_product.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% else %}
+                    {% if last_product.image_thumbnail %}
+                    <img src="{{ last_product.image_thumbnail.url }}" alt="{{ last_product.name }}" loading="lazy">
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </a>
+            {% endif %}
             {% for product in products %}
             <a href="{{ product.get_absolute_url }}">
                 <div class="carousel_items">
@@ -177,6 +196,40 @@
     
     {% include 'about_me_content.html' %}
 </div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const carousel = document.getElementById('carousel');
+        const items = carousel.querySelectorAll('.carousel_items');
+        
+        // Clone the items and append them to the carousel to create the infinite loop effect
+        items.forEach(item => {
+            const clone = item.cloneNode(true);
+            carousel.appendChild(clone);
+        });
+
+        let scrollAmount = 0;
+        let scrollSpeed = 1; // Adjust scroll speed as needed
+
+        function scrollCarousel() {
+            scrollAmount += scrollSpeed;
+            carousel.scrollLeft = scrollAmount;
+
+            // When reaching the end of the carousel, reset to the beginning
+            if (carousel.scrollLeft >= carousel.scrollWidth / 2) {
+                carousel.scrollLeft = 0;
+                scrollAmount = 0;
+            }
+
+            requestAnimationFrame(scrollCarousel);
+        }
+
+        // Start scrolling the carousel
+        scrollCarousel();
+    });
+</script>
     
     <script>
     document.getElementsByClassName('type1').addEventListener('click', function(event) {

@@ -18,15 +18,17 @@
     {% for blog in blogs %}
     <a href="{{ blog.get_absolute_url }}">
         <div class="blog-post">
-            <h2>{{ blog.name }}</h2>
-            <p>{{ blog.description }}</p>
-            {% if blog.images.exists %}
-                <div class="blog-images">
-                    {% with blog.images.first as first_image %}
-                        <img src="{{ first_image.image_thumbnail.url }}" alt="Image for {{ blog.name }}">
-                    {% endwith %}
+            <div class="blog-header" style="background-image: url('{{ blog.images.first.image.url }}');">
+                <div class="blog-info">
+                    <h2>{{ blog.name }}</h2>
+                    <p>Napisané: {{ blog.created|date:"j/n/Y" }}</p>
+                    <p>Čas čítania: {{ blog.reading_time }} 
+                    </p>
                 </div>
-            {% endif %}
+            </div>
+            <div class="blog-content">
+                <p>{{ blog.description }}</p>
+            </div>
         </div>
     </a>
     {% endfor %}

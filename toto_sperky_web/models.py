@@ -46,6 +46,25 @@ class Blog(models.Model):
     
     def get_absolute_url(self):
         return reverse('toto_sperky_web:blog_detail', args=[self.slug])
+    
+
+    def reading_time(self):
+        # Priemerná rýchlosť čítania je okolo 220 slov za minútu
+        words_per_minute = 200
+        # Rozdelenie textu na slová
+        word_count = len(self.description.split())
+        # Vypočítať čas čítania v minútach a sekundách
+        reading_time_minutes = word_count / words_per_minute
+        reading_time_seconds = (reading_time_minutes * 60) % 60
+        # Zaokrúhlenie sekúnd na najbližších 10 sekúnd
+        rounded_seconds = round(reading_time_seconds / 10) * 10
+        # Vypočítať celkový čas čítania v minútach a sekundách
+        total_minutes = int(reading_time_minutes)
+        if rounded_seconds == 60:
+            total_minutes += 1
+            rounded_seconds = 0
+        # Vrátiť čas čítania vo formáte minúty:sekundy
+        return f"{total_minutes} m {rounded_seconds} s"
 
 
 class BlogImage(models.Model):
@@ -210,62 +229,69 @@ class Product(models.Model):
         super().save(*args, **kwargs)
 
         # Zpracování videa
+
         if self.video:
             video_path = self.video.path
             print("Original video size (before processing):", os.path.getsize(video_path) / (1024 * 1024), "MB")
             
-            video = VideoFileClip(video_path)
-            print("Original video dimensions:", video.size)
-
-            # Define paths for the compressed video and thumbnail
             base_name, ext = os.path.splitext(os.path.basename(video_path))
-            compressed_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_compressed{ext}")
-            thumbnail_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_thumbnail{ext}")
 
-            # Video compression
-            if video.size[0] > 1280 or video.size[1] > 720:
-                # Calculate new dimensions while preserving aspect ratio
-                aspect_ratio = video.size[0] / video.size[1]
-                if video.size[0] > video.size[1]:
-                    new_width = 1280
-                    new_height = int(1280 / aspect_ratio)
-                else:
-                    new_height = 720
-                    new_width = int(720 * aspect_ratio)
-                
-                video = video.resize(newsize=(new_width, new_height))
-                video.write_videofile(compressed_video_path, codec='libx264', bitrate='5000k')
-                self.video = ContentFile(open(compressed_video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
-                print("Video compressed and saved as:", compressed_video_path)
-                print("Compressed video size:", os.path.getsize(compressed_video_path) / (1024 * 1024), "MB")
-                print("Compressed video dimensions:", (new_width, new_height))
+            # Skontrolujte, či video už má koncovku _compressed
+            if '_compressed' in base_name:
+                print("Video is already compressed, skipping compression.")
             else:
-                self.video = ContentFile(open(video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
-                print("Video size is acceptable, no compression needed.")
+                video = VideoFileClip(video_path)
+                print("Original video dimensions:", video.size)
 
-            # Generate video thumbnail
-            if not self.video_thumbnail or self.video_thumbnail.name != f"{base_name}_thumbnail{ext}":
-                thumbnail_clip = video.subclip(0, min(10, video.duration))  # Extract the first 10 seconds or the length of the video
-                thumbnail_clip.write_videofile(thumbnail_video_path, codec='libx264', bitrate='500k')
-                new_thumbnail_file = ContentFile(open(thumbnail_video_path, 'rb').read(), name=f"{base_name}_thumbnail{ext}")
+                # Define paths for the compressed video and thumbnail
+                compressed_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_compressed{ext}")
+                thumbnail_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_thumbnail{ext}")
 
-                # Save new thumbnail if it is different from the current one
-                if not self.video_thumbnail or self.video_thumbnail.name != new_thumbnail_file.name:
-                    self.video_thumbnail.save(f"{base_name}_thumbnail{ext}", new_thumbnail_file, save=False)
-                    print("Video thumbnail created and saved as:", self.video_thumbnail.name)
-                    print("Thumbnail video size:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
+                # Video compression
+                if video.size[0] > 1280 or video.size[1] > 720:
+                    # Calculate new dimensions while preserving aspect ratio
+                    aspect_ratio = video.size[0] / video.size[1]
+                    if video.size[0] > video.size[1]:
+                        new_width = 1280
+                        new_height = int(1280 / aspect_ratio)
+                    else:
+                        new_height = 720
+                        new_width = int(720 * aspect_ratio)
+                    
+                    video = video.resize(newsize=(new_width, new_height))
+                    video.write_videofile(compressed_video_path, codec='libx264', bitrate='5000k')
+                    self.video = ContentFile(open(compressed_video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
+                    print("Video compressed and saved as:", compressed_video_path)
+                    print("Compressed video size:", os.path.getsize(compressed_video_path) / (1024 * 1024), "MB")
+                    print("Compressed video dimensions:", (new_width, new_height))
+                else:
+                    self.video = ContentFile(open(video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
+                    print("Video size is acceptable, no compression needed.")
 
-            # Clean up temporary files
-            for path in [compressed_video_path, thumbnail_video_path]:
-                if os.path.exists(path):
-                    os.remove(path)
+                # Generate video thumbnail
+                if not self.video_thumbnail or self.video_thumbnail.name != f"{base_name}_thumbnail{ext}":
+                    thumbnail_clip = video.subclip(0, min(10, video.duration))  # Extract the first 10 seconds or the length of the video
+                    thumbnail_clip.write_videofile(thumbnail_video_path, codec='libx264', bitrate='500k')
+                    new_thumbnail_file = ContentFile(open(thumbnail_video_path, 'rb').read(), name=f"{base_name}_thumbnail{ext}")
+
+                    # Save new thumbnail if it is different from the current one
+                    if not self.video_thumbnail or self.video_thumbnail.name != new_thumbnail_file.name:
+                        self.video_thumbnail.save(f"{base_name}_thumbnail{ext}", new_thumbnail_file, save=False)
+                        print("Video thumbnail created and saved as:", self.video_thumbnail.name)
+                        print("Thumbnail video size:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
+
+                # Clean up temporary files
+                for path in [compressed_video_path, thumbnail_video_path]:
+                    if os.path.exists(path):
+                        os.remove(path)
 
         if not self.image:
             self.image_thumbnail = None
         if not self.video:
             self.video_thumbnail = None
-        
+
         super().save(*args, **kwargs)
+
 
     # def save(self, *args, **kwargs):
 
