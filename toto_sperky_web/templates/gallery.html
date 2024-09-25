@@ -91,8 +91,70 @@
 
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    function checkAspectRatio() {
+        const videos = document.querySelectorAll('.container .box a video');
+
+        videos.forEach(video => {
+            const width = video.videoWidth;
+            const height = video.videoHeight;
+
+            if (width > height) {
+                video.closest('.box').classList.add('wide');
+            } else {
+                video.closest('.box').classList.add('tall');
+            }
+        });
+
+        const images = document.querySelectorAll('.container .box a img');
+
+        images.forEach(image => {
+            const width = image.naturalWidth;
+            const height = image.naturalHeight;
+
+            if (width > height) {
+                image.closest('.box').classList.add('wide');
+            } else {
+                image.closest('.box').classList.add('tall');
+            }
+        });
+    }
+
+    function isMobileScreen() {
+        return window.matchMedia("(max-width: 768px)").matches;
+    }
+
+    function initializeMobileHover() {
+        if (isMobileScreen()) {
+            let links = gsap.utils.toArray('.box');
+
+            links.forEach((link) => {
+                link.addEventListener('click', function(event) {
+                    if (!link.classList.contains('hover')) {
+                        event.preventDefault();
+                        links.forEach(l => l.classList.remove('hover'));
+                        link.classList.add('hover');
+                    } else {
+                        link.classList.remove('hover');
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', function() {
+                links.forEach((link) => {
+                    link.classList.remove('hover');
+                });
+            });
+        }
+    }
+
+    function initializeScripts() {
+        checkAspectRatio();
         initializeGSAPAnimations();
+        initializeMobileHover();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeScripts();
 
         document.querySelectorAll('.category-link').forEach(link => {
             link.addEventListener('click', function (e) {
@@ -111,27 +173,12 @@
 
                         this.parentElement.classList.add('selected');
 
-                        initializeGSAPAnimations();
-
-                        // Pridá triedy wide/tall po načítaní obsahu AJAX-om
-                        checkAspectRatio();
+                        initializeScripts();
                     })
                     .catch(error => console.error('Chyba pri načítaní produktov:', error));
             });
         });
     });
-
-  
 </script>
-
-
-
-
-
-
-
-
-
-
 
 {% endblock %}

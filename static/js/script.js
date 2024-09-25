@@ -457,34 +457,34 @@ $(document).ready(function() {
 
 
   
-$(document).ready(function() {
-  // Funkcia na detekciu šírky obrazovky
-  function isMobileScreen() {
-      return window.matchMedia("(max-width: 768px)").matches;
-  }
+// $(document).ready(function() {
+//   // Funkcia na detekciu šírky obrazovky
+//   function isMobileScreen() {
+//       return window.matchMedia("(max-width: 768px)").matches;
+//   }
 
-  if (isMobileScreen()) {
-      let links = gsap.utils.toArray('.box');
+//   if (isMobileScreen()) {
+//       let links = gsap.utils.toArray('.box');
 
-      links.forEach((link) => {
-          link.addEventListener('click', function(event) {
-              if (!link.classList.contains('hover')) {
-                  event.preventDefault(); // Zabraňuje predvolenému správaniu (navigácia)
-                  links.forEach(l => l.classList.remove('hover')); // Odstráni 'hover' z ostatných prvkov
-                  link.classList.add('hover'); // Pridá triedu 'hover'
-              } else {
-                  link.classList.remove('hover'); // Odstráni triedu 'hover' pri druhom kliknutí
-              }
-          });
-      });
+//       links.forEach((link) => {
+//           link.addEventListener('click', function(event) {
+//               if (!link.classList.contains('hover')) {
+//                   event.preventDefault(); // Zabraňuje predvolenému správaniu (navigácia)
+//                   links.forEach(l => l.classList.remove('hover')); // Odstráni 'hover' z ostatných prvkov
+//                   link.classList.add('hover'); // Pridá triedu 'hover'
+//               } else {
+//                   link.classList.remove('hover'); // Odstráni triedu 'hover' pri druhom kliknutí
+//               }
+//           });
+//       });
 
-      window.addEventListener('scroll', function() {
-          links.forEach((link) => {
-              link.classList.remove('hover'); // Odstráni triedu 'hover' pri skrolovaní
-          });
-      });
-  }
-});
+//       window.addEventListener('scroll', function() {
+//           links.forEach((link) => {
+//               link.classList.remove('hover'); // Odstráni triedu 'hover' pri skrolovaní
+//           });
+//       });
+//   }
+// });
 
 
 

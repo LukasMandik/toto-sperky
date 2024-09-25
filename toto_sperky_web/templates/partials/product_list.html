@@ -135,7 +135,7 @@
 
         
             
-    <script>
+    <!-- <script>
         document.getElementById('details-element').addEventListener('toggle', function() {
             var summaryElement = document.getElementById('details-summary');
             if (this.open) {
@@ -144,44 +144,10 @@
                 summaryElement.textContent = 'Viac možnosti';
             }
         });
-    </script>    
+    </script>     -->
 
 
-<script>    
-  // Funkcia na zistenie tried wide/tall
-  function checkAspectRatio() {
-        const videos = document.querySelectorAll('.container .box a video');
 
-        videos.forEach(video => {
-            const width = video.videoWidth;
-            const height = video.videoHeight;
-
-            // Ak je šírka väčšia ako výška, pridaj triedu wide, inak pridaj triedu tall
-            if (width > height) {
-                video.closest('.box').classList.add('wide');
-            } else {
-                video.closest('.box').classList.add('tall');
-            }
-        });
-
-        const images = document.querySelectorAll('.container .box a img');
-
-        images.forEach(image => {
-            const width = image.naturalWidth;
-            const height = image.naturalHeight;
-
-            // Ak je šírka väčšia ako výška, pridaj triedu wide, inak pridaj triedu tall
-            if (width > height) {
-                image.closest('.box').classList.add('wide');
-            } else {
-                image.closest('.box').classList.add('tall');
-            }
-        });
-    }
-
-    // Spustíme funkciu po načítaní stránky
-    window.onload = checkAspectRatio;
-</script>
     
 
 
