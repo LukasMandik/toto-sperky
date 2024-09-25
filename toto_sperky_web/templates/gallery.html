@@ -95,36 +95,62 @@
         const videos = document.querySelectorAll('.container .box a video');
 
         videos.forEach(video => {
-            const width = video.videoWidth;
-            const height = video.videoHeight;
+            if (video.readyState >= 1) {
+                const width = video.videoWidth;
+                const height = video.videoHeight;
 
-            if (width > height) {
-                video.closest('.box').classList.add('wide');
+                if (width > height) {
+                    video.closest('.box').classList.add('wide');
+                } else {
+                    video.closest('.box').classList.add('tall');
+                }
             } else {
-                video.closest('.box').classList.add('tall');
+                video.addEventListener('loadedmetadata', () => {
+                    const width = video.videoWidth;
+                    const height = video.videoHeight;
+
+                    if (width > height) {
+                        video.closest('.box').classList.add('wide');
+                    } else {
+                        video.closest('.box').classList.add('tall');
+                    }
+                });
             }
         });
 
         const images = document.querySelectorAll('.container .box a img');
 
         images.forEach(image => {
-            const width = image.naturalWidth;
-            const height = image.naturalHeight;
+            if (image.complete) {
+                const width = image.naturalWidth;
+                const height = image.naturalHeight;
 
-            if (width > height) {
-                image.closest('.box').classList.add('wide');
+                if (width > height) {
+                    image.closest('.box').classList.add('wide');
+                } else {
+                    image.closest('.box').classList.add('tall');
+                }
             } else {
-                image.closest('.box').classList.add('tall');
+                image.addEventListener('load', () => {
+                    const width = image.naturalWidth;
+                    const height = image.naturalHeight;
+
+                    if (width > height) {
+                        image.closest('.box').classList.add('wide');
+                    } else {
+                        image.closest('.box').classList.add('tall');
+                    }
+                });
             }
         });
     }
 
-    function isMobileScreen() {
-        return window.matchMedia("(max-width: 768px)").matches;
+    function isTouchScreen() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     }
 
     function initializeMobileHover() {
-        if (isMobileScreen()) {
+        if (isTouchScreen()) {
             let links = gsap.utils.toArray('.box');
 
             links.forEach((link) => {
@@ -160,25 +186,30 @@
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 var url = this.getAttribute('href');
-
+                
                 fetch(url, { method: 'GET' })
-                    .then(response => response.text())
-                    .then(html => {
-                        var newContent = $(html).find('.gallery_container').html();
-                        $('.gallery_container').html(newContent);
-
-                        document.querySelectorAll('.category-link').forEach(l => {
-                            l.parentElement.classList.remove('selected');
-                        });
-
-                        this.parentElement.classList.add('selected');
-
-                        initializeScripts();
-                    })
-                    .catch(error => console.error('Chyba pri načítaní produktov:', error));
+                .then(response => response.text())
+                .then(html => {
+                    var newContent = $(html).find('.gallery_container').html();
+                    $('.gallery_container').html(newContent);
+                    
+                    document.querySelectorAll('.category-link').forEach(l => {
+                        l.parentElement.classList.remove('selected');
+                    });
+                    
+                    this.parentElement.classList.add('selected');
+                    
+                    initializeScripts();
+                    hideLoadingScreen(); // Skryť načítavaciu obrazovku
+                })
+                .catch(error => {
+                    console.error('Chyba pri načítaní produktov:', error);
+                    hideLoadingScreen(); // Skryť načítavaciu obrazovku aj pri chybe
+                });
             });
         });
     });
+    showLoadingScreen(); // Zobraziť načítavaciu obrazovku
 </script>
 
 {% endblock %}
