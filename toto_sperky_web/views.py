@@ -9,6 +9,18 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+import logging
+
+# Konfigurácia logovania
+logging.basicConfig(level=logging.DEBUG)
+
+# Príklad použitia
+logging.debug('Toto je debug správa')
+logging.info('Toto je info správa')
+logging.warning('Toto je varovanie')
+logging.error('Toto je chyba')
+logging.critical('Toto je kritická chyba')
+
 # Create your views here.
 
 def home(request):
