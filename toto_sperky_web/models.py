@@ -28,6 +28,7 @@ from PIL import Image
 from io import BytesIO
 from moviepy.editor import VideoFileClip
 import cv2
+import warnings
 
 class Blog(models.Model):
     name = models.CharField(max_length=200)
@@ -240,50 +241,54 @@ class Product(models.Model):
             if '_compressed' in base_name:
                 print("Video is already compressed, skipping compression.")
             else:
-                video = VideoFileClip(video_path)
-                print("Original video dimensions:", video.size)
+                try:
+                    video = VideoFileClip(video_path)
+                    print("Original video dimensions:", video.size)
 
-                # Define paths for the compressed video and thumbnail
-                compressed_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_compressed{ext}")
-                thumbnail_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_thumbnail{ext}")
+                    # Define paths for the compressed video and thumbnail
+                    compressed_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_compressed{ext}")
+                    thumbnail_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_thumbnail{ext}")
 
-                # Video compression
-                if video.size[0] > 1280 or video.size[1] > 720:
-                    # Calculate new dimensions while preserving aspect ratio
-                    aspect_ratio = video.size[0] / video.size[1]
-                    if video.size[0] > video.size[1]:
-                        new_width = 1280
-                        new_height = int(1280 / aspect_ratio)
+                    # Video compression
+                    if video.size[0] > 1280 or video.size[1] > 720:
+                        # Calculate new dimensions while preserving aspect ratio
+                        aspect_ratio = video.size[0] / video.size[1]
+                        if video.size[0] > video.size[1]:
+                            new_width = 1280
+                            new_height = int(1280 / aspect_ratio)
+                        else:
+                            new_height = 720
+                            new_width = int(720 * aspect_ratio)
+                        
+                        video = video.resize(newsize=(new_width, new_height))
+                        video.write_videofile(compressed_video_path, codec='libx264', bitrate='5000k')
+                        self.video = ContentFile(open(compressed_video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
+                        print("Video compressed and saved as:", compressed_video_path)
+                        print("Compressed video size:", os.path.getsize(compressed_video_path) / (1024 * 1024), "MB")
+                        print("Compressed video dimensions:", (new_width, new_height))
                     else:
-                        new_height = 720
-                        new_width = int(720 * aspect_ratio)
-                    
-                    video = video.resize(newsize=(new_width, new_height))
-                    video.write_videofile(compressed_video_path, codec='libx264', bitrate='5000k')
-                    self.video = ContentFile(open(compressed_video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
-                    print("Video compressed and saved as:", compressed_video_path)
-                    print("Compressed video size:", os.path.getsize(compressed_video_path) / (1024 * 1024), "MB")
-                    print("Compressed video dimensions:", (new_width, new_height))
-                else:
-                    self.video = ContentFile(open(video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
-                    print("Video size is acceptable, no compression needed.")
+                        self.video = ContentFile(open(video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
+                        print("Video size is acceptable, no compression needed.")
 
-                # Generate video thumbnail
-                if not self.video_thumbnail or self.video_thumbnail.name != f"{base_name}_thumbnail{ext}":
-                    thumbnail_clip = video.subclip(0, min(10, video.duration))  # Extract the first 10 seconds or the length of the video
-                    thumbnail_clip.write_videofile(thumbnail_video_path, codec='libx264', bitrate='500k')
-                    new_thumbnail_file = ContentFile(open(thumbnail_video_path, 'rb').read(), name=f"{base_name}_thumbnail{ext}")
+                    # Generate video thumbnail
+                    if not self.video_thumbnail or self.video_thumbnail.name != f"{base_name}_thumbnail{ext}":
+                        thumbnail_clip = video.subclip(0, min(10, video.duration))  # Extract the first 10 seconds or the length of the video
+                        thumbnail_clip.write_videofile(thumbnail_video_path, codec='libx264', bitrate='500k')
+                        new_thumbnail_file = ContentFile(open(thumbnail_video_path, 'rb').read(), name=f"{base_name}_thumbnail{ext}")
 
-                    # Save new thumbnail if it is different from the current one
-                    if not self.video_thumbnail or self.video_thumbnail.name != new_thumbnail_file.name:
-                        self.video_thumbnail.save(f"{base_name}_thumbnail{ext}", new_thumbnail_file, save=False)
-                        print("Video thumbnail created and saved as:", self.video_thumbnail.name)
-                        print("Thumbnail video size:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
+                        # Save new thumbnail if it is different from the current one
+                        if not self.video_thumbnail or self.video_thumbnail.name != new_thumbnail_file.name:
+                            self.video_thumbnail.save(f"{base_name}_thumbnail{ext}", new_thumbnail_file, save=False)
+                            print("Video thumbnail created and saved as:", self.video_thumbnail.name)
+                            print("Thumbnail video size:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
 
-                # Clean up temporary files
-                for path in [compressed_video_path, thumbnail_video_path]:
-                    if os.path.exists(path):
-                        os.remove(path)
+                    # Clean up temporary files
+                    for path in [compressed_video_path, thumbnail_video_path]:
+                        if os.path.exists(path):
+                            os.remove(path)
+                except Exception as e:
+                    print(f"An error occurred during video processing: {e}")
+                    warnings.warn(f"An error occurred during video processing: {e}")
 
         if not self.image:
             self.image_thumbnail = None
@@ -293,324 +298,10 @@ class Product(models.Model):
         super().save(*args, **kwargs)
 
 
-    # def save(self, *args, **kwargs):
-
-    #     # Zpracování videa
-    #     if self.video:
-    #         super().save(*args, **kwargs)
-    #         print("Before saving video:", self.video.size / (1024 * 1024), "MB")
-            
-    #         # Spracovanie hlavného videa
-    #         cap = cv2.VideoCapture(self.video.path)
-    #         fourcc = cv2.VideoWriter_fourcc(*'avc1')
-
-    #         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    #         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-    #         print("Original video dimensions:", width, "x", height)
-
-    #         max_side_length = 1800
-    #         if width > height:
-    #             new_width = max_side_length
-    #             new_height = int(height * (max_side_length / width))
-    #         else:
-    #             new_height = max_side_length
-    #             new_width = int(width * (max_side_length / height))
-
-    #         dim = (new_width, new_height)
-    #         bitrate = 1000000
-    #         framerate = 30.0
-
-    #         resized_video_path = os.path.join(os.path.dirname(self.video.path), 'resized_' + os.path.basename(self.video.path))
-    #         out = cv2.VideoWriter(resized_video_path, fourcc, framerate, dim, isColor=True)
-    #         out.set(cv2.CAP_PROP_BITRATE, bitrate)
-
-    #         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    #         prev_frame = None
-    #         processed_frames = 0
-
-    #         while True:
-    #             ret, frame = cap.read()
-    #             if not ret:
-    #                 break
-    #             resized_frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-    #             if prev_frame is not None:
-    #                 resized_frame = cv2.addWeighted(resized_frame, 0.5, prev_frame, 0.5, 0)
-    #             out.write(resized_frame)
-    #             prev_frame = resized_frame
-
-    #             processed_frames += 1
-    #             progress = (processed_frames / total_frames) * 100
-    #             sys.stdout.write(f"\rProgress: {progress:.2f}%")
-    #             sys.stdout.flush()
-
-    #         cap.release()
-    #         out.release()
-    #         os.remove(self.video.path)
-    #         self.video.name = 'resized_' + os.path.basename(self.video.name)
-    #         print("Resized video dimensions:", new_width, "x", new_height)
-    #         print("After saving video:", os.path.getsize(resized_video_path) / (1024 * 1024), "MB")
-
-    #         # Spracovanie náhľadu videa
-        
-    #         cap = cv2.VideoCapture(resized_video_path)
-    #         fourcc = cv2.VideoWriter_fourcc(*'avc1')
-
-    #         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    #         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        
-
-    #         print("Original video dimensions for thumbnail:", width, "x", height)
-    #         super().save(*args, **kwargs)
-    #         max_side_length = 600
-    #         if width > height:
-    #             new_width = max_side_length
-    #             new_height = int(height * (max_side_length / width))
-    #         else:
-    #             new_height = max_side_length
-    #             new_width = int(width * (max_side_length / height))
-
-    #         dim = (new_width, new_height)
-    #         bitrate = 1000000
-    #         framerate = 30.0
-
-    #         thumbnail_video_path = os.path.join(os.path.dirname(self.video.path), 'thumbnail_' + os.path.basename(self.video.path))
-    #         out = cv2.VideoWriter(thumbnail_video_path, fourcc, framerate, dim, isColor=True)
-    #         out.set(cv2.CAP_PROP_BITRATE, bitrate)
-
-    #         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    #         prev_frame = None
-    #         processed_frames = 0
-
-    #         while True:
-    #             ret, frame = cap.read()
-    #             if not ret:
-    #                 break
-    #             resized_frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-    #             if prev_frame is not None:
-    #                 resized_frame = cv2.addWeighted(resized_frame, 0.5, prev_frame, 0.5, 0)
-    #             out.write(resized_frame)
-    #             prev_frame = resized_frame
-
-    #             processed_frames += 1
-    #             progress = (processed_frames / total_frames) * 100
-    #             sys.stdout.write(f"\rProgress: {progress:.2f}%")
-    #             sys.stdout.flush()
-
-    #         cap.release()
-    #         out.release()
-
-    #         # Uloženie názvu náhľadu videa
-    #         self.video_thumbnail.name = 'thumbnail_' + os.path.basename(self.video.name)
-    #         print("Resized video dimensions for thumbnail:", new_width, "x", new_height)
-    #         print("After saving video thumbnail:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
-
-
-
-
-
-
-    #     # Zpracování obrázku
-    #     if self.image:
-    #         # Vytvoření náhledového obrázku
-    #         with Image.open(self.image) as img:
-    #             # Získanie veľkosti súboru v bajtoch
-    #             file_size = self.image.size
-    #             print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-    #             if file_size > 2 * 1024 * 1024:  # 2 MB prevedené na bajty
-    #                     # Získání původních rozměrů obrázku
-    #                     orig_width, orig_height = img.size
-    #                     # Zjistit orientaci obrazku
-    #                     if orig_width > orig_height:
-    #                         # Zmenit velikost na max. 1200x...
-    #                         new_width = 1200
-    #                         new_height = int((orig_height / orig_width) * new_width)
-    #                     else:
-    #                         # Zmenit velikost na max. ...x1200
-    #                         new_height = 1200
-    #                         new_width = int((orig_width / orig_height) * new_height)
-    #                     img.thumbnail((new_width, new_height), Image.LANCZOS)
-    #                     buffer = BytesIO()
-    #                     img.save(buffer, format='PNG')
-    #                     self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
-    #             print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-    #             if self.image_thumbnail:
-    #                 # file_size_thumb = self.image_thumbnail.size
-    #                 # if file_size_thumb > 0.1 * 1024 * 1024:   
-    #                 if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png": 
-    #                     img.thumbnail((300, 300), Image.LANCZOS)
-    #                     thumbnail_buffer = BytesIO()
-    #                     img.save(thumbnail_buffer, format='PNG')
-    #                     self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
-    #                     print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
-    #             else:
-    #                 img.thumbnail((300, 300), Image.LANCZOS)
-    #                 thumbnail_buffer = BytesIO()
-    #                 img.save(thumbnail_buffer, format='PNG')
-    #                 self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
-    #                 print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
-                
-    #     if not self.image:
-    #         self.image_thumbnail = None
-    #     super().save(*args, **kwargs)
-
-
-
-
 @receiver(pre_save, sender=Product)
 def update_product_images(sender, instance, **kwargs):
     if not instance.image:
         instance.image_thumbnail = None
-
-
-# @receiver(pre_delete, sender=Product)
-# def delete_product_images(sender, instance, **kwargs):
-#     # Získajte príslušné fotografie spojené s produktom a vymažte ich
-#     if instance.image:
-#         instance.image.delete()
-#     if instance.image_thumbnail:
-#         instance.image_thumbnail.delete()
-#     if instance.video:
-#         instance.video.delete()
-#     if instance.video_thumbnail:
-#         instance.video_thumbnail.delete()
-# @receiver(pre_save, sender=Product)
-# def update_product_images(sender, instance, **kwargs):
-#     # Skontrolujte, či sa zmenila fotka a ak áno, odstráňte starú a vytvorte novú
-#     if instance.pk:
-#         try:
-#             old_instance = Product.objects.get(pk=instance.pk)
-#             if old_instance.image != instance.image:
-#                 if old_instance.image:
-#                     old_instance.image.delete()
-#                 if old_instance.image_thumbnail:
-#                     old_instance.image_thumbnail.delete()
-#         except Product.DoesNotExist:
-#             pass
-
-    # Tu pridajte váš kód pre spracovanie nového obrázku
-  
-        # Vytváranie náhľadového obrá
-           
-        # if self.image:
-        #     print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-            
-        #     # Získání velikosti souboru v bajtech
-        #     file_size = self.image.size
-            
-        #     # Cílová velikost souboru pro kompresi (v bajtech)
-        #     target_size = 3 * 1024 * 1024  # 2 MB
-            
-        #     # Rozdíl mezi aktuální a cílovou velikostí
-        #     size_difference = target_size - file_size
-            
-        #     # Procentuální změna velikosti
-        #     size_change_percentage = size_difference / file_size
-            
-        #     # Výpočet kvality komprese na základě procentuální změny velikosti
-        #     compression_quality = int(100 * (1 + size_change_percentage))
-            
-        #     # Otevření obrázku
-        #     img = Image.open(self.image)
-            
-        #     # Změna velikosti obrázku (volitelné, upravte podle potřeby)
-        #     img.thumbnail((img.width / 3, img.height / 3), Image.LANCZOS)
-            
-        #     # Uložení obrázku s určitou kvalitou komprese a formátem
-        #     buffer = BytesIO()
-        #     img.save(buffer, format='PNG', quality=compression_quality)
-        #     self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
-            
-        #     # Výpis detailů komprese pro ladění
-        #     print(f"Compression quality: {compression_quality}")
-            
-        #     print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-      
-
-    # def save(self, *args, **kwargs):
-    #     print("Before saving:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-    #     print("Before saving video:",  self.video.size / (1024 * 1024), "MB")
-        
-    #     if self.video:
-    #         try:
-    #             # Uloženie originálneho videa
-    #             super().save(*args, **kwargs)
-                
-    #             # Zmena veľkosti videa
-    #             video_clip = VideoFileClip(self.video.path)
-    #             resized_clip = video_clip.resize(0.5)  # Zmeňte na vašu preferovanú úroveň zmeny veľkosti
-                
-    #             # Uloženie zmenšeného videa do dočasného súboru
-    #             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_video:
-    #                 resized_clip.write_videofile(temp_video.name, codec="libx264", audio_codec="aac", remove_temp=True)
-                    
-    #                 # Vytvoriť InMemoryUploadedFile z dočasného súboru a uložiť do modelu
-    #                 self.video.save('resized_' + os.path.basename(self.video.name), InMemoryUploadedFile(temp_video, None, 'resized_' + os.path.basename(self.video.name), 'video/mp4', os.path.getsize(temp_video.name), None))
-                    
-    #             # Vymazať originálne video
-    #             os.remove(self.video.path)
-    #             self.video.name = 'resized_' + os.path.basename(self.video.name)
-    #         except Exception as e:
-    #             print("An error occurred during video resizing:", e)
-    #             # Ak nastane chyba, zachovajte originálny súbor videa
-
-    #     if self.image:
-    #         # Získanie veľkosti súboru v bajtoch
-    #         file_size = self.image.size
-            
-    #         # Podmienka pre veľkosť súboru 8MB
-    #         if file_size > 2 * 1024 * 1024:  # 8MB prevedené na bajty
-    #             img = Image.open(self.image)
-        
-    #             # Zmenšiť obrázok na tretinu a znížiť kvalitu
-    #             img.thumbnail((img.width / 3, img.height / 3), Image.LANCZOS)
-    #             buffer = BytesIO()
-    #             img.save(buffer, format='JPEG', quality=60)
-    #             self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.jpg", 'image/jpeg', buffer.tell(), None)
-                
-    #     print("After saving:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-    #     print("After saving video:",  self.video.size / (1024 * 1024), "MB")
-        
-        # super().save(*args, **kwargs)
-
-
-
-
-
-    # def save(self, *args, **kwargs):
-    #     print("Before saving:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-    #     print("Before saving video:",  self.video.size / (1024 * 1024), "MB")
-    #     if self.video:
-    #         # Uloženie originálneho videa
-    #         super().save(*args, **kwargs)
-            
-    #         # Zmena veľkosti videa
-    #         video_clip = VideoFileClip(self.video.path)
-    #         resized_clip = video_clip.resize(0.1)  # Zmeňte na vašu preferovanú úroveň zmeny veľkosti
-    #         resized_video_path = os.path.join(os.path.dirname(self.video.path), 'resized_' + os.path.basename(self.video.path))
-    #         resized_clip.write_videofile(resized_video_path, codec="libx264", audio_codec="aac", remove_temp=True)
-            
-           
-    #         os.remove(self.video.path)
-
-    #         self.video.name = 'resized_' + os.path.basename(self.video.name)
-
-    #     if self.image:
-    #         # Získanie veľkosti súboru v bajtoch
-    #         file_size = self.image.size
-            
-    #         # Podmienka pre veľkosť súboru 8MB
-    #         if file_size > 2 * 1024 * 1024:  # 8MB prevedené na bajty
-    #             img = Image.open(self.image)
-        
-    #             # Zmenšiť obrázok na tretinu a znížiť kvalitu
-    #             img.thumbnail((img.width / 3, img.height / 3), Image.LANCZOS)
-    #             buffer = BytesIO()
-    #             img.save(buffer, format='JPEG', quality=60)
-    #             self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.jpg", 'image/jpeg', buffer.tell(), None)
-    #     print("After saving:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-    #     print("After saving video:",  self.video.size / (1024 * 1024), "MB")
-    #     super().save(*args, **kwargs)
 
 
 
