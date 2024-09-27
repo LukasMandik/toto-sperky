@@ -377,7 +377,7 @@ h3.h3_category{
 .container {
 	display: grid;
 	align-items: left;
-	grid-template-columns: repeat(20, minmax(0, 2fr));
+	grid-template-columns: repeat(20, minmax(0, 23fr));
 	/* grid-template-rows: repeat(12, minmax(120px, 1fr)); */
 	/* grid-template-rows: repeat(4, auto); */
 	row-gap: 25px;
@@ -396,8 +396,14 @@ h3.h3_category{
 	box-shadow: 0 0 12.5px 0 #ededed;
 	overflow: hidden;
 	border-radius: 10px;
+	grid-column-end: span 4
 }
-
+@media only screen and (max-width: 768px) {
+	.container .box {
+		grid-column-end: span 10;
+	}
+	
+}
 .container .box.wide {
 	grid-column-end: span 8;
 }
