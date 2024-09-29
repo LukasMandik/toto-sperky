@@ -133,15 +133,133 @@
 
         
             
-    <script>
-        document.getElementById('details-element').addEventListener('toggle', function() {
-            var summaryElement = document.getElementById('details-summary');
-            if (this.open) {
-                summaryElement.textContent = 'Menej možnosti';
+<script>
+function initializeGSAPAnimations() {
+        gsap.utils.toArray('.container').forEach((elem) => {
+            let lines = elem.querySelectorAll('.container .box');
+
+            lines.forEach((line) => {
+                let timeline = gsap.timeline({
+                    ease: "elastic",
+                    scrollTrigger: {
+                        trigger: line,
+                        start: "top 630svh",
+                        end: "bottom 600svh",
+                        scrub: false,
+                        toggleActions: "restart none none reverse",
+                    },
+                });
+
+                timeline.from(line, { opacity: 0, y: 20 });
+            });
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.line_center_short').forEach((elem) => {
+            let line = elem.querySelector('.line');
+            let lineLength = line.getTotalLength();
+
+            line.style.strokeDasharray = lineLength;
+            line.style.strokeDashoffset = lineLength;
+
+            let Timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: elem,
+                    easy: "linear",
+                    start: "top 500svh",
+                    end: "bottom 300svh",
+                    scrub: true,
+                }
+            });
+
+            Timeline
+                .to(line, { strokeDashoffset: 0 })
+        });
+
+    }
+
+    function checkAspectRatio() {
+        const videos = document.querySelectorAll('.container .box a video');
+
+        videos.forEach(video => {
+            if (video.readyState >= 1) {
+                const width = video.videoWidth;
+                const height = video.videoHeight;
+
+                if (width > height) {
+                    video.closest('.box').classList.add('wide');
+                } else {
+                    video.closest('.box').classList.add('tall');
+                }
             } else {
-                summaryElement.textContent = 'Viac možnosti';
+                video.addEventListener('loadedmetadata', () => {
+                    const width = video.videoWidth;
+                    const height = video.videoHeight;
+
+                    if (width > height) {
+                        video.closest('.box').classList.add('wide');
+                    } else {
+                        video.closest('.box').classList.add('tall');
+                    }
+                });
             }
         });
+
+        const images = document.querySelectorAll('.container .box a img');
+
+        images.forEach(image => {
+            if (image.complete) {
+                const width = image.naturalWidth;
+                const height = image.naturalHeight;
+
+                if (width > height) {
+                    image.closest('.box').classList.add('wide');
+                } else {
+                    image.closest('.box').classList.add('tall');
+                }
+            } else {
+                image.addEventListener('load', () => {
+                    const width = image.naturalWidth;
+                    const height = image.naturalHeight;
+
+                    if (width > height) {
+                        image.closest('.box').classList.add('wide');
+                    } else {
+                        image.closest('.box').classList.add('tall');
+                    }
+                });
+            }
+        });
+    }
+
+    function isTouchScreen() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+
+    function initializeMobileHover() {
+        if (isTouchScreen()) {
+            let links = gsap.utils.toArray('.box');
+
+            links.forEach((link) => {
+                link.addEventListener('click', function(event) {
+                    if (!link.classList.contains('hover')) {
+                        event.preventDefault();
+                        links.forEach(l => l.classList.remove('hover'));
+                        link.classList.add('hover');
+                    } else {
+                        link.classList.remove('hover');
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', function() {
+                links.forEach((link) => {
+                    link.classList.remove('hover');
+                });
+            });
+        }
+    }
     </script>    
 
 

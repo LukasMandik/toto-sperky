@@ -931,14 +931,7 @@ $(document).ready(function() {
 
 
 
-$(document).ready(function() {
 
-    var scroll = new SmoothScroll('a[href*="#"]', {
-      speed: 800, // nastavte rychlost scrollování podle potřeby
-      easing: 'easeInOutCubic',
-    });
-
-  });
 
     
   
