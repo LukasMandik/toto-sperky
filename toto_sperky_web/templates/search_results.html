@@ -4,21 +4,27 @@
 <div class="search_results_wrapper">
     <div class="search-results">
         <div class="results-text">
-            <div class="results"> Výsledky hľadania pre "{{ query }}" </div>
+            <div class="results"> Hľadanie pre "{{ query|truncatewords:2 }}" </div>
         </div>
         {% if results %}
-        {% for product in results %}
-            <a href="{{ product.get_absolute_url }}">
+        {% for result in results %}
+            <a href="{{ result.get_absolute_url }}">
                 <div class="result-item">
-                    <img class="image_result" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    {% if result.image_thumbnail %}
+                    <img class="image_result" src="{{ result.image_thumbnail.url }}" alt="{{ result.name }}" />
+                    {% elif result.image %}
+                    <img class="image_result" src="{{ result.image.url }}" alt="{{ result.name }}" />
+                    {% elif result.images.first %}
+                    <img class="image_result" src="{{ result.images.first.image_thumbnail.url }}" alt="{{ result.name }}" />
+                    {% endif %}
                     <div class="name-and-description">
-                        <div class="name"> {{ product.name }} </div>
-                        <p class="description"> {{ product.description}}</p>
-                        <span>Najdené podľa: {{ product.search_type }}</span>
+                        <div class="name"> {{ result.name }} </div>
+                        <p class="description"> {{ result.description }}</p>
+                        <span>Najdené podľa: {{ result.search_type }}</span>
                     </div>
                 </div>
             </a>
-            {% endfor %}
+        {% endfor %}
         {% else %}
             <p>Žiadny vysledok pre "{{ query }}".</p>
         {% endif %}
@@ -65,7 +71,32 @@
             }
         }, 300); // 0,3-sekundové oneskorenie
     }
-  </script>
+
+    function highlightText(text, query, isDescription = false) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        if (isDescription) {
+            const match = text.match(regex);
+            if (match) {
+                const start = Math.max(text.indexOf(match[0]) - 40, 0);
+                const end = Math.min(start + match[0].length + 120, text.length);
+                return text.substring(start, end).replace(regex, '<span class="highlight">$1</span>');
+            }
+        }
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const query = "{{ query }}";
+        const results = document.querySelectorAll('.result-item .name, .result-item .description');
+
+        results.forEach(result => {
+            const isDescription = result.classList.contains('description');
+            result.innerHTML = highlightText(result.innerHTML, query, isDescription);
+        });
+    });
+</script>
+
+
 
 {% endblock %}
 

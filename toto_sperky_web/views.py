@@ -399,25 +399,38 @@ def search_results(request):
     # Vyhľadajte podľa rôznych kritérií
     results = []
     
-    # Hľadanie podľa názvu
+    # Hľadanie podľa názvu produktu
     products_by_name = Product.objects.filter(name__icontains=query)
     for product in products_by_name:
         product.search_type = 'Názvu'  # Označiť spôsob nájdenia
         results.append(product)
 
-    # Hľadanie podľa popisu
+    # Hľadanie podľa popisu produktu
     products_by_description = Product.objects.filter(description__icontains=query)
     for product in products_by_description:
         if product not in results:  # Pridať iba vtedy, ak ešte nie je v výsledkoch
             product.search_type = 'Popisu'
             results.append(product)
 
-    # Hľadanie podľa kategórie
+    # Hľadanie podľa kategórie produktu
     products_by_category = Product.objects.filter(category__name__icontains=query)
     for product in products_by_category:
         if product not in results:
             product.search_type = 'Kategorie'
             results.append(product)
+
+    # Hľadanie v blogoch podľa názvu
+    blogs_by_name = Blog.objects.filter(name__icontains=query)
+    for blog in blogs_by_name:
+        blog.search_type = 'Názvu blogu'  # Označiť spôsob nájdenia
+        results.append(blog)
+
+    # Hľadanie v blogoch podľa popisu
+    blogs_by_description = Blog.objects.filter(description__icontains=query)
+    for blog in blogs_by_description:
+        if blog not in results:  # Pridať iba vtedy, ak ešte nie je v výsledkoch
+            blog.search_type = 'Popisu blogu'
+            results.append(blog)
 
     context = {
         'query': query,
@@ -425,3 +438,63 @@ def search_results(request):
     }
 
     return render(request, 'search_results.html', context)
+
+def search_suggestions(request):
+    query = request.GET.get('q', '')
+    suggestions = []
+
+    if query:
+        # Hľadanie podľa názvu produktu
+        products_by_name = Product.objects.filter(name__icontains=query)
+        for product in products_by_name:
+            suggestions.append({
+                'type': 'názve výrobku',
+                'name': product.name,
+                'description': product.description,
+                'image_url': product.image_thumbnail.url if product.image_thumbnail else '',
+                'video_url': product.video_thumbnail.url if product.video_thumbnail else ''
+            })
+
+        # Hľadanie podľa popisu produktu
+        products_by_description = Product.objects.filter(description__icontains=query)
+        for product in products_by_description:
+            suggestions.append({
+                'type': 'popise výrobku',
+                'name': product.name,
+                'description': product.description,
+                'image_url': product.image_thumbnail.url if product.image_thumbnail else '',
+                'video_url': product.video_thumbnail.url if product.video_thumbnail else ''
+            })
+
+        # Hľadanie podľa kategórie produktu
+        products_by_category = Product.objects.filter(category__name__icontains=query)
+        for product in products_by_category:
+            suggestions.append({
+                'type': 'kategorii výrobku',
+                'name': product.name,
+                'description': product.description,
+                'image_url': product.image_thumbnail.url if product.image_thumbnail else '',
+                'video_url': product.video_thumbnail.url if product.video_thumbnail else ''
+            })
+
+        # Hľadanie v blogoch podľa názvu
+        blogs_by_name = Blog.objects.filter(name__icontains=query)[:15]
+        for blog in blogs_by_name:
+            suggestions.append({
+                'type': 'názve blogu',
+                'name': blog.name,
+                'description': blog.description,
+                'image_url': blog.images.first().image_thumbnail.url if blog.images.exists() else ''
+            })
+
+        # Hľadanie v blogoch podľa popisu
+        blogs_by_description = Blog.objects.filter(description__icontains=query)
+        for blog in blogs_by_description:
+            suggestions.append({
+                'type': 'popise blogu',
+                'name': blog.name,
+                'description': blog.description,
+                'image_url': blog.images.first().image_thumbnail.url if blog.images.exists() else ''
+            })
+
+    return JsonResponse(suggestions, safe=False)

@@ -939,3 +939,19 @@ $(document).ready(function() {
       
 
       
+
+document.addEventListener('DOMContentLoaded', () => {
+    const currentPath = window.location.pathname;
+    const menuItems = document.querySelectorAll('.startermenu li');
+
+    menuItems.forEach(item => {
+        const section = item.getAttribute('data-section');
+        if ((currentPath === '/' && section === 'home') || 
+            currentPath.includes(section.toLowerCase()) || 
+            (currentPath.includes('product') && section === 'Gallery')) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+});

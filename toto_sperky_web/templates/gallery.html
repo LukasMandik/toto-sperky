@@ -34,11 +34,11 @@
             {% endfor %}
         </ul>
     </div>
-
-        {% include "partials/product_list.html" %}
+    {% include "partials/product_list.html" %}
+    
 
     
-        {% if not products %}
+    {% if not products %}
         <p>No products found.</p>
         {% endif %}
 </div>
@@ -59,14 +59,9 @@
         checkAspectRatio();
         initializeGSAPAnimations();
         initializeMobileHover();
-        initializeCategoryLinks(); // Pridajte túto funkciu
+        // initializeCategoryLinks(); // Pridajte túto funkciu
     }
-    function initializeScripts2() {
-        checkAspectRatio();
-        initializeGSAPAnimations();
-        initializeMobileHover();
-
-    }
+  
 
     function initializeCategoryLinks() {
         document.querySelectorAll('.category-link').forEach(link => {
@@ -109,7 +104,7 @@
 
                                 link.parentElement.classList.add('selected');
 
-                                initializeScripts2(); // Znovu inicializujte skripty
+                                initializeScripts(); // Znovu inicializujte skripty
                             } else {
                                 console.error('Chyba pri načítaní produktov:', currentRequest.statusText);
                             }
@@ -130,5 +125,24 @@
 
    
 </script>
+</script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryLinks = document.querySelectorAll('.category-link');
+    const categoriesContainer = document.querySelector('.categories');
+
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const scrollPosition = categoriesContainer.scrollLeft;
+            localStorage.setItem('selectedCategoryPosition', scrollPosition);
+        });
+    });
+
+    const savedPosition = localStorage.getItem('selectedCategoryPosition');
+    if (savedPosition) {
+        categoriesContainer.scrollLeft = savedPosition;
+    }
+});
+</script>
 {% endblock %}

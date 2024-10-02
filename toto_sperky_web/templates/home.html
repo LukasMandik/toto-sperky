@@ -90,12 +90,12 @@
             <a href="" class="btn type1">Blog</a>
             <a href="/about_me" class="btn type1">O mne</a>
         </div>
-        <div class="search_form">
-            <form method="GET" action="{% url 'search_results' %}">
+        <!-- <div class="search_form">
+            <form id="search-form" method="GET" action="{% url 'search_results' %}">
                 <input id="s" type="text" name="q" placeholder="Vyhladaj product" required minlength="3">
-                <!-- <button class="btn" type="submit"><i class='bx bx-search'></i></button> -->
             </form>
-        </div>
+        </div> -->
+        {% include 'partials/search_suggestions.html' %}
     </div>
     
     
