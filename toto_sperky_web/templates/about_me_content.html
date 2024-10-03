@@ -11,18 +11,14 @@
                 </g>
             </svg>
         </div>
-        <div class="text-about-me1"> 
-            <p>Ahoj, som Ivana 
-<span>tvorím autorské diela</span> zo striebra a šperkárskeho cínu.
-Tvorím intuitívne, v dielach sa odráža moja osobnosť a nálada. Šperky osobne navrhujem na mieru a podľa <span>požiadavky zákazníka.</span></p>
-        </div>
-        <div class="image_neckless">
-            <img src="{% static 'media/nahrdelnik.jpg' %}" loading="lazy"/>
+        <div class="text-about-me"> 
+            <p>Ahoj, som Ivana <span>tvorím autorské diela</span> zo striebra a šperkárskeho cínu. Tvorím intuitívne, v dielach sa odráža moja osobnosť a nálada. Šperky osobne navrhujem na mieru a podľa <span>požiadavky zákazníka.</span></p>
         </div>
         <div class="text-about-me">
             <p>Kombinujem <span>prírodné</span> materiály s chladným kovom. Šperky sú vyrábané s precíznosťou a <span>jemnosťou</span> a dušu im dodávajú polodrahokamy, ktoré osobne vyberám, ktoré majú <span>výnimočné</span> tvary, farby, veľkosti, aj vďaka tomu nie je možné vyrobiť rovnaký šperk.</p>
         </div>
-        <div class="wrapper3">
+
+        <!-- <div class="wrapper3">
             <div class="boxes">
                 {% for product in products %}
                 <a href="{{ product.get_absolute_url }}">
@@ -44,16 +40,82 @@ Tvorím intuitívne, v dielach sa odráža moja osobnosť a nálada. Šperky oso
                 </a>
                 {% endfor %}
             </div>
-        </div>
-   
+        </div> -->
+        
         <div class="text-about-me">
             <p>Mám <span>vyštudovanú</span> školu úžitkového výtvarníctva v Kremnici v odbore plošné a plastické <span>rytie kovov</span>, popri ktorom som voľne študovala aj odbor <span>zlatníctvo-strieborníctvo.</span></p>
+        </div>
+        <div class="carousel">
+            {% for product in products %}
+            <a href="{{ product.get_absolute_url }}">
+              
+                
+                
+                    {% if product.image_thumbnail %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    {% endif %}
+              
+           
+            </a>
+            {% endfor %}
+            <div class="carousel-indicators">
+                {% for product in products %}
+                <div class="indicator" data-slide="{{ forloop.counter0 }}"></div>
+                {% endfor %}
+            </div>
         </div>
         <div class="text-about-me">
             <p>Pri tvorení s radosťou využívam aj moje znalosti z obdobia štúdia na <span>Technickej univerzite</span> v Bratislave zo zameraním na krajinnú architektúru a krajinné plánovanie.</p>
         </div>
         <div class="text-about-me">
-            <p>K šperku mám veľmi blízko a v spojení mojich štúdii som si našla moju <span>prácu snov</span><span>Inšpirujú ma rôzne</span> situácie, ľudia, miesta, podnety... </p>
+            <p>K šperku mám veľmi blízko a v spojení mojich štúdii som si našla moju <span>prácu snov</span>. <span>Inšpirujú ma rôzne</span> situácie, ľudia, miesta, podnety... </p>
+        </div>
+        <div class="image_neckless">
+            <img src="{% static 'media/nahrdelnik.jpg' %}" loading="lazy"/>
         </div>
     </div>
 </div>
+<script>
+    let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel img');
+const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+let slideInterval;
+
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.style.display = i === index ? 'block' : 'none';
+  });
+  indicators.forEach((indicator, i) => {
+    indicator.classList.toggle('active', i === index);
+  });
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function startSlideShow() {
+  slideInterval = setInterval(nextSlide, 4000); // 4 sekundy
+}
+
+function stopSlideShow() {
+  clearInterval(slideInterval);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  showSlide(currentSlide);
+  startSlideShow();
+
+  const carousel = document.querySelector('.carousel');
+  carousel.addEventListener('mouseenter', stopSlideShow);
+  carousel.addEventListener('mouseleave', startSlideShow);
+
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      currentSlide = index;
+      showSlide(currentSlide);
+    });
+  });
+});
+</script>

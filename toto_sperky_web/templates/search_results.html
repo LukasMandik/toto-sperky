@@ -3,6 +3,7 @@
 {% block content %}
 <div class="search_results_wrapper">
     <div class="search-results">
+        {% include 'partials/search_suggestions.html' %}
         <div class="results-text">
             <div class="results"> Hľadanie pre "{{ query|truncatewords:2 }}" </div>
         </div>
@@ -10,7 +11,11 @@
         {% for result in results %}
             <a href="{{ result.get_absolute_url }}">
                 <div class="result-item">
-                    {% if result.image_thumbnail %}
+                    {% if result.video_thumbnail %}
+                    <video class="video_result" src="{{ result.video_thumbnail.url }}" autoplay muted playsinline></video>
+                    {% elif result.video %}
+                    <video class="video_result" src="{{ result.video.url }}" autoplay muted playsinline></video>
+                    {% elif result.image_thumbnail %}
                     <img class="image_result" src="{{ result.image_thumbnail.url }}" alt="{{ result.name }}" />
                     {% elif result.image %}
                     <img class="image_result" src="{{ result.image.url }}" alt="{{ result.name }}" />
@@ -93,12 +98,29 @@
             const isDescription = result.classList.contains('description');
             result.innerHTML = highlightText(result.innerHTML, query, isDescription);
         });
+
+        const videos = document.querySelectorAll('video');
+
+        videos.forEach(video => {
+            video.muted = true; // Uisti sa, že video je stlmené
+            video.playsInline = true; // Pre mobilné zariadenia
+            video.autoplay = true;
+            video.loop = true;
+            video.controls = false;
+            
+
+            // Pokus o spustenie videa
+            video.play().catch(error => {
+                console.error('Video sa nepodarilo spustiť automaticky:', error);
+            });
+        });
     });
 </script>
 
 
 
 {% endblock %}
+
 
 
 
