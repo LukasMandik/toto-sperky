@@ -28,6 +28,7 @@ from PIL import Image
 from io import BytesIO
 from moviepy.editor import VideoFileClip
 import cv2
+from PIL import ExifTags
 
 class Blog(models.Model):
     name = models.CharField(max_length=200)
@@ -75,39 +76,57 @@ class BlogImage(models.Model):
     def save(self, *args, **kwargs):
         if self.image:
             with Image.open(self.image) as img:
-                # Získanie veľkosti súboru v bajtoch
+                # Oprava orientácie podľa EXIF
+                try:
+                    for orientation in ExifTags.TAGS.keys():
+                        if ExifTags.TAGS[orientation] == 'Orientation':
+                            break
+                    exif = img._getexif()
+                    if exif is not None:
+                        orientation = exif.get(orientation, None)
+                        if orientation == 3:
+                            img = img.rotate(180, expand=True)
+                        elif orientation == 6:
+                            img = img.rotate(270, expand=True)
+                        elif orientation == 8:
+                            img = img.rotate(90, expand=True)
+                except (AttributeError, KeyError, IndexError):
+                    # prípad, keď obrázok nemá EXIF informácie
+                    pass
+
+                # Zvyšok vášho kódu pre spracovanie obrázku
                 file_size = self.image.size
-                print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
-                if file_size > 2 * 1024 * 1024:  # 2 MB prevedené na bajty
-                    # Získanie pôvodných rozmerov obrázku
+                print("Before saving image:", img.width, img.height, file_size / (1024 * 1024), "MB")
+                
+                if file_size > 2 * 1024 * 1024:
                     orig_width, orig_height = img.size
-                    # Zistenie orientácie obrázku
                     if orig_width > orig_height:
-                        # Zmena veľkosti na max. 1200x...
                         new_width = 1200
                         new_height = int((orig_height / orig_width) * new_width)
                     else:
-                        # Zmena veľkosti na max. ...x1200
                         new_height = 1200
                         new_width = int((orig_width / orig_height) * new_height)
                     img.thumbnail((new_width, new_height), Image.LANCZOS)
                     buffer = BytesIO()
                     img.save(buffer, format='PNG')
                     self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
-                print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                
+                print("After saving image:", img.width, img.height, self.image.size / (1024 * 1024), "MB")
+
                 if self.image_thumbnail:
-                    if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png": 
-                        img.thumbnail((300, 300), Image.LANCZOS)
+                    if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png":
+                        img.thumbnail((600, 600), Image.LANCZOS)
                         thumbnail_buffer = BytesIO()
                         img.save(thumbnail_buffer, format='PNG')
                         self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
                         print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
                 else:
-                    img.thumbnail((300, 300), Image.LANCZOS)
+                    img.thumbnail((600, 600), Image.LANCZOS)
                     thumbnail_buffer = BytesIO()
                     img.save(thumbnail_buffer, format='PNG')
                     self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
                     print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
+
         if not self.image:
             self.image_thumbnail = None
         super().save(*args, **kwargs)
@@ -135,28 +154,45 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         # Zpracování obrázku
         if self.image:
-            # Vytvoření náhledového obrázku
             with Image.open(self.image) as img:
+                # Oprava orientácie podľa EXIF
+                try:
+                    for orientation in ExifTags.TAGS.keys():
+                        if ExifTags.TAGS[orientation] == 'Orientation':
+                            break
+                    exif = img._getexif()
+                    if exif is not None:
+                        orientation = exif.get(orientation, None)
+                        if orientation == 3:
+                            img = img.rotate(180, expand=True)
+                        elif orientation == 6:
+                            img = img.rotate(270, expand=True)
+                        elif orientation == 8:
+                            img = img.rotate(90, expand=True)
+                except (AttributeError, KeyError, IndexError):
+                    # prípad, keď obrázok nemá EXIF informácie
+                    pass
+
                 # Získanie veľkosti súboru v bajtoch
                 file_size = self.image.size
-                print("Before saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                print("Before saving image:", img.width, img.height, file_size / (1024 * 1024), "MB")
                 if file_size > 0.1 * 1024 * 1024:  # 0.1 MB prevedené na bajty
-                        # Získání původních rozměrů obrázku
-                        orig_width, orig_height = img.size
-                        # Zjistit orientaci obrazku
-                        if orig_width > orig_height:
-                            # Zmenit velikost na max. 1200x...
-                            new_width = 220
-                            new_height = int((orig_height / orig_width) * new_width)
-                        else:
-                            # Zmenit velikost na max. ...x1200
-                            new_height = 220
-                            new_width = int((orig_width / orig_height) * new_height)
-                        img.thumbnail((new_width, new_height), Image.LANCZOS)
-                        buffer = BytesIO()
-                        img.save(buffer, format='PNG')
-                        self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_category_thumbnail.png", 'image/png', buffer.tell(), None)
-                        print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                    # Získání původních rozměrů obrázku
+                    orig_width, orig_height = img.size
+                    # Zjistit orientaci obrazku
+                    if orig_width > orig_height:
+                        # Zmenit velikost na max. 220x...
+                        new_width = 220
+                        new_height = int((orig_height / orig_width) * new_width)
+                    else:
+                        # Zmenit velikost na max. ...x220
+                        new_height = 220
+                        new_width = int((orig_width / orig_height) * new_height)
+                    img.thumbnail((new_width, new_height), Image.LANCZOS)
+                    buffer = BytesIO()
+                    img.save(buffer, format='PNG')
+                    self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_category_thumbnail.png", 'image/png', buffer.tell(), None)
+                    print("After saving image:", img.width, img.height, self.image.size / (1024 * 1024), "MB")
         super().save(*args, **kwargs)
 
 
@@ -186,6 +222,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
     def save(self, *args, **kwargs):
         # Zpracování obrázku
         if self.image:
@@ -193,8 +230,26 @@ class Product(models.Model):
             print("Original image size (before processing):", self.image.size / (1024 * 1024), "MB")
             
             with Image.open(self.image) as img:
+                # Oprava orientácie podľa EXIF
+                try:
+                    for orientation in ExifTags.TAGS.keys():
+                        if ExifTags.TAGS[orientation] == 'Orientation':
+                            break
+                    exif = img._getexif()
+                    if exif is not None:
+                        orientation = exif.get(orientation, None)
+                        if orientation == 3:
+                            img = img.rotate(180, expand=True)
+                        elif orientation == 6:
+                            img = img.rotate(270, expand=True)
+                        elif orientation == 8:
+                            img = img.rotate(90, expand=True)
+                except (AttributeError, KeyError, IndexError):
+                    # prípad, keď obrázok nemá EXIF informácie
+                    pass
+
                 file_size = self.image.size
-                print("Before saving image:", self.image.width, self.image.height, file_size / (1024 * 1024), "MB")
+                print("Before saving image:", img.width, img.height, file_size / (1024 * 1024), "MB")
                 
                 if file_size > 2 * 1024 * 1024:
                     orig_width, orig_height = img.size
@@ -209,17 +264,17 @@ class Product(models.Model):
                     img.save(buffer, format='PNG')
                     self.image = InMemoryUploadedFile(buffer, None, f"{self.image.name.split('.')[0]}_compressed.png", 'image/png', buffer.tell(), None)
                 
-                print("After saving image:", self.image.width, self.image.height, self.image.size / (1024 * 1024), "MB")
+                print("After saving image:", img.width, img.height, self.image.size / (1024 * 1024), "MB")
 
                 if self.image_thumbnail:
                     if self.image_thumbnail.name != f"{self.image.name.split('.')[0]}_thumbnail.png":
-                        img.thumbnail((300, 300), Image.LANCZOS)
+                        img.thumbnail((600, 600), Image.LANCZOS)
                         thumbnail_buffer = BytesIO()
                         img.save(thumbnail_buffer, format='PNG')
                         self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
                         print("After saving image thumbnail:", self.image_thumbnail.width, self.image_thumbnail.height, self.image_thumbnail.size / (1024 * 1024), "MB")
                 else:
-                    img.thumbnail((300, 300), Image.LANCZOS)
+                    img.thumbnail((600, 600), Image.LANCZOS)
                     thumbnail_buffer = BytesIO()
                     img.save(thumbnail_buffer, format='PNG')
                     self.image_thumbnail.save(f"{self.image.name.split('.')[0]}_thumbnail.png", ContentFile(thumbnail_buffer.getvalue()), save=False)
@@ -236,29 +291,26 @@ class Product(models.Model):
             
             base_name, ext = os.path.splitext(os.path.basename(video_path))
 
-            # Skontrolujte, či video už má koncovku _compressed
             if '_compressed' in base_name:
                 print("Video is already compressed, skipping compression.")
             else:
-                # Define paths for the compressed video and thumbnail
                 compressed_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_compressed{ext}")
                 thumbnail_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_thumbnail{ext}")
 
-                # Video compression
                 if os.path.getsize(video_path) > 2 * 1024 * 1024:  # 2 MB
                     os.system(f"ffmpeg -y -i {video_path} -vf 'scale=1280:-1' -b:v 4000k {compressed_video_path}")
-                    self.video = ContentFile(open(compressed_video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
-
+                    with open(compressed_video_path, 'rb') as f:
+                        self.video = ContentFile(f.read(), name=f"{base_name}_compressed{ext}")
                 else:
-                    self.video = ContentFile(open(video_path, 'rb').read(), name=f"{base_name}_compressed{ext}")
+                    with open(video_path, 'rb') as f:
+                        self.video = ContentFile(f.read(), name=f"{base_name}_compressed{ext}")
                     print("Video size is acceptable, no compression needed.")
 
-                # Generate video thumbnail
                 if not self.video_thumbnail or self.video_thumbnail.name != f"{base_name}_thumbnail{ext}":
-                    os.system(f"ffmpeg -y -i {video_path} -ss 00:00:01.000 -t 2 -vf 'scale=1280:trunc(ow/a/2)*2' -b:v 3000k {thumbnail_video_path}")
-                    new_thumbnail_file = ContentFile(open(thumbnail_video_path, 'rb').read(), name=f"{base_name}_thumbnail{ext}")
+                    os.system(f"ffmpeg -y -i {video_path} -ss 00:00:01.00 -t 6 -vf 'scale=640:-2' -b:v 1050k {thumbnail_video_path}")
+                    with open(thumbnail_video_path, 'rb') as f:
+                        new_thumbnail_file = ContentFile(f.read(), name=f"{base_name}_thumbnail{ext}")
 
-                    # Save new thumbnail if it is different from the current one
                     if not self.video_thumbnail or self.video_thumbnail.name != new_thumbnail_file.name:
                         self.video_thumbnail.save(f"{base_name}_thumbnail{ext}", new_thumbnail_file, save=False)
                         print("Video thumbnail created and saved as:", self.video_thumbnail.name)
@@ -267,7 +319,6 @@ class Product(models.Model):
                         print("Compressed video size:", os.path.getsize(compressed_video_path) / (1024 * 1024), "MB")
                         print("Original video size (before processing):", os.path.getsize(video_path) / (1024 * 1024), "MB")
 
-                # Clean up temporary files
                 for path in [compressed_video_path, thumbnail_video_path]:
                     if os.path.exists(path):
                         os.remove(path)
@@ -531,10 +582,10 @@ def update_product_images(sender, instance, **kwargs):
     #             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_video:
     #                 resized_clip.write_videofile(temp_video.name, codec="libx264", audio_codec="aac", remove_temp=True)
                     
-    #                 # Vytvoriť InMemoryUploadedFile z dočasného súboru a uložiť do modelu
+    #                 # Vytvoření InMemoryUploadedFile z dočasného súboru a uložení do modelu
     #                 self.video.save('resized_' + os.path.basename(self.video.name), InMemoryUploadedFile(temp_video, None, 'resized_' + os.path.basename(self.video.name), 'video/mp4', os.path.getsize(temp_video.name), None))
                     
-    #             # Vymazať originálne video
+    #             # Vymazať originálny súbor videa
     #             os.remove(self.video.path)
     #             self.video.name = 'resized_' + os.path.basename(self.video.name)
     #         except Exception as e:

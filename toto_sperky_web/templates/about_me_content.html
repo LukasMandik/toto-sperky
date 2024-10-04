@@ -41,10 +41,6 @@
                 {% endfor %}
             </div>
         </div> -->
-        
-        <div class="text-about-me">
-            <p>Mám <span>vyštudovanú</span> školu úžitkového výtvarníctva v Kremnici v odbore plošné a plastické <span>rytie kovov</span>, popri ktorom som voľne študovala aj odbor <span>zlatníctvo-strieborníctvo.</span></p>
-        </div>
         <div class="carousel">
             {% for product in products %}
             <a href="{{ product.get_absolute_url }}">
@@ -63,6 +59,10 @@
                 <div class="indicator" data-slide="{{ forloop.counter0 }}"></div>
                 {% endfor %}
             </div>
+        </div>
+        
+        <div class="text-about-me">
+            <p>Mám <span>vyštudovanú</span> školu úžitkového výtvarníctva v Kremnici v odbore plošné a plastické <span>rytie kovov</span>, popri ktorom som voľne študovala aj odbor <span>zlatníctvo-strieborníctvo.</span></p>
         </div>
         <div class="text-about-me">
             <p>Pri tvorení s radosťou využívam aj moje znalosti z obdobia štúdia na <span>Technickej univerzite</span> v Bratislave zo zameraním na krajinnú architektúru a krajinné plánovanie.</p>

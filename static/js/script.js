@@ -550,7 +550,7 @@ $(document).ready(function() {
                 }
             });
   
-            Timeline.to(line, { scale: 1.15,});
+            Timeline.to(line, { scale: 1.25,});
         });
     });
   });
@@ -575,7 +575,46 @@ $(document).ready(function() {
       });
     });
   });
-
+  $(document).ready(function() {
+    gsap.utils.toArray('.content-about-me').forEach((elem) => {
+        let lines = elem.querySelectorAll('.carousel');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 650svh",
+              end: "center 650svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, y: 20,scale: 0.9,duration: 0.35});
+      });
+    });
+  });
+  $(document).ready(function() {
+    gsap.utils.toArray('.third_home_container').forEach((elem) => {
+        let lines = elem.querySelectorAll('.carusel');
+  
+        let Timeline = gsap.timeline({
+          scrollTrigger: {
+              trigger: elem,
+              start: "center 790svh",
+              end: "center 790svh",
+              scrub: false,
+              toggleActions: "restart none none reverse",
+              // markers: true,
+          }
+      });
+  
+      lines.forEach((line) => {
+        Timeline.from(line, { opacity: 0, y: 20,scale: 0.9,duration: 0.35});
+      });
+    });
+  });
   $(document).ready(function() {
 
     gsap.set(".box2", {

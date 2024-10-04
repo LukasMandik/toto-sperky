@@ -385,7 +385,9 @@ h3.h3_category{
 	
 }
 
-
+.gallery_container p{
+	margin-bottom: 60px;
+}
 .container {
 	display: grid;
 	align-items: left;
@@ -1986,7 +1988,6 @@ input#goToPage{
 	transition: width 0.3s ease;
 }
 /* About me */
-
 .container_about_me {
 	background-color: var(--background-color-light);
     width: 100%;
@@ -1998,9 +1999,12 @@ input#goToPage{
     /* overflow-y: auto; */
 	overflow-x: hidden;
 	margin-top: 100px;
-
+	
 	/* padding-bottom: 100px; */
 	/* overflow-x: auto;  */
+}
+.main_home_container .container_about_me{
+	margin-top: 30px;
 }
 
 .content-about-me {
@@ -2023,12 +2027,27 @@ input#goToPage{
 }
 .container_about_me .content-about-me .carousel {
 	position: relative;
-	width: 90%;
-	height: 330px;
+	width: 540px;
+	height: 380px;
 	overflow: hidden;
 	border-radius: 10px;
 	margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+	.container_about_me .content-about-me .carousel {
+		width: 540px;
+	
+	}
+}
+@media (max-width: 600px) {
+	.container_about_me .content-about-me .carousel {
+		width: 90%;
+		height: 250px;
+	
+	}
+}
+
 
 
 
@@ -2065,7 +2084,7 @@ input#goToPage{
 
 .text-about-me p, .text-about-me1 p {
 	color: var(--text-color-dark);
-    text-align: center;
+    text-align: left;
 	/* hyphens: auto; */
 	white-space: pre-wrap;
 	max-width: 600px;
@@ -2752,14 +2771,14 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 160px;
-	height: 47px;
+	width: 120px;
+	height: 37px;
 	border-radius: 25px;
 	border: var(--text-color-dark) solid 0.07rem;
 	/* margin-bottom: 12px; */
 	background-color: transparent;
 	color: var(--text-color-dark);
-	font-size: 18px;
+	font-size: 16px;
 	text-align: center;
 	overflow: hidden;
 	z-index: 21;
@@ -3094,7 +3113,7 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	/* page-break-before: always; */
 	/* page-break-inside: avoid; */
 	/* break-inside: avoid; */
-	margin-bottom: 120px;
+	margin-bottom: 20px;
 
 }
 .gallery_container_home{
@@ -3230,7 +3249,7 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	height: 230px;
 	border-radius: 10px;
 	scroll-snap-align: start;
-    scroll-margin-left: -76px;
+    scroll-margin-left: -80px;
 	overflow: hidden;
 	@media (max-width: 768px) {
 
@@ -3243,7 +3262,7 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 		width: 40.6svw;
 		height: auto;
 		aspect-ratio: 2/3;
-		scroll-margin-left: -75px;
+		scroll-margin-left: -80px;
 	}
 }
 /* .container_about_me .carusel a .carousel_items:first-child {
@@ -3480,7 +3499,7 @@ footer {
 
 }
 .footer_container.scrolled .footer_menu{
-	margin-bottom: 25px;
+	margin-bottom: 15px;
 	display: flex;
 	flex-direction: column;
 	gap: 3px;
@@ -3504,8 +3523,8 @@ footer {
 	display: none;
 
 }
-.footer_container.scrolled  .connections_container_contact{
-	margin-bottom: 40px;
+.footer_container.scrolled .connections_container_contact{
+	margin-bottom: 10px;
 	display: flex;
 
 }

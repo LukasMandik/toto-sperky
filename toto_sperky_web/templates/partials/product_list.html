@@ -15,7 +15,7 @@
         <div class="box">
             <a href="{{ product.get_absolute_url }}">
                 {% if product.video %}
-                <video autoplay=""loop muted playsinline loading="lazy">
+                <video autoplay="" loop muted playsinline loading="lazy">
                     {% if product.video_thumbnail %}
                     <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
                     {% endif %}
@@ -52,6 +52,9 @@
         </div>
         {% endfor %}
     </div>
+    {% if not products %}
+    <p>Nenašli sa žiadne produkty.</p>
+    {% endif %}
 
     <div class="pagination">
         <span class="step-links">
@@ -106,10 +109,8 @@
                 <form method="get">
                     <label for="itemsPerPage">Položiek na stránke:</label>
                     <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
-                        <option value="1" {% if products.paginator.per_page == 1 %} selected {% endif %}>1</option>
-                        <option value="5" {% if products.paginator.per_page == 5 %} selected {% endif %}>5</option>
-                        <option value="15" {% if products.paginator.per_page == 15 %} selected {% endif %}>15</option>
-                        <option value="25" {% if products.paginator.per_page == 25 %} selected {% endif %}>25</option>
+                        <option value="15" {% if products.paginator.per_page == 10 %} selected {% endif %}>15</option>
+                        <option value="30" {% if products.paginator.per_page == 30 %} selected {% endif %}>30</option>
                         <option value="50" {% if products.paginator.per_page == 50 %} selected {% endif %}>50</option>
                     </select>
                 </form>
