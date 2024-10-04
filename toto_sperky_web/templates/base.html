@@ -94,6 +94,19 @@
 
       window.addEventListener('scroll', function() {
           // Check the scroll position
+          if (window.scrollY >  0) {
+              footer.classList.add('scrolled');
+          } else {
+              footer.classList.remove('scrolled');
+          }
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+      var footer = document.querySelector('.footer_up_block');
+
+      window.addEventListener('scroll', function() {
+          // Check the scroll position
           if (window.scrollY >  100) {
               footer.classList.add('scrolled');
           } else {
