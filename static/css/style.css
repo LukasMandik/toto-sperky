@@ -53,7 +53,7 @@ body, body.light-mode{
 	border: none;
 
 	/* clip-path: ellipse(500% 100% at 50% 0%); */
-
+	z-index: 2;
 }
 /* .product_list_container{
 	background-color: var(--background-color-light);
@@ -61,7 +61,9 @@ body, body.light-mode{
 	overflow-x: hidden;
 	clip-path: ellipse(500% 100% at 50% 0%);
 	z-index: 2;
-
+	@media only screen and (max-width: 768px) {
+		margin-bottom: 160px;
+	}
 } */
 /* background: #efefef url() 14px 14px no-repeat; */
 /* background-image: url("/static/media/kristal_pecka.jpg"); */
@@ -180,7 +182,6 @@ input[type=search]::-webkit-search-cancel-button {
 	position: relative;
 	
 
-
   }
 
 
@@ -200,7 +201,6 @@ h3.h3_category{
 	text-align: center;
 
 	
-
 
 }
 .categories {
@@ -394,10 +394,10 @@ h3.h3_category{
 	border-radius: 10px;
 	grid-column-end: span 4
 }
+
 .container .box.wide {
 	grid-column-end: span 8;
 }
-
 
 .container .box.tall {
 
@@ -405,7 +405,6 @@ h3.h3_category{
 
 
 }
-
 /* .container .box {
 
 	grid-column-end: span 4;
@@ -429,6 +428,9 @@ grid-row-end: 2; */
 	object-fit: cover;
 	transition: all 0.4s ease-in-out; 
 
+	@media only screen and (max-width: 768px) {
+		height: 65svw;
+	}
 }
 .container .box:hover img, .container .box:hover video{
 	scale: 1.1;
@@ -962,8 +964,6 @@ input#goToPage{
 
 
 
-	/* text-align: center; */
-
 .product_detail_container .product_detail_text_p h1.desktop_screen{
 	font-size: 28px;
     font-weight: 800;
@@ -975,8 +975,6 @@ input#goToPage{
 }
 .product_detail_container .product_detail_text_p h1.mobile_screen{
 	display: none;
-	
-	
 
 }
 
@@ -995,9 +993,6 @@ input#goToPage{
 	overflow: hidden;
 	position: relative;
 
-
-
-
 }
 
 .product_detail_container .product_detail_text_p .product_detail_scroll_wrap{
@@ -1008,8 +1003,6 @@ input#goToPage{
 	padding-top: 5px;
 	padding-right: 15px;
 	height: 400px;
-
-
 }
 
 
@@ -1038,7 +1031,6 @@ input#goToPage{
     /* position: relative; */
 
 
-
 }
 
 .product_detail_container .product_detail_text_p::before {
@@ -1055,6 +1047,7 @@ input#goToPage{
 }
 
 
+
 .product_detail_container .product_detail_text_p::after {
     content: '';
     display: block;
@@ -1067,7 +1060,6 @@ input#goToPage{
 
 	
 }
-
 
 
 
@@ -1090,8 +1082,6 @@ input#goToPage{
 	
 	/* width :34px; */
 	height: 55px;
-
-
   }
 
 
@@ -1215,6 +1205,7 @@ input#goToPage{
 
 
 
+
 .button_back button.back{
 	position: relative;
 	/* position: fixed; */
@@ -1233,7 +1224,7 @@ input#goToPage{
 	z-index: 1;
 	color: var(--background-color-light);
 	overflow: hidden;
-	
+
 }
 
 
@@ -1269,7 +1260,6 @@ input#goToPage{
 	justify-content: center;
 	align-items: center;
 	transition: fill 100ms ease-in-out;
-
 }
 
 .button_back button.back .svg_button_back:hover{
@@ -1281,13 +1271,6 @@ input#goToPage{
 	display: none;
 	width: 12px;
 	rotate: -90deg;
-
-
-
-		/* fill: var(--text-color-dark); */
-
-
-
 }
 
 
@@ -1305,8 +1288,6 @@ input#goToPage{
 	border-radius: 25px;
 	transition: width 300ms ease-in-out;
 	display: inline-block;
-
-
 
   }
   
@@ -1392,7 +1373,6 @@ input#goToPage{
 	/* max-height: 50%; */
 	object-fit: cover;
 	border-radius: 1px;
-
 }
 .modal-name{
 	margin-top: 80px;
@@ -1425,7 +1405,6 @@ input#goToPage{
 	align-items: center;
 	background-color: var(--background-color-light);
 	width: 420px;
-
 }
 
 .results-text {
@@ -1863,7 +1842,6 @@ input#goToPage{
 
 
 
-
 .line_center_about_me, .line_center_detail_product{
 	height: 100px;
 	/* rotate: 180deg; */
@@ -1915,7 +1893,6 @@ input#goToPage{
 
     /* position: relative; */
     align-self: stretch;
-
 }
 .text-about-me span, .text-about-me1 span{
     /* color: #fb144e; */
@@ -1936,7 +1913,6 @@ input#goToPage{
 	overflow:hidden;
 	border-radius: 5px;
 	
-
 
   }
 
@@ -2397,7 +2373,6 @@ width: calc(100%-20px);
 	font-weight: 600;
  
     transition: width 0.2s ease; 
-
 }
 
 
@@ -2448,6 +2423,8 @@ width: calc(100%-20px);
 .main_home_container .main_image_container{
 	position: relative;
 	background-image: url("/static/assets/images/krystal s fantomovkov.jpg"); 
+	/* filter: grayscale(50%); */
+	/* background-image: url("/static/media/IMG_20170921_093620.jpg"); */
     height: 110svh;
 	border-bottom-right-radius: 35px; /* Zaoblenie vpravo dole */
     border-bottom-left-radius: 35px; /* Zaoblenie vlavo dole */
@@ -2472,6 +2449,7 @@ width: calc(100%-20px);
 
 	
 
+	
 }
 
 
@@ -2732,10 +2710,6 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	width: 200px;
 	height: 220px;
 	margin: 50px auto 60px auto;
-	/* z-index: 12; */
-	/* overflow: hidden; */
-	/* border: solid 1px red; */
-
 }
 
 .text_home_about_jewelry p.first_text{
@@ -2752,8 +2726,6 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	width: 400px;
 	
 	margin: 0 auto;
-
-
 }
 .text_home_about_jewelry .ellipse_group{
 	width: 240px;
@@ -2854,7 +2826,6 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	bottom: -10%;
 	transform: translateX(-50%);
 	left: 3%;
-
 	
 }
 
@@ -2999,7 +2970,6 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	scroll-snap-align: start;
     scroll-margin-left: -80px;
 	overflow: hidden;
-
 }
 /* .container_about_me .carusel a .carousel_items:first-child {
 	margin-left: 5px;
@@ -3310,9 +3280,6 @@ body.dark-mode .main_home_container #kontakt .kontakt_container .kontakt_contain
 	align-items: center;
 	gap: 20px;
 	background-color: var(--background-color-light);
-	/* display: flex;
-	flex-direction: column; */
-	/* align-items: center; */
 
 }
 .container_add_product form .form-group{
@@ -3731,145 +3698,116 @@ font-size: 24px;
 
 
 
-@media (max-width: 420px) {
-	.search-results{
-		width: 100%;
-		
-	}
-}
 
-@media (max-width: 480px) {
-		.carusel a .carousel_items{
 
-		width: 40.6svw;
-		height: auto;
-		aspect-ratio: 2/3;
-		scroll-margin-left: -80px;
-	}
-}
-@media (max-width: 600px) {
-	.container_about_me .content-about-me .carousel {
-		width: 90%;
-		height: 250px;
-	
-	}
-}
 
 @media (max-width: 768px) {
-
-	.container_add_product{
-			width: calc(100% - 0px);
-		
+	.footer_hide_element{
+			margin-bottom: 470px;
 	}
 
-	.carusel a .carousel_items{
-	
-			width: 20.9svw;
-			height: auto;
-			aspect-ratio: 2/3;
-		
+	.container, .container_home{
+		width: calc(100% - 20px);
+		row-gap: 25px;
+		column-gap: 15px; 
 	}
-	.carusel {
+	.gallery_container h3.navigation{
 
-			width: 100%;
+		margin: 20px auto 5px auto;
+	
 	}
-	.text_home_about_jewelry p.last_text{
+	.gallery_content_page{
+			margin-top: 50px;	
+	  }
+	h3.h3_category{
 	
 		
-			bottom: -16%;
+			text-align: center;
+			/* padding-left: 1.8px; */
+			top: 30px;
+	
+	}
+	.categories{
+			margin-top: 50px;
+			padding-left: 7px;
+	
+	}
+	.container .box {
+		grid-column-end: span 10;
+	}
+	.container .box.wide {
+		grid-column-end: span 20;
+	}
+	.container .box.tall {
+		grid-column-end: span 10;
+	}
+	.container .box:hover img, .container .box:hover video{
+		scale: 1;
 
-		
 	}
-	.text_home_about_jewelry .ellipse_group{
-			left: 72%;
-			top: 57%;
-			scale: 0.9;
-	
-		
+	.product_detail_container{
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		gap: 0px;
+		margin: 60px auto 0 auto;
 	}
-	.text_home_about_jewelry p.first_text{
-			
-			text-align: left;
-			width: 355px;
-	
-		
-	}
-	.text_home_about_jewelry{
-			margin: 50px auto 100px auto;
-		
-	}
-	.main_home_container .main_image_container{
-	
-	
-			background-position: 66% 60%;
-			background-size: auto 115%;
-		
-	}
-	.main_navbar .menu ul li.active a {
-			font-weight: 300;
-		
-	}
-	.image_neckless{
-	
-			width: 80%;
-			/* height: 240px; */
-			margin-bottom: 10px;
-		
-	
-	}
-	.wrapper3{
-			width:100%;
-	}
-	.text-about-me p, .text-about-me1 p {
-	
-		 font-size: 18px;
-		 text-align: left;
-		 width: 90%;
-		
-	}
-	.container_about_me .content-about-me .carousel {
-		width: 540px;
-	
-	}
-	.blog_detail_container {
-		width: 95%;
-	}
-	.container_blog a .blog-post {
-        width: 90%;
-        /* height: auto; */
-		margin: 0 auto;
-		margin-bottom: 20px;
-    }
-
-	.search-results {
-			width: 420px;
-		
-	}
-	.modal-img{
-			width: 100%;
-	
-		
-	}
-	.button_back button.back::before {
-			
+	.product_detail_container .product_detail_text_p h1.desktop_screen{
 			display: none;
-	
+		
 	}
-	
-	  
-	.button_back button.back svg{
-			
+	.product_detail_container .product_detail_text_p h1.mobile_screen{
 			display: block;
+			font-size: 28px;
+			font-weight: 800;
+			line-height: 105%;
+			letter-spacing: 1px;
+			/* margin-top: 10px; */
+			margin-bottom: 20px;
+	}
+	.product_detail_container .product_detail_text_p{
+			
+		
+			width: 100%;
+			height: 100%;
+	
 	
 	}
-	
-	.button_back button.back .svg_button_back{
-			display: flex;
-	
-		}
-	
-	.button_back button.back p{
+	.product_detail_container .product_detail_text_p .product_detail_scroll_wrap{
+		
+		overflow-y: visible;
+		height: fit-content;
+		padding: 0;
+	}
+	.product_detail_container .product_detail_text_p .product_detail_scroll_wrap p{
+			
+			overflow-y: visible;
+			max-height: fit-content;
+			border: none;
+			width: 100%;
+			height: 100%;
+			margin-top: 5px;
+			margin-left: auto;
+			margin-right: auto;
+	}
+	.product_detail_container .product_detail_text_p::before{
+		width: 0;
+	}
+	.product_detail_container .product_detail_text_p::after{
+		width: 0;
+	}
+	.scroll-downs{
 		display: none;
+	}
+	.button_back{
+			
+	
+		
+			width: 2.2rem;
+			height: 2.7rem;
+	
+			overflow: hidden;
 	}
 	.button_back button.back{
 			
@@ -3887,6 +3825,7 @@ font-size: 24px;
 			height: 2.7rem;
 			border: none;
 			/* box-sizing: content-box; */
+		
 			cursor: pointer;
 			/* transition: all 0.2s ease; */
 			/* border: solid red ; */
@@ -3896,141 +3835,108 @@ font-size: 24px;
 			animation: back_button 0.3s;
 			z-index: 100;
 			fill: var(--background-color-light);
-	}
-	
 
-	.button_back{
-		
-		width: 2.2rem;
-		height: 2.7rem;
-		overflow: hidden;
-    }
-	.scroll-downs{
+	}
+	.button_back button.back p{
 		display: none;
 	}
-	.product_detail_container .product_detail_text_p::after{
-		width: 0;
+	.button_back button.back .svg_button_back{
+			display: flex;
 	}
-	.product_detail_container .product_detail_text_p::before {
-			width: 0;
-		}
-	
-	.product_detail_container .product_detail_text_p .product_detail_scroll_wrap p{
+	.button_back button.back svg{
 			
-			overflow-y: visible;
-			max-height: fit-content;
-			border: none;
-			width: 100%;
-			height: 100%;
-			margin-top: 5px;
-			margin-left: auto;
-			margin-right: auto;
-	}
-
-	.product_detail_container .product_detail_text_p .product_detail_scroll_wrap{
-			
-			overflow-y: visible;
-			height: fit-content;
-			padding: 0;
-	}
-	
-	.product_detail_container .product_detail_text_p{
-			
-		
-			width: 100%;
-			height: 100%;
-	
-	}
-	
-	.product_detail_container .product_detail_text_p h1.mobile_screen{
 			display: block;
-			font-size: 28px;
-			font-weight: 800;
-			line-height: 105%;
-			letter-spacing: 1px;
-			/* margin-top: 10px; */
-			margin-bottom: 20px;
-			/* text-align: center; */
-		}
-		
-	
-	
-	.product_detail_container .product_detail_text_p h1.desktop_screen {
-			display: none;
-		}
-	
-	.product_detail_container{
+	}
+	.button_back button.back::before{
 			
-				display: flex;
-				justify-content: center;
-				flex-direction: column;
-				align-items: center;
-				gap: 0px;
-				margin: 60px auto 0 auto;
-	
-		}
-	
-	.container .box:hover img, .container .box:hover video{
-		scale: 1;
-
-	}
-	.container .box img, .container .box video {
-			height: 65svw;
-		}
-	
-	.container .box.tall {
-		grid-column-end: span 10;
-	}
-	.container .box.wide {
-		grid-column-end: span 20;
-	}
-		.container .box {
-			grid-column-end: span 10;
-		}
-		
-
-	.categories {
-			margin-top: 50px;
-			padding-left: 7px;
-		}
-	
-
-	h3.h3_category {
-	
-			text-align: center;
-			/* padding-left: 1.8px; */
-			top: 30px;
-		}
-	
-	
-
-	.gallery_content_page {
-			margin-top: 50px;
-		}
-	
-	
-	  
-
-	.footer_hide_element {
-			margin-bottom: 470px;
-		}
-	
-
-	.container, .container_home{
-		width: calc(100% - 20px);
-		row-gap: 25px;
-		column-gap: 15px; 
-	}
-	.gallery_container h3.navigation{
-
-		margin: 20px auto 5px auto;
+			display: none;
 	
 	}
+	.modal-img{
+			width: 100%;
+	
+	}
+	.search-results{
+			width: 420px;
+	}
+	.container_blog a .blog-post {
+        width: 90%;
+        /* height: auto; */
+		margin: 0 auto;
+		margin-bottom: 20px;
+    }
+	.blog_detail_container {
+		width: 95%;
+	}
+	.container_about_me .content-about-me .carousel {
+		width: 540px;
+	
+	}
+	
+	.text-about-me p, .text-about-me1 p{
+	
+		 font-size: 18px;
+		 text-align: left;
+		 width: 90%;
+
+	}
+
 	/* .main_navbar .logo img {
 		width: 10rem;
 		margin: 2rem;
 	} */
+	.wrapper3{
+			
+			width:100%;
+	}
+	.image_neckless{
+	
+			width: 80%;
+			/* height: 240px; */
+			margin-bottom: 10px;
+	
+	}
+	.main_home_container .main_image_container{
+	
+			background-position: 66% 60%;
+			background-size: auto 115%;
+	}
+	.text_home_about_jewelry{
+			margin: 50px auto 100px auto;
+	
+	}
+	.text_home_about_jewelry p.first_text{
+			
+			text-align: left;
+			width: 355px;
+	}
+	.text_home_about_jewelry .ellipse_group{
+			left: 72%;
+			top: 57%;
+			scale: 0.9;
+	}
+	.text_home_about_jewelry p.last_text{
+	
+		
+			bottom: -16%;
+	}
+	.carusel{
+	
+			width: 100%;
+	}
+	.carusel a .carousel_items{
+			width: 20.9svw;
+			height: auto;
+			aspect-ratio: 2/3;
+	}
+	.container_add_product{
+			width: calc(100% - 0px);
+		
+	}
+	.main_navbar .menu ul li.active a{
+			font-weight: 300;
 
+	}
 	.main_navbar {
 		background-color: transparent;
 		backdrop-filter: none;
@@ -4314,4 +4220,26 @@ font-size: 24px;
 	.wrapper2 .buttons{
 	margin-top: 8px;
 	}  
+}
+
+
+@media (max-width: 600px) {
+	.container_about_me .content-about-me .carousel {
+		width: 90%;
+		height: 250px;
+	
+	}
+}
+@media (max-width: 480px) {
+	.carusel a .carousel_items{
+		width: 40.6svw;
+		height: auto;
+		aspect-ratio: 2/3;
+		scroll-margin-left: -80px;
+	}
+}
+@media (max-width: 420px) {
+	.search-results{
+		width: 100%;
+	}
 }
