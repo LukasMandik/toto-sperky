@@ -2448,8 +2448,6 @@ width: calc(100%-20px);
 .main_home_container .main_image_container{
 	position: relative;
 	background-image: url("/static/assets/images/krystal s fantomovkov.jpg"); 
-	/* filter: grayscale(50%); */
-	/* background-image: url("/static/media/IMG_20170921_093620.jpg"); */
     height: 110svh;
 	border-bottom-right-radius: 35px; /* Zaoblenie vpravo dole */
     border-bottom-left-radius: 35px; /* Zaoblenie vlavo dole */
