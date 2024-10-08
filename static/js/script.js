@@ -11,27 +11,27 @@ let menu = document.querySelector(".menu");
 
 
 
-$(document).ready(function() {
 
-        $(document).ready(function() {
-            let hamburger = document.querySelector(".hamburger");
-            let toggle = document.querySelector("#toggle");
 
-            hamburger.addEventListener("click", function() {
-                toggle.classList.toggle("active");
-                if (toggle.classList.contains("active")) {
-                    document.body.style.overflow = 'hidden';
-                    document.body.style.position = 'fixed';
-                    document.body.style.width = '100%';
-                } else {
-                    document.body.style.overflow = '';
-                    document.body.style.position = '';
-                    document.body.style.width = '';
-                }
-            });
-        });
+  $(document).ready(function() {
+      let hamburger = document.querySelector(".hamburger");
+      let toggle = document.querySelector("#toggle");
 
-});
+      hamburger.addEventListener("click", function() {
+          toggle.classList.toggle("active");
+          if (toggle.classList.contains("active")) {
+              document.body.style.overflow = 'hidden';
+              // document.body.style.position = 'fixed';
+              document.body.style.width = '100%';
+          } else {
+              document.body.style.overflow = '';
+              document.body.style.position = '';
+              document.body.style.width = '';
+          }
+      });
+  });
+
+
   
 
 
