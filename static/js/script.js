@@ -701,6 +701,25 @@ $(document).ready(function() {
   //   }
   // });
   
+  $(document).on("click", ".hamburger", function() {
+    if ($(".menu").hasClass("active")) {
+    const Container = document.querySelectorAll('.main_navbar .menu .menu_search');
+  // Create an animation loop using GSAP
+  gsap.from(Container, {
+    x: -340,
+    delay: 0, 
+    opacity: 0, 
+    // y: 2,
+    // rotate: 1,
+    stagger: 0.03,  
+    duration: 0.6, 
+    // repeat: -1,
+    // yoyo: true, 
+    ease: 'power2.inOut' // Smooth easing function
+  });
+  }
+  });
+
 
 
   $(document).on("click", ".hamburger", function() {
@@ -710,6 +729,7 @@ $(document).ready(function() {
   // Create an animation loop using GSAP
   gsap.from(Container, {
     x: -340,
+    // delay: 0.4, 
     opacity: 0, 
     // y: 2,
     // rotate: 1,
@@ -981,16 +1001,24 @@ $(document).ready(function() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
-    const menuItems = document.querySelectorAll('.startermenu li');
+    const menuItems = document.querySelectorAll('.startermenu li a');
 
     menuItems.forEach(item => {
         const section = item.getAttribute('data-section');
         if ((currentPath === '/' && section === 'home') || 
             currentPath.includes(section.toLowerCase()) || 
             (currentPath.includes('product') && section === 'Gallery')) {
-            item.classList.add('active');
+            item.classList.add('active2');
         } else {
-            item.classList.remove('active');
+            item.classList.remove('active2');
         }
     });
 });
+
+// document.addEventListener('DOMContentLoaded', function() {
+//   if ('ontouchstart' in window || navigator.maxTouchPoints) {
+//       document.querySelectorAll('.container .box').forEach(function(box) {
+//           box.classList.remove('hover');
+//       });
+//   }
+// });
