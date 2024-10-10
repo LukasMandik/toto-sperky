@@ -95,27 +95,27 @@ $(document).ready(function() {
 
 
   
-  $(document).ready(function() {
-    gsap.utils.toArray('.second_home_container').forEach((elem) => {
-        let lines = elem.querySelectorAll('.background_wrapper');
+  // $(document).ready(function() {
+  //   gsap.utils.toArray('.second_home_container').forEach((elem) => {
+  //       let lines = elem.querySelectorAll('.background_wrapper');
   
-        lines.forEach((line) => {
-            let Timeline = gsap.timeline({
-                ease: "slowMo.ease",
-                scrollTrigger: {
-                    trigger: line,
-                    start: "top 100svh",
-                    end: "bottom 50svh",
-                    scrub: true,
-                    // markers: true,
-                    // toggleActions: "restart none none reverse",
-                }
-            });
+  //       lines.forEach((line) => {
+  //           let Timeline = gsap.timeline({
+  //               ease: "slowMo.ease",
+  //               scrollTrigger: {
+  //                   trigger: line,
+  //                   start: "top 100svh",
+  //                   end: "bottom 50svh",
+  //                   scrub: true,
+  //                   // markers: true,
+  //                   // toggleActions: "restart none none reverse",
+  //               }
+  //           });
   
-            Timeline.from(line, { backgroundPositionX: "200", rotation:"120deg"});
-        });
-    });
-  });
+  //           Timeline.from(line, { backgroundPositionX: "200", rotation:"120deg"});
+  //       });
+  //   });
+  // });
 
   // $(document).ready(function() {
   // // Inicializuj ScrollTrigger
@@ -174,28 +174,28 @@ $(document).ready(function() {
       
     });
   });
-  $(document).ready(function() {
-    gsap.registerPlugin(ScrollTrigger);
+  // $(document).ready(function() {
+  //   gsap.registerPlugin(ScrollTrigger);
   
-    gsap.utils.toArray('.logo_svg_container_footer').forEach((elem) => {
-      // Predpokladáme, že každý prvok má niečo ako čiaru alebo iný element na animovanie
-      let line = elem.querySelectorAll('.logo_dot'); // Prvok, ktorý budeme animovať
+  //   gsap.utils.toArray('.footer_a').forEach((elem) => {
+  //     // Predpokladáme, že každý prvok má niečo ako čiaru alebo iný element na animovanie
+  //     let line = elem.querySelectorAll('.logo_dot'); // Prvok, ktorý budeme animovať
   
-      // Vytvoríme GSAP časovú os
-      let timeline = gsap.timeline({
-        ease: "bounce",
-        repeat: 100, // Opakovanie nekonečne
-        yoyo: true, // Animácia sa opakuje opačným smerom
-      });
+  //     // Vytvoríme GSAP časovú os
+  //     let timeline = gsap.timeline({
+  //       ease: "bounce",
+  //       repeat: 100, // Opakovanie nekonečne
+  //       yoyo: true, // Animácia sa opakuje opačným smerom
+  //     });
   
-      // Pridáme animáciu na Timeline
-      timeline
-        .from(line[0], { rotation: "-=360_cw", transformOrigin: "7220px 2000px", duration: 260 }, 0)
-        .from(line[1], { rotation: "-=360_cw", transformOrigin: "7620px 2000px", duration: 527 }, 0)
-        .from(line[2], { rotation: "-=360_cw", transformOrigin: "-5370px -4250px", duration: 211 }, 0)
-        .from(line[3], { rotation: "-=360_cw", transformOrigin: "4020px 6220px", duration: 220}, 0);
-    });
-  });
+  //     // Pridáme animáciu na Timeline
+  //     timeline
+  //       .from(line[0], { rotation: "-=360_cw", transformOrigin: "7220px 2000px", duration: 260 }, 0)
+  //       .from(line[1], { rotation: "-=360_cw", transformOrigin: "7620px 2000px", duration: 527 }, 0)
+  //       .from(line[2], { rotation: "-=360_cw", transformOrigin: "-5370px -4250px", duration: 211 }, 0)
+  //       .from(line[3], { rotation: "-=360_cw", transformOrigin: "4020px 6220px", duration: 220}, 0);
+  //   });
+  // });
   
 
   $(document).ready(function() {
@@ -251,32 +251,32 @@ $(document).ready(function() {
         .to(line, { strokeDashoffset: 0 })
     });
   });
-  $(document).ready(function() {
-    gsap.registerPlugin(ScrollTrigger);
+  // $(document).ready(function() {
+  //   gsap.registerPlugin(ScrollTrigger);
   
-    gsap.utils.toArray('.line_center_detail_product').forEach((elem) => {
-      let line = elem.querySelector('.line');
-      let lineLength = line.getTotalLength();
+  //   gsap.utils.toArray('.line_center_detail_product').forEach((elem) => {
+  //     let line = elem.querySelector('.line');
+  //     let lineLength = line.getTotalLength();
   
 
-      line.style.strokeDasharray = lineLength;
-      line.style.strokeDashoffset = lineLength; 
+  //     line.style.strokeDasharray = lineLength;
+  //     line.style.strokeDashoffset = lineLength; 
 
-      let Timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: elem,
-          easy:"linear",
-          start: "top 700svh",
-          end: "bottom 700svh",
-          scrub: false,
-          // markers: true,
-          toggleActions: "restart none none reverse",  
-        }
-      });
-      Timeline
-        .to(line, { strokeDashoffset: 0 })
-    });
-  });
+  //     let Timeline = gsap.timeline({
+  //       scrollTrigger: {
+  //         trigger: elem,
+  //         easy:"linear",
+  //         start: "top 700svh",
+  //         end: "bottom 700svh",
+  //         scrub: false,
+  //         // markers: true,
+  //         toggleActions: "restart none none reverse",  
+  //       }
+  //     });
+  //     Timeline
+  //       .to(line, { strokeDashoffset: 0 })
+  //   });
+  // });
   $(document).ready(function() {
     gsap.registerPlugin(ScrollTrigger);
   
@@ -615,23 +615,23 @@ $(document).ready(function() {
       });
     });
   });
-  $(document).ready(function() {
+  // $(document).ready(function() {
 
-    gsap.set(".box2", {
-      x: (i) => i * 155
-    });
+  //   gsap.set(".box2", {
+  //     x: (i) => i * 155
+  //   });
     
     
-    gsap.to(".box2", {
-      duration: 40,
-      ease: "linear",
-      x: "+=775", //move each box 500px to right
-      modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % 775) //force x value to be between 0 and 500 using modulus
-      },
-      repeat: -1
-    });
-  });
+  //   gsap.to(".box2", {
+  //     duration: 40,
+  //     ease: "linear",
+  //     x: "+=775", //move each box 500px to right
+  //     modifiers: {
+  //       x: gsap.utils.unitize(x => parseFloat(x) % 775) //force x value to be between 0 and 500 using modulus
+  //     },
+  //     repeat: -1
+  //   });
+  // });
 
 
   // $(document).ready(function() {
@@ -760,24 +760,24 @@ gsap.from(Container, {
 });
 }
 });
-$(document).on("click", ".hamburger", function() {
-  if ($(".menu").hasClass("active")) {
-  const Container = document.querySelectorAll('.switch-box');
-// Create an animation loop using GSAP
-gsap.from(Container, {
-  x: -340,
-  delay: 0.3, 
-  opacity: 0, 
-  // y: 2,
-  // rotate: 1,
-  stagger: 0.03,  
-  duration: 0.6, 
-  // repeat: -1,
-  // yoyo: true, 
-  ease: 'power2.inOut' // Smooth easing function
-});
-}
-});
+// $(document).on("click", ".hamburger", function() {
+//   if ($(".menu").hasClass("active")) {
+//   const Container = document.querySelectorAll('.switch-box');
+// // Create an animation loop using GSAP
+// gsap.from(Container, {
+//   x: -340,
+//   delay: 0.3, 
+//   opacity: 0, 
+//   // y: 2,
+//   // rotate: 1,
+//   stagger: 0.03,  
+//   duration: 0.6, 
+//   // repeat: -1,
+//   // yoyo: true, 
+//   ease: 'power2.inOut' // Smooth easing function
+// });
+// }
+// });
 
 
   
@@ -809,20 +809,20 @@ gsap.from(Container, {
     });
   });
 
-$(document).ready(function() {
-  const svgContainer = document.querySelector('.svg_container');
+// $(document).ready(function() {
+//   const svgContainer = document.querySelector('.svg_container');
 
-// Create an animation loop using GSAP
-gsap.to(svgContainer, {
-  x: 10, // Move horizontally by 10 pixels
-  // y: 2,
-  // rotate: 1,  
-  duration: 2, // Animation duration in seconds
-  repeat: -1, // Repeat indefinitely
-  yoyo: true, // Reverse the animation direction back and forth
-  ease: 'power2.inOut' // Smooth easing function
-});
-});
+// // Create an animation loop using GSAP
+// gsap.to(svgContainer, {
+//   x: 10, // Move horizontally by 10 pixels
+//   // y: 2,
+//   // rotate: 1,  
+//   duration: 2, // Animation duration in seconds
+//   repeat: -1, // Repeat indefinitely
+//   yoyo: true, // Reverse the animation direction back and forth
+//   ease: 'power2.inOut' // Smooth easing function
+// });
+// });
 
 
 $(document).ready(function() {
@@ -894,27 +894,27 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
-  gsap.utils.toArray('.container_home').forEach((elem) => {
-      let lines = elem.querySelectorAll('.container_home .box_home');
+// $(document).ready(function() {
+//   gsap.utils.toArray('.container_home').forEach((elem) => {
+//       let lines = elem.querySelectorAll('.container_home .box_home');
 
-      lines.forEach((line) => {
-          let Timeline = gsap.timeline({
-              ease: "elastic",
-              scrollTrigger: {
-                  trigger: line,
-                  start: "top 550svh",
-                  end: "bottom 600svh",
-                  scrub: false,
-                  // markers: true,
-                  toggleActions: "restart none none reverse",
-              }
-          });
+//       lines.forEach((line) => {
+//           let Timeline = gsap.timeline({
+//               ease: "elastic",
+//               scrollTrigger: {
+//                   trigger: line,
+//                   start: "top 550svh",
+//                   end: "bottom 600svh",
+//                   scrub: false,
+//                   // markers: true,
+//                   toggleActions: "restart none none reverse",
+//               }
+//           });
 
-          Timeline.from(line, { opacity: 0, y: 20 });
-      });
-  });
-});
+//           Timeline.from(line, { opacity: 0, y: 20 });
+//       });
+//   });
+// });
 
 $(document).ready(function() {
   gsap.utils.toArray('.starter').forEach((elem) => {

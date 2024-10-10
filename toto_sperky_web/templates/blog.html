@@ -33,11 +33,11 @@
     </a>
     {% endfor %}
     
+    {% if user.is_authenticated %}
     <div class="home_buttons">
         <a href="{% url 'add_blog' %}" class="btn type1">Pridať článok</a>
     </div>
+    {% endif %}
 </div>
-{% if user.is_authenticated %}
-{% endif %}
 
 {% endblock %}

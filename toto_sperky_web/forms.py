@@ -1,7 +1,7 @@
-
 from django.utils.text import slugify
 from django import forms
 from django.forms import ImageField
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Product, Category, Blog, BlogImage
 
 import random
@@ -151,4 +151,7 @@ class BlogForm(forms.ModelForm):
             while Blog.objects.filter(slug=slug).exists():
                 slug += f'{random.randint(1, 100)}'
         return slug
-    
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Meno'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Heslo'}))

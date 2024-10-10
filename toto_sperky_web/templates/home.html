@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Toto{% endblock %}
+{% block title %}Toto šperky{% endblock %}
 
 
 {% block content %}
@@ -87,18 +87,11 @@
         </div>      
         <div class="home_buttons">
             <a href="/gallery" class="btn type1">Galéria</a>
-            <a href="" class="btn type1">Blog</a>
+            <a href="/blog" class="btn type1">Blog</a>
             <a href="/about_me" class="btn type1">O mne</a>
         </div>
-        <!-- <div class="search_form">
-            <form id="search-form" method="GET" action="{% url 'search_results' %}">
-                <input id="s" type="text" name="q" placeholder="Vyhladaj product" required minlength="3">
-            </form>
-        </div> -->
         {% include 'partials/search_suggestions.html' %}
     </div>
-    
-    
     <div class="third_home_container">
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -150,44 +143,6 @@
             </a>
             {% endfor %}
         </div>
-        <!-- <div class="carousel_wrapper">
-            <div class="card-carousel">
-                {% for product in products %}
-                <div class="my-card">
-                    {% if product.image_thumbnail %}
-                    <a href="{{ product.get_absolute_url }}"></a>
-                    
-                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
-        
-            
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div> -->
-        <!-- <div class="wrapper3">
-            <div class="boxes">
-                {% for product in products %}
-                <a href="{{ product.get_absolute_url }}">
-                    <div class="box2">
-                        {% if product.video %}
-                        <video autoplay="" loop muted playsinline preload="auto">
-                            {% if product.video_thumbnail %}
-                            <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
-                            {% endif %}
-                            <source src="{{ product.video.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        {% else %}
-                        {% if product.image_thumbnail %}
-                        <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
-                        {% endif %}
-                        {% endif %}
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </div> -->
         <div class="home_buttons">
             <!-- <button>Viac</button> -->
             <a href="/gallery" class="btn type1">Celá galéria</a>
@@ -198,94 +153,24 @@
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const carousel = document.getElementById('carousel');
-        const items = carousel.querySelectorAll('.carousel_items');
-        
-        // Clone the items and append them to the carousel to create the infinite loop effect
-        items.forEach(item => {
-            const clone = item.cloneNode(true);
-            carousel.appendChild(clone);
-        });
 
-        let scrollAmount = 0;
-        let scrollSpeed = 1; // Adjust scroll speed as needed
-
-        function scrollCarousel() {
-            scrollAmount += scrollSpeed;
-            carousel.scrollLeft = scrollAmount;
-
-            // When reaching the end of the carousel, reset to the beginning
-            if (carousel.scrollLeft >= carousel.scrollWidth / 2) {
-                carousel.scrollLeft = 0;
-                scrollAmount = 0;
-            }
-
-            requestAnimationFrame(scrollCarousel);
-        }
-
-        // Start scrolling the carousel
-        scrollCarousel();
-    });
-</script>
     
-    <script>
-    document.getElementsByClassName('type1').addEventListener('click', function(event) {
-        // Zabráni predvolenému správaniu odkazu
-        event.preventDefault();
+<script>
+    const buttons = document.getElementsByClassName('type1');
+    Array.from(buttons).forEach(button => {
+        button.addEventListener('click', function(event) {
+            // Zabráni predvolenému správaniu odkazu
+            event.preventDefault();
 
-        // Oneskorí otvorenie odkazu o 0.3 sekundy
-        setTimeout(function() {
-            window.location.href = event.target.href;
-        }, 300); // 0.3 sekundy oneskorenie
+            // Oneskorí otvorenie odkazu o 0.3 sekundy
+            setTimeout(function() {
+                window.location.href = event.target.href;
+            }, 300); // 0.3 sekundy oneskorenie
+        });
     });
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script> 
-<script>
-    $num = $('.my-card').length;
-$even = $num / 2;
-$odd = ($num + 1) / 2;
 
-if ($num % 2 == 0) {
-  $('.my-card:nth-child(' + $even + ')').addClass('active');
-  $('.my-card:nth-child(' + $even + ')').prev().addClass('prev');
-  $('.my-card:nth-child(' + $even + ')').next().addClass('next');
-} else {
-  $('.my-card:nth-child(' + $odd + ')').addClass('active');
-  $('.my-card:nth-child(' + $odd + ')').prev().addClass('prev');
-  $('.my-card:nth-child(' + $odd + ')').next().addClass('next');
-}
-
-$('.my-card').click(function() {
-  $slide = $('.active').width();
-  console.log($('.active').position().left);
-  
-  if ($(this).hasClass('next')) {
-    $('.card-carousel').stop(false, true).animate({left: '-=' + $slide});
-  } else if ($(this).hasClass('prev')) {
-    $('.card-carousel').stop(false, true).animate({left: '+=' + $slide});
-  }
-  
-  $(this).removeClass('prev next');
-  $(this).siblings().removeClass('prev active next');
-  
-  $(this).addClass('active');
-  $(this).prev().addClass('prev');
-  $(this).next().addClass('next');
-});
-
-
-// Keyboard nav
-$('html body').keydown(function(e) {
-  if (e.keyCode == 37) { // left
-    $('.active').prev().trigger('click');
-  }
-  else if (e.keyCode == 39) { // right
-    $('.active').next().trigger('click');
-  }
-});
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.querySelector('.carusel');

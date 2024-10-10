@@ -9,6 +9,9 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib.auth.views import LoginView, LogoutView
+from .forms import UserLoginForm
+
 # Create your views here.
 
 def home(request):
@@ -510,3 +513,11 @@ def category_detail(request, slug):
         'products': products,
     }
     return render(request, 'category_detail.html', context)
+
+
+class UserLoginView(LoginView):
+    form_class = UserLoginForm
+    template_name = 'login.html'
+
+class UserLogoutView(LogoutView):
+    template_name = 'home.html'  # Môžete špecifikovať šablónu, ktorá sa zobrazí po odhlásení

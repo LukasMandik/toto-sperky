@@ -1,3 +1,4 @@
+
 function mediaLoaded() {
     const images = document.getElementsByTagName("img");
     const videos = document.getElementsByTagName("video");

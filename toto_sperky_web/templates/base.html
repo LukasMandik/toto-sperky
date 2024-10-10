@@ -22,6 +22,7 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link rel="icon" type="image/x-icon" href="{% static '/media/logo_cierne.png' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,8 +37,10 @@
   {% block main %}
 
       <div id="loading-screen" class="loading-screen">
-          <div class="loading-text">Načítavam</div>
-          <div class="chaotic-orbit"></div>
+          <div class="loading-text">Načítavam
+            <div class="chaotic-orbit"></div>
+
+          </div>
       </div>
       <div class="wrapper2">
           <header>
@@ -52,6 +55,23 @@
             <!-- <button class="button" id="declineBtn">Odmietnuť</button> -->
             <button class="button" id="customizeBtn">Prispôsobiť</button>
           </div>
+      </div>
+      <div id="customize-cookies-modal" class="modal_cookies">
+        <div class="modal-content_cookies">
+            <span class="close_cookies">&times;</span>
+            <h2>Prispôsobenie cookies</h2>
+            <form id="cookie-preferences-form">
+                <label>
+                    <input type="checkbox" id="functional-cookies" checked disabled>
+                    Funkčné cookies (vždy aktívne)
+                </label>
+                <label>
+                    <input type="checkbox" id="marketing-cookies">
+                    Marketingové cookies
+                </label>
+                <button type="submit">Uložiť a prijať</button>
+            </form>
+        </div>
       </div>
         
       {% include 'navbar.html' %}
@@ -167,23 +187,7 @@ var bodyWrapper = document.querySelector('.footer_hide_element');
       window.addEventListener("load", executeCodes);
   });
 </script>
-  <div id="customize-cookies-modal" class="modal_cookies">
-    <div class="modal-content_cookies">
-        <span class="close_cookies">&times;</span>
-        <h2>Prispôsobenie cookies</h2>
-        <form id="cookie-preferences-form">
-            <label>
-                <input type="checkbox" id="functional-cookies" checked disabled>
-                Funkčné cookies (vždy aktívne)
-            </label>
-            <label>
-                <input type="checkbox" id="marketing-cookies">
-                Marketingové cookies
-            </label>
-            <button type="submit">Uložiť a prijať</button>
-        </form>
-    </div>
-</div>
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
       const customizeCookiesButton = document.getElementById("customizeCookies");
