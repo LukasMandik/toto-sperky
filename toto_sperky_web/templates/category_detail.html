@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+<div class="category_detail_container">
+    <h1>{{ category.name }}</h1>
+    {% if category.image %}
+        <img src="{{ category.image.url }}" alt="{{ category.name }}" />
+    {% endif %}
+    <div class="products_list">
+        {% for product in products %}
+            <div class="product_item">
+                <a href="{{ product.get_absolute_url }}">
+                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" />
+                    <h2>{{ product.name }}</h2>
+                </a>
+            </div>
+        {% empty %}
+            <p>Žiadne produkty v tejto kategórii.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

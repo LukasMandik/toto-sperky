@@ -498,3 +498,15 @@ def search_suggestions(request):
             })
 
     return JsonResponse(suggestions, safe=False)
+
+
+
+@login_required
+def category_detail(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(category=category, available=True)
+    context = {
+        'category': category,
+        'products': products,
+    }
+    return render(request, 'category_detail.html', context)

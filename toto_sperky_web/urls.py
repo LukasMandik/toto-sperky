@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import home, gallery, ProductDetailView, cookies, product_data, about_me, contact, blog_view, BlogDetailView
+from .views import home, gallery, ProductDetailView, cookies, product_data, about_me, contact, blog_view, BlogDetailView, category_detail
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 app_name = 'toto_sperky_web'
 
@@ -16,6 +16,7 @@ urlpatterns = [
     path('blog/<slug:slug>/', BlogDetailView, name='blog_detail'),
     path('cookies/', cookies, name='cookies'),
     path('product/<slug:slug>/data/', product_data, name='product_data'),
+    path('category/<slug:slug>/', category_detail, name='category_detail'),
     # path('add_product/', add_product, name='add_product'),
     # path('product/<slug:slug>/update/', update_product, name='update_product'),
     # path('product/<slug:slug>/delete/', delete_product, name='delete_product'),

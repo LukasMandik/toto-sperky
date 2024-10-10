@@ -66,6 +66,16 @@ class Blog(models.Model):
             rounded_seconds = 0
         # Vrátiť čas čítania vo formáte minúty:sekundy
         return f"{total_minutes} m {rounded_seconds} s"
+    
+        # Meta informácie pre django-meta
+    def get_meta_title(self):
+        return self.name
+
+    def get_meta_description(self):
+        return self.description
+
+    def get_meta_image(self):
+        return self.images.first().image.url if self.images.first() else None
 
 
 class BlogImage(models.Model):
@@ -144,9 +154,14 @@ class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField(blank=True, null=True,)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'categories'
+    
+    def get_absolute_url(self):
+        return reverse('toto_sperky_web:category_detail', args=[self.slug])
 
     def __str__(self):
         return self.name

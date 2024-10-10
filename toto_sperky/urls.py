@@ -19,6 +19,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from toto_sperky_web import views
+from django.contrib.sitemaps.views import sitemap
+from toto_sperky_web.sitemaps import BlogSitemap, ProductSitemap, CategorySitemap, StaticViewSitemap
+
+sitemaps = {
+    'blogs': BlogSitemap,
+    'products': ProductSitemap,
+    'categories': CategorySitemap,
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +44,8 @@ urlpatterns = [
     path('add_category/', views.add_category, name='add_category'),
     path('category/<slug:slug>/update/', views.update_category, name='update_category'),
     path('category/<slug:slug>/delete/', views.delete_category, name='delete_category'),
+    path('category/<slug:slug>/', views.category_detail, name='category_detail'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:
