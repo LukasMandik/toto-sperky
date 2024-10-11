@@ -3,7 +3,8 @@
 .gallery_content_page {
     display: flex;
     flex-direction: column;
-    margin-top: 85px;
+    /* margin-top: 85px; */
+	padding-top: 85px;
     overflow: hidden;
     background-color: var(--background-color-light);
     min-height: 100vh;
@@ -582,6 +583,10 @@ input#goToPage{
 	.footer_hide_element{
 			margin-bottom: 470px;
 	}
+	.gallery_content_page{
+			/* margin-top: 50px;	 */
+			padding-top: 50px;
+	  }
 
 	.container, .container_home{
 		width: calc(100% - 20px);
@@ -593,15 +598,12 @@ input#goToPage{
 		margin: 20px auto 5px auto;
 	
 	}
-	.gallery_content_page{
-			margin-top: 50px;	
-	  }
 	h3.h3_category{
 	
 		
 			text-align: center;
 			/* padding-left: 1.8px; */
-			top: 30px;
+			top: 85px;
 	
 	}
 	.categories{

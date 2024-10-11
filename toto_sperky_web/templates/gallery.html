@@ -5,7 +5,7 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/gallery.css' %}">
 <div class="gallery_content_page">
-    <div class="categories">
+    <section class="categories">
         <h3 class="h3_category">Kategórie</h3>
         <ul class="categories-list">
             <div class="categories_item">
@@ -34,8 +34,10 @@
             </div>
             {% endfor %}
         </ul>
-    </div>
-    {% include "partials/product_list.html" %}
+    </section>
+    <section>
+        {% include "partials/product_list.html" %}
+    </section>
 </div>
  
 <!-- test -->

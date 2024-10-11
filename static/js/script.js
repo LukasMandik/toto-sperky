@@ -310,7 +310,7 @@ $(document).ready(function() {
 
   $(document).ready(function() {
     gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
-        let lines = elem.querySelectorAll('.text_home_about_jewelry p.first_text, .text_home_about_jewelry p.last_text');
+        let lines = elem.querySelectorAll('.text_home_about_jewelry h1.first_text, .text_home_about_jewelry h2.last_text');
   
         let Timeline = gsap.timeline({
           scrollTrigger: {

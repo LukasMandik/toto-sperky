@@ -8,8 +8,8 @@
 
 
 
-<div class="main_home_container starter">
-    <div class="main_image_container starter2">
+<section class="main_home_container starter">
+    <header class="main_image_container starter2">
             <!-- <img src="{% static 'media/logo_biele.png' %}" alt="logo"> -->
             <div class="circles_gradient"></div>
             <div class="logo_svg_container starterdot">
@@ -46,9 +46,9 @@
                     </g>
                 </svg>
             </div>
-    </div>
+    </header>
     
-    <div class="second_home_container">
+    <section class="second_home_container">
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs/>
@@ -58,21 +58,21 @@
             </svg>
         </div>
         <div class="text_home_about_jewelry">
-            <p class="first_text">
+            <h1 class="first_text">
                 Cínované šperky vyrábané s precíznosťou a jemnosťou 
-            </p>
+            </h1>
             <div class="ellipse_group">  
-                <p class="ring">
+                <h2 class="ring">
                     Výnimočné <br>tvary polodrahokamov vsadených <br>v bezolovnatom šperkárskom <br>cíne 
                     s prímesou striebra.
-                </p>
+                </h2>
                 <div class="ellipse-1"></div>
                 <div class="ellipse-3"></div>
                 <div class="ellipse-2"></div>
             </div>
-            <p class="last_text">  
+            <h2 class="last_text">  
                 Jedinečné <br>doplnky <br>a ozdôbky <br>vyrobené <br> iba pre teba. 
-            </p>
+            </h2>
         </div>
         
         
@@ -91,8 +91,8 @@
             <a href="/about_me" class="btn type1">O mne</a>
         </div>
         {% include 'partials/search_suggestions.html' %}
-    </div>
-    <div class="third_home_container">
+    </section>
+    <section class="third_home_container">
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs/>
@@ -101,7 +101,7 @@
                 </g>
             </svg>
         </div> 
-        <p>Najnovšie pridané</p>
+        <h3>Najnovšie pridané</h3>
         <div class="carusel">
                     
             {% if last_product %}
@@ -147,9 +147,11 @@
             <!-- <button>Viac</button> -->
             <a href="/gallery" class="btn type1">Celá galéria</a>
         </div>
-    </div>
-    {% include 'about_me_content.html' %}
-</div>
+    </section>
+    <article>
+        {% include 'about_me_content.html' %}
+    </article>
+</section>
 
 
 

@@ -5,8 +5,8 @@
 {% block content %}
 
 
-<div class="container_blog">
-    <div class="title_blog"> Blog </div>
+<section class="container_blog">
+    <h3 class="title_blog"> Blog </h3>
     {% for blog in blogs %}
         <div class="line_center_about_me" >
         <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -17,19 +17,18 @@
         </svg>
     </div>
     <a href="{{ blog.get_absolute_url }}">
-        <div class="blog-post">
+        <article class="blog-post">
             <div class="blog-header" style="background-image: url('{{ blog.images.first.image.url }}');">
                 <div class="blog-info">
                     <h2>{{ blog.name }}</h2>
                     <p>Napísané: {{ blog.created|date:"j/n/Y" }}</p>
-                    <p>Čas čítania: {{ blog.reading_time }} 
-                    </p>
+                    <p>Čas čítania: {{ blog.reading_time }}</p>
                 </div>
             </div>
             <div class="blog-content">
                 <p>{{ blog.description }}</p>
             </div>
-        </div>
+        </article>
     </a>
     {% endfor %}
     
@@ -38,6 +37,6 @@
         <a href="{% url 'add_blog' %}" class="btn type1">Pridať článok</a>
     </div>
     {% endif %}
-</div>
+</section>
 
 {% endblock %}
