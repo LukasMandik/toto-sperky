@@ -1022,3 +1022,147 @@ document.addEventListener('DOMContentLoaded', () => {
 //       });
 //   }
 // });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const customizeCookiesButton = document.getElementById("customizeCookies");
+  const modal = document.getElementById("customize-cookies-modal");
+  const closeModal = document.querySelector(".close_cookies");
+  const cookieForm = document.getElementById("cookie-preferences-form");
+  const marketingCookiesCheckbox = document.getElementById("marketing-cookies");
+
+  // Nastaviť stav checkboxu podľa uložených cookies
+  if (!document.cookie.includes("marketingCookies=")) {
+      marketingCookiesCheckbox.checked = true;
+  } else if (document.cookie.includes("marketingCookies=accepted")) {
+      marketingCookiesCheckbox.checked = true;
+  } else {
+      marketingCookiesCheckbox.checked = false;
+  }
+
+  customizeCookiesButton.addEventListener("click", function() {
+      modal.style.display = "block";
+  });
+
+  closeModal.addEventListener("click", function() {
+      modal.style.display = "none";
+  });
+
+  window.addEventListener("click", function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  });
+
+  cookieForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const marketingCookies = marketingCookiesCheckbox.checked ? "accepted" : "declined";
+      const currentCookieValue = document.cookie.split('; ').find(row => row.startsWith('marketingCookies=')).split('=')[1];
+
+      if (currentCookieValue !== marketingCookies) {
+          document.cookie = "marketingCookies=" + marketingCookies + "; max-age=" + 60 * 60 * 24 * 30;
+      }
+      modal.style.display = "none";
+  });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const cookieBox = document.querySelector(".wrapper2");
+  const buttons = document.querySelectorAll(".button");
+  const modal = document.getElementById("customize-cookies-modal");
+  const closeModal = document.querySelector(".close_cookies");
+  const cookieForm = document.getElementById("cookie-preferences-form");
+  const marketingCookiesCheckbox = document.getElementById("marketing-cookies");
+
+  const executeCodes = () => {
+    if (document.cookie.includes("cookieBy=toto_sperky")) return;
+    cookieBox.classList.add("show");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        cookieBox.classList.remove("show");
+
+        if (button.id == "acceptBtn") {
+          document.cookie = "cookieBy=toto_sperky; path=/; max-age=" + 60 * 60 * 24 * 30;
+          document.cookie = "marketingCookies=accepted; path=/; max-age=" + 60 * 60 * 24 * 30;
+        } else if (button.id == "declineBtn") {
+          document.cookie = "cookieBy=toto_sperky; path=/; max-age=" + 60 * 60 * 24 * 30;
+          document.cookie = "marketingCookies=declined; path=/; max-age=" + 60 * 60 * 24 * 30;
+        } else if (button.id == "customizeBtn") {
+          modal.style.display = "block";
+        }
+      });
+    });
+  };
+
+  closeModal.addEventListener("click", function() {
+      modal.style.display = "none";
+  });
+
+  window.addEventListener("click", function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  });
+
+  cookieForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const marketingCookies = marketingCookiesCheckbox.checked ? "accepted" : "declined";
+      document.cookie = "cookieBy=toto_sperky; path=/; max-age=" + 60 * 60 * 24 * 30;
+      document.cookie = "marketingCookies=" + marketingCookies + "; path=/; max-age=" + 60 * 60 * 24 * 30;
+      modal.style.display = "none";
+    });
+
+  window.addEventListener("load", executeCodes);
+});
+
+
+
+const buttons = document.getElementsByClassName('type1');
+Array.from(buttons).forEach(button => {
+    button.addEventListener('click', function(event) {
+        // Zabráni predvolenému správaniu odkazu
+        event.preventDefault();
+
+        // Oneskorí otvorenie odkazu o 0.3 sekundy
+        setTimeout(function() {
+            window.location.href = event.target.href;
+        }, 300); // 0.3 sekundy oneskorenie
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.querySelector('.carusel');
+  const images = carousel.querySelectorAll('.carusel a .carousel_items');
+
+  function updateImageScales() {
+      const carouselRect = carousel.getBoundingClientRect();
+      const carouselCenter = carouselRect.left + carouselRect.width / 2;
+      const tolerance = carouselRect.width * 0.1; // 10% tolerance
+
+      images.forEach(img => {
+          const imgRect = img.getBoundingClientRect();
+          const imgCenter = imgRect.left + imgRect.width / 2;
+          const distanceFromCenter = Math.abs(carouselCenter - imgCenter);
+          const maxDistance = (carouselRect.width / 2) - tolerance;
+
+          let scale;
+          if (distanceFromCenter < tolerance) {
+              scale = 1.17;
+          } else {
+              scale = 1.17 - ((distanceFromCenter - tolerance) / maxDistance * 0.1);
+              scale = Math.max(scale, 1); // Ensure the scale doesn't go below 1
+          }
+
+          img.style.transform = `scale(${scale})`;
+      });
+  }
+
+  carousel.addEventListener('scroll', updateImageScales);
+  window.addEventListener('resize', updateImageScales);
+
+  updateImageScales(); // Initial call to set the scales
+});

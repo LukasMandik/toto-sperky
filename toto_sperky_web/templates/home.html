@@ -175,56 +175,9 @@
 
 
     
-<script>
-    const buttons = document.getElementsByClassName('type1');
-    Array.from(buttons).forEach(button => {
-        button.addEventListener('click', function(event) {
-            // Zabráni predvolenému správaniu odkazu
-            event.preventDefault();
 
-            // Oneskorí otvorenie odkazu o 0.3 sekundy
-            setTimeout(function() {
-                window.location.href = event.target.href;
-            }, 300); // 0.3 sekundy oneskorenie
-        });
-    });
-</script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script> 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const carousel = document.querySelector('.carusel');
-    const images = carousel.querySelectorAll('.carusel a .carousel_items');
 
-    function updateImageScales() {
-        const carouselRect = carousel.getBoundingClientRect();
-        const carouselCenter = carouselRect.left + carouselRect.width / 2;
-        const tolerance = carouselRect.width * 0.1; // 10% tolerance
-
-        images.forEach(img => {
-            const imgRect = img.getBoundingClientRect();
-            const imgCenter = imgRect.left + imgRect.width / 2;
-            const distanceFromCenter = Math.abs(carouselCenter - imgCenter);
-            const maxDistance = (carouselRect.width / 2) - tolerance;
-
-            let scale;
-            if (distanceFromCenter < tolerance) {
-                scale = 1.17;
-            } else {
-                scale = 1.17 - ((distanceFromCenter - tolerance) / maxDistance * 0.1);
-                scale = Math.max(scale, 1); // Ensure the scale doesn't go below 1
-            }
-
-            img.style.transform = `scale(${scale})`;
-        });
-    }
-
-    carousel.addEventListener('scroll', updateImageScales);
-    window.addEventListener('resize', updateImageScales);
-
-    updateImageScales(); // Initial call to set the scales
-});
-
-</script>
 
 {% endblock %}
