@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /settings/
+Allow: /static/
+Allow: /media/
+Sitemap: http://37.205.12.97/sitemap.xml
