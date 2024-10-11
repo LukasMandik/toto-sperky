@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% load custom_filters %} 
 {% load static %}
-{% block title %}{{blog.name }}{% endblock %}
+{% block title %}{{blog.name }} - Detail blogu{% endblock %}
+{% block meta_description %}
+<meta name="description" content="{{ meta_description }}">
+{% endblock %}
 
 {% block content %}
 <div class="product_detail_container_wrapper">

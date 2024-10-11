@@ -369,7 +369,7 @@ def ProductDetailView(request, slug):
     product = get_object_or_404(Product, slug=slug)
     context = {
         'product': product,
-        # 'show_footer': True, 
+        'meta_description': product.get_meta_description(),
     }
     return render(request, 'product_detail.html', context)
 
@@ -377,7 +377,7 @@ def BlogDetailView(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     context = {
         'blog': blog,
-        # 'show_footer': True, 
+        'meta_description': blog.get_meta_description(),
     }
     return render(request, 'blog_detail.html', context)
 

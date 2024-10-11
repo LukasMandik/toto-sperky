@@ -72,7 +72,7 @@ class Blog(models.Model):
         return self.name
 
     def get_meta_description(self):
-        return self.description
+        return f"Prečítajte si viac o {self.name} na našom blogu. {self.description[:150]}..."
 
     def get_meta_image(self):
         return self.images.first().image.url if self.images.first() else None
@@ -506,6 +506,8 @@ class Product(models.Model):
     #     if not self.image:
     #         self.image_thumbnail = None
     #     super().save(*args, **kwargs)
+    def get_meta_description(self):
+        return f"Vyrobila som {self.name}. {self.description[:150]}..."
 
 
 
