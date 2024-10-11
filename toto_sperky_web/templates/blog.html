@@ -6,6 +6,11 @@
 <meta name="description" content="Prečítajte si najnovšie články na našom blogu o trendoch v šperkoch, návodoch na starostlivosť a inšpiráciách pre vaše ďalšie kúsky.">
 {% endblock %}
 
+{% block og_title %}Blog - Toto šperky{% endblock %}
+{% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block og_description %}Prečítajte si najnovšie články na našom blogu o trendoch v šperkoch.{% endblock %}
+
 {% block content %}
 
 

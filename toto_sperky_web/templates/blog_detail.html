@@ -6,6 +6,11 @@
 <meta name="description" content="{{ meta_description }}">
 {% endblock %}
 
+{% block og_title %}{{ blog.get_meta_title }}{% endblock %}
+{% block og_image %}{{ blog.get_meta_image }}{% endblock %}
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block og_description %}{{ blog.get_meta_description }}{% endblock %}
+
 {% block content %}
 <div class="product_detail_container_wrapper">
   <div class="blog_detail_container">

@@ -22,6 +22,13 @@
     {% block meta_description %}
     <meta name="description" content="Objavte krásne a kvalitné šperky na Toto šperky.">
     {% endblock %}
+
+    <meta property="og:title" content="{% block og_title %}Toto šperky{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Objavte krásne a kvalitné šperky na Toto šperky.{% endblock %}">
+    
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>

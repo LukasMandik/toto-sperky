@@ -7,6 +7,12 @@
 <meta name="description" content="{{ meta_description }}">
 {% endblock %}
 
+{% block og_title %}{{ product.name }} - Detail produktu{% endblock %}
+{% block og_image %}{{ product.image.url }}{% endblock %}
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block og_description %}Detail produktu {{ product.name }}. Objavte jeho vlastnosti a jedinečný dizajn.{% endblock %}
+
+
 {% block content %}
 <div class="product_detail_container_wrapper">
 <div class="product_detail_container">

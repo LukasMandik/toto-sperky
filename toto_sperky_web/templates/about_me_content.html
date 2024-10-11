@@ -17,30 +17,6 @@
         <div class="text-about-me">
             <p>Kombinujem <span>prírodné</span> materiály s chladným kovom. Šperky sú vyrábané s precíznosťou a <span>jemnosťou</span> a dušu im dodávajú polodrahokamy, ktoré osobne vyberám, ktoré majú <span>výnimočné</span> tvary, farby, veľkosti, aj vďaka tomu nie je možné vyrobiť rovnaký šperk.</p>
         </div>
-
-        <!-- <div class="wrapper3">
-            <div class="boxes">
-                {% for product in products %}
-                <a href="{{ product.get_absolute_url }}">
-                    <div class="box2">
-                        {% if product.video %}
-                        <video autoplay="" loop muted playsinline preload="auto">
-                            {% if product.video_thumbnail %}
-                            <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
-                            {% endif %}
-                            <source src="{{ product.video.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        {% else %}
-                        {% if product.image_thumbnail %}
-                        <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
-                        {% endif %}
-                        {% endif %}
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </div> -->
         <div class="carousel">
             {% for product in products %}
             <a href="{{ product.get_absolute_url }}">
@@ -71,7 +47,7 @@
             <p>K šperku mám veľmi blízko a v spojení mojich štúdii som si našla moju <span>prácu snov</span>. <span>Inšpirujú ma rôzne</span> situácie, ľudia, miesta, podnety... </p>
         </div>
         <div class="image_neckless">
-            <img src="{% static 'media/nahrdelnik.jpg' %}" loading="lazy"/>
+            <img src="{% static 'media/nahrdelnik.jpg' %}" loading="lazy" alt="Nahrdelnik"/>
         </div>
     </div>
 </section>

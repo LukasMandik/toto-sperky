@@ -3,8 +3,15 @@
 {% block title %}Toto šperky{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="Vitajte na Toto šperky - vášmi odborníkmi na kvalitné a elegantné šperky. Objavte našu širokú ponuku prsteňov, náhrdelníkov a ďalších kúskov pre každú príležitosť.">
+<meta name="description" content="Vitajte na Toto šperky - kvalitné a elegantné šperky. Objavte našu ponuku prsteňov, náhrdelníkov a ďalších kúskov pre každú príležitosť.">
 {% endblock %}
+
+{% block og_title %}Toto šperky - Domov{% endblock %}
+{% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block og_description %}Vitajte na Toto šperky - kvalitné a elegantné šperky. Objavte našu ponuku prsteňov, náhrdelníkov a ďalších kúskov pre každú príležitosť.{% endblock %}
+
+
 
 {% block content %}
 <section class="main_home_container starter">
