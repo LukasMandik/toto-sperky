@@ -2,6 +2,33 @@
 {% load static %}
 {% block title %}Kontakt{% endblock %}
 
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Toto šperky",
+      "url": "https://www.vasadomena.sk/contact",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+4214735863945",
+        "contactType": "Customer Service",
+        "email": "ing.vcelikovaivana@gmail.com",
+        "areaServed": "SK",
+        "availableLanguage": "Slovak"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1.mája č.95",
+        "addressLocality": "Handlová",
+        "postalCode": "972 51",
+        "addressCountry": "Slovakia"
+      }
+    }
+  }
+  </script>
+
 {% block meta_description %}
 <meta name="description" content="Kontaktujte nás na Toto šperky. Sme tu pre vás, aby sme odpovedali na vaše otázky a poskytli vám potrebné informácie. Nájdete nás na adrese 1.mája č.95, Handlová, Slovensko.">
 {% endblock %}

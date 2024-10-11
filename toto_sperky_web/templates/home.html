@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Toto šperky{% endblock %}
-
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Toto šperky",
+      "url": "https://www.vasadomena.sk",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.vasadomena.sk/search?query={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+</script>
 {% block meta_description %}
 <meta name="description" content="Vitajte na Toto šperky - kvalitné a elegantné šperky. Objavte našu ponuku prsteňov, náhrdelníkov a ďalších kúskov pre každú príležitosť.">
 {% endblock %}

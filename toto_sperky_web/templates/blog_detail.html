@@ -2,6 +2,29 @@
 {% load custom_filters %} 
 {% load static %}
 {% block title %}{{blog.name }} - Detail blogu{% endblock %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ blog.name }}",
+    "image": "{{ blog.get_meta_image }}",
+    "author": {
+      "@type": "Person",
+      "name": "Ivana"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Toto šperky",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.vasadomena.sk/media/logo_cierne.png"
+      }
+    },
+    "datePublished": "{{ blog.created|date:'Y-m-d' }}",
+    "description": "{{ blog.get_meta_description }}"
+  }
+  </script>
+
 {% block meta_description %}
 <meta name="description" content="{{ meta_description }}">
 {% endblock %}

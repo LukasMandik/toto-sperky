@@ -2,7 +2,28 @@
 {% load custom_filters %} 
 {% load static %}
 {% block title %}{{ product.name }} - Detail produktu{% endblock %}
-
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "{{ product.name }}",
+    "image": "{{ product.image.url }}",
+    "description": "{{ product.description }}",
+    "sku": "{{ product.sku }}",
+    "brand": {
+      "@type": "Brand",
+      "name": "Toto šperky"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "{{ request.build_absolute_uri }}",
+      "priceCurrency": "EUR",
+      "price": "{{ product.price }}",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
 {% block meta_description %}
 <meta name="description" content="{{ meta_description }}">
 {% endblock %}
