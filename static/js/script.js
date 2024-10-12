@@ -654,6 +654,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
   const customizeCookiesButton = document.getElementById("customizeCookies");
   const modal = document.getElementById("customize-cookies-modal");
@@ -746,21 +749,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
   window.addEventListener("load", executeCodes);
-});
-
-
-
-const buttons = document.getElementsByClassName('type1');
-Array.from(buttons).forEach(button => {
-    button.addEventListener('click', function(event) {
-        // Zabráni predvolenému správaniu odkazu
-        event.preventDefault();
-
-        // Oneskorí otvorenie odkazu o 0.3 sekundy
-        setTimeout(function() {
-            window.location.href = event.target.href;
-        }, 300); // 0.3 sekundy oneskorenie
-    });
 });
 
 
