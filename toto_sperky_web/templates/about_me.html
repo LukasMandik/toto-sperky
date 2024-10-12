@@ -10,28 +10,21 @@
         "@type": "Person",
         "name": "Ivana",
         "description": "Autorka jedinečných šperkov zo striebra a šperkárskeho cínu. Objavte jej inšpirácie, tvorivé procesy a osobný príbeh.",
-        "url": "https://www.vasadomena.sk/about_me",
-        "image": "https://www.vasadomena.sk/media/nahrdelnik.jpg"
+        "url": "https://www.totosperky.sk/about_me",
+        "image": "https://www.totosperky.sk/media/nahrdelnik.jpg"
       }
     }
-    </script>
+</script>
 
 {% block meta_description %}
 <meta name="description" content="Zistite viac o Ivane, autorke jedinečných šperkov zo striebra a šperkárskeho cínu. Objavte jej inšpirácie, tvorivé procesy a osobný príbeh.">
 {% endblock %}
-
 {% block og_title %}O mne - Ivana{% endblock %}
 {% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 {% block og_description %}Zistite viac o Ivane, autorke jedinečných šperkov zo striebra a šperkárskeho cínu. Objavte jej inšpirácie, tvorivé procesy a osobný príbeh.{% endblock %}
-
-
 {% block content %}
-
-
 {% include 'about_me_content.html' %}
-
-
 {% endblock %}
 
 

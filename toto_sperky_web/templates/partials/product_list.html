@@ -19,7 +19,6 @@
                     {% if product.video_thumbnail %}
                     <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
                     {% endif %}
-                    <!-- <source src="{{ product.video.url }}" type="video/mp4"> -->
                     Your browser does not support the video tag.
                 </video>
                 {% else %}
@@ -47,51 +46,39 @@
 
     <div class="pagination">
         <span class="step-links">
-            <!-- {% if products.has_previous %}
-                <a href="?category={{ selected_category }}&page={{ products.previous_page_number }}"> < </a>
-                {% endif %} -->
-                
-        {% for num in first_range %}
-        {% if num == products.number %}
-        <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-        {% else %}
-        <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-        {% endif %}
-        {% endfor %}
-        
-        {% if first_range|last < paginator.num_pages|add:'-3' and products.number < paginator.num_pages|add:'-3' %}
-        <span>...</span>
-        {% endif %}
-        
-        {% for num in middle_range %}
-        {% if num == products.number %}
-        <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-        {% else %}
-        <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-        {% endif %}
-        {% endfor %}
-        
-        {% if last_range|first > 3 and products.number >= 5 %}
-        <span>...</span>
-        {% endif %}
-        
-        {% for num in last_range %}
-        {% if num == products.number %}
-        <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-        {% else %}
-        <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
-        {% endif %}
-        {% endfor %}
-        
-        <!-- {% if products.has_next %}
-            <a href="?category={{ selected_category }}&page={{ products.next_page_number }}"> > </a>
-            {% endif %} -->
+            {% for num in first_range %}
+            {% if num == products.number %}
+            <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+            {% else %}
+            <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+            {% endif %}
+            {% endfor %}
+            
+            {% if first_range|last < paginator.num_pages|add:'-3' and products.number < paginator.num_pages|add:'-3' %}
+            <span>...</span>
+            {% endif %}
+            
+            {% for num in middle_range %}
+            {% if num == products.number %}
+            <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+            {% else %}
+            <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+            {% endif %}
+            {% endfor %}
+            
+            {% if last_range|first > 3 and products.number >= 5 %}
+            <span>...</span>
+            {% endif %}
+            
+            {% for num in last_range %}
+            {% if num == products.number %}
+            <a class="current-page" href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+            {% else %}
+            <a href="?category={{ selected_category }}&page={{ num }}">{{ num }}</a>
+            {% endif %}
+            {% endfor %}
+
         </span>
-        
-        <!-- <span class="current">
-            Stránka {{ products.number }} s {{ products.paginator.num_pages }}.
-        </span> -->
-        
         <details id="details-element">
             <summary id="details-summary">Viac možnosti</summary>
             <span class="items-per-page">
