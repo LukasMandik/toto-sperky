@@ -28,7 +28,6 @@
 {% block content %}
 <section class="main_home_container starter">
     <header class="main_image_container starter2">
-            <!-- <img src="{% static 'media/logo_biele.png' %}" alt="logo"> -->
             <div class="circles_gradient"></div>
             <div class="logo_svg_container starterdot">
                 <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="-1000 -1000 19853.7 19063.3" width="100%" >
@@ -65,7 +64,6 @@
                 </svg>
             </div>
     </header>
-    
     <section class="second_home_container">
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -92,9 +90,6 @@
                 Jedinečné <br>doplnky <br>a ozdôbky <br>vyrobené <br> iba pre teba. 
             </h2>
         </div>
-        
-        
-        
         <div class="line_center" >
             <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs/>
@@ -120,8 +115,7 @@
             </svg>
         </div> 
         <h3>Najnovšie pridané</h3>
-        <div class="carusel">
-                    
+        <div class="carusel">      
             {% if last_product %}
             <a href="{{ last_product.get_absolute_url }}">
                 <div class="carousel_items">
@@ -162,7 +156,6 @@
             {% endfor %}
         </div>
         <div class="home_buttons">
-            <!-- <button>Viac</button> -->
             <a href="/gallery" class="btn type1">Celá galéria</a>
         </div>
     </section>
@@ -170,14 +163,6 @@
         {% include 'about_me_content.html' %}
     </article>
 </section>
-
-
-<script>
-    
-</script>
-
-    
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script> 
 
 

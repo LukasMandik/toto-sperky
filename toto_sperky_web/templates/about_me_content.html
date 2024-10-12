@@ -20,14 +20,9 @@
         <div class="carousel">
             {% for product in products %}
             <a href="{{ product.get_absolute_url }}">
-              
-                
-                
-                    {% if product.image_thumbnail %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
-                    {% endif %}
-              
-           
+                {% if product.image_thumbnail %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                {% endif %}
             </a>
             {% endfor %}
             <div class="carousel-indicators">
@@ -36,7 +31,6 @@
                 {% endfor %}
             </div>
         </div>
-        
         <div class="text-about-me">
             <p>Mám <span>vyštudovanú</span> školu úžitkového výtvarníctva v Kremnici v odbore plošné a plastické <span>rytie kovov</span>, popri ktorom som voľne študovala aj odbor <span>zlatníctvo-strieborníctvo.</span></p>
         </div>
