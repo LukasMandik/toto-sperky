@@ -1882,15 +1882,6 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	width: 100%;
 	height: 100%;
   }
-/* .container_add_product #delete-button.delete-button a{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	@media (max-width: 720px) {
-	width: 0px;
-	height: 0px;
-	}
-  } */
   .delete-svgIcon {
 	width: 15px;
 	transition-duration: 0.3s;
@@ -2258,26 +2249,10 @@ footer {
 	/* background: red; */
 	font-size: 12px;
 	z-index: -2;
-	/* padding-top: 100px; */
-	/* margin-top: 100px; */
-
-	
   }
   footer::before {
-
 	z-index: 2;
-	
   }
- /* .footer_up_block {
-	width: 100%;
-	height: 400px;
-	background: var(--background-color-light);
-
-}
-.footer_up_block.scrolled  {
-	background: #3d3d3d
-
-} */
 .footer_container.scrolled {
 	background:#3d3d3d;;
 
@@ -2348,21 +2323,19 @@ footer {
 	color: #cdcdcd;
 	font-size: 24px;
 }
-
+.footer_container p button{
+	display: none;
+}
 footer p a, footer p {
 	color: #cdcdcd;
 	z-index: 1000;
   }
-  body.light-mode footer .footer_container p a{
-	color: #cdcdcd;
-  }
 
-  body.dark-mode footer .footer_container p a{
-	color:#cdcdcd;
-  }
+
+
 .container_add_product{
 	margin: 0 auto;
-	padding-top: 120px;
+	padding-top: 80px;
 	width: 100%;
 	min-height: 100svh;
 	display: flex;
@@ -2373,15 +2346,13 @@ footer p a, footer p {
 
 }
 .container_add_product form .form-group{
-
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
-	width: 300px;
-	/* display: flex;
-	flex-direction: column; */
-	/* align-items: center; */
+	max-width: 600px;
+	width: 90%;
+	border: 1 px red solid;
 }
 
 .container_add_product form{
@@ -2394,10 +2365,9 @@ footer p a, footer p {
 }
 .container_add_product form .form-group input#id_name{
 	display: flex;
-	  
+	font-size: 16px;
 	flex-direction: column;
-
-	width: 100%;
+	width: 260px;
 	padding: 0.6rem;
 	border-radius: 1rem;
 	border: solid 0.047rem;
@@ -2409,38 +2379,39 @@ footer p a, footer p {
 }
 .container_add_product form .form-group a{
 	width: 100%;
+	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .container_add_product form .form-group select#id_category{
-		display: flex;
-		font-size: 16px;
-		width: 280px;
-		height: 40px;
-		padding: 0.4rem;
-		border-radius: 1rem;
-		border: solid 0.047rem;
-		box-shadow: 2px 2px 5px 2px rgba(211, 211, 211, 0.239);
-		margin-top: 5px;
-		margin-bottom: 5px;
-	  }
-	  .container_add_product form .form-group textarea{
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		padding: 0.6rem;
-		border-radius: 1rem;
-		border: solid 0.047rem;
-		box-shadow: 2px 2px 5px 2px rgba(211, 211, 211, 0.239);
-		margin-top: 5px;
-		margin-bottom: 5px;
-		
-	  }
-	.container_add_product form .form-group input#id_image, .container_add_product form .form-group input#id_video{
-		display: flex;
-		margin: 0 auto;
-		text-align: center;
+	display: flex;
+	font-size: 16px;
+	width: 260px;
+	height: 40px;
+	padding: 0.4rem;
+	border-radius: 1rem;
+	border: solid 0.047rem;
+	box-shadow: 2px 2px 5px 2px rgba(211, 211, 211, 0.239);
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.container_add_product form .form-group textarea{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0.6rem;
+	border-radius: 1rem;
+	border: solid 0.047rem;
+	box-shadow: 2px 2px 5px 2px rgba(211, 211, 211, 0.239);
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 16px;
+	}
+.container_add_product form .form-group input#id_image, .container_add_product form .form-group input#id_video{
+	display: flex;
+	margin: 0 auto;
+	text-align: center;
 	}	
 
 	.container_add_product form .form-group input#file_upload{
@@ -2462,8 +2433,8 @@ footer p a, footer p {
 		visibility: hidden;
 	}	 
 	 input#id_image, input#id_video, input#id_0-image.form-control, input#id_1-image.form-control,input#id_2-image.form-control,input#id_3-image.form-control, input#id_4-image.form-control,
-	 .replace-input input{
-		display: inline-block;
+	 .replace-input input {
+		display: block;
 		width: 100%;
 		padding: 120px 0 0 0;
 		height: 80px;
@@ -2474,8 +2445,9 @@ footer p a, footer p {
 		background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png') center center no-repeat #e4e4e4;
 		border-radius: 20px;
 		background-size: 60px 60px;
+		/* border: solid red 1px; */
 	  }
-  .container_add_product form#product-form .form-group:nth-child(4), .container_add_product form#product-form .form-group:nth-child(5),
+  /* .container_add_product form#product-form .form-group:nth-child(4), .container_add_product form#product-form .form-group:nth-child(5),
   .container_add_product form#blog-form .form-group .image-upload {
 	display: flex;
 	justify-content: center;
@@ -2483,9 +2455,25 @@ footer p a, footer p {
 	align-items: center;
 	gap: 10px;
 	margin-bottom: 10px;
-	font-size: 22PX;
-	max-width: 400px;
-	width: 100%;
+	font-size: 22px;
+
+	height: auto;
+	padding: 1rem;
+	border-radius: 1rem;
+	border:  red solid 0.047rem;
+	box-shadow: 2px 2px 5px 2px rgba(211, 211, 211, 0.239);
+	margin-top: 5px;
+	margin-bottom: 5px;
+  } */
+.container_add_product form .form-group.media, .container_add_product form .form-group .image-upload{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 10px;
+	font-size: 22px;
+	width: 90%;
 	height: auto;
 	padding: 1rem;
 	border-radius: 1rem;

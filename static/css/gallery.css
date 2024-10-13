@@ -57,7 +57,10 @@ h3.h3_category {
   overflow-y: hidden;
 }
 .categories_item li a p, .categories_item li a{
-	font-weight: 400;
+	font-weight: 500;
+}
+.categories_item li.selected a p, .categories_item li a{
+	font-weight: 900;
 }
 .categories_item li {
     position: relative;

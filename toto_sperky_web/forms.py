@@ -48,7 +48,7 @@ class CategoryForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'slug', 'image', 'video', 'category', 'description', 'available']
+        fields = ['name', 'slug', 'category', 'description', 'available' , 'image', 'video']
         widgets = {
             'slug': forms.HiddenInput(),
             # 'image': forms.HiddenInput(),
@@ -58,18 +58,6 @@ class ProductForm(forms.ModelForm):
                 # 'style': 'max-width: 100px;',
                 'placeholder': 'Názov produktu'
                 }),
-            # 'available': forms.CheckboxInput(attrs={
-            #     'class': "form-control-input",
-            #     # 'style': 'min-width: 100px;',
-            #     # 'placeholder': 'Name'
-            #     }),
-
-            # 'image': forms.FileInput(attrs={
-            #     # 'class': "form-control-input",
-            #     # 'style': 'max-width: 100px;',
-            #     'placeholder': 'Obrazok',
-            #     'label': 'Vybrať súbor',
-            #     }),
 
                 
         }
