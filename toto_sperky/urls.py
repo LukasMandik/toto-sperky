@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from toto_sperky_web import views
 from django.contrib.sitemaps.views import sitemap
 from toto_sperky_web.sitemaps import BlogSitemap, ProductSitemap, CategorySitemap, StaticViewSitemap
-
+from django.views.generic import TemplateView
 sitemaps = {
     'blogs': BlogSitemap,
     'products': ProductSitemap,
@@ -46,6 +46,7 @@ urlpatterns = [
     path('category/<slug:slug>/delete/', views.delete_category, name='delete_category'),
     path('category/<slug:slug>/', views.category_detail, name='category_detail'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]
 
 if settings.DEBUG:

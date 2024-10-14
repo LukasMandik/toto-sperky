@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /settings/
+Allow: /static/
+Allow: /media/
+Sitemap: https://www.totosperky.sk/sitemap.xml

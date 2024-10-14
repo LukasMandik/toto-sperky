@@ -3,7 +3,6 @@ from django.urls import path
 from .views import home, gallery, ProductDetailView, cookies, product_data, about_me, contact, blog_view, BlogDetailView, category_detail, UserLoginView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import LogoutView
-
 app_name = 'toto_sperky_web'
 
 urlpatterns = [

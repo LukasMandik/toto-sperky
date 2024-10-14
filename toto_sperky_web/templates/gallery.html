@@ -70,7 +70,7 @@
         checkAspectRatio();
         initializeGSAPAnimations();
         initializeMobileHover();
-        // initializeCategoryLinks(); // Pridajte túto funkciu
+        initializeCategoryLinks(); // Pridajte túto funkciu
     }
   
 
@@ -78,58 +78,60 @@
         document.querySelectorAll('.category-link').forEach(link => {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
-                if (isRequestInProgress) return; // Zastaviť, ak je požiadavka v procese
+                if (isRequestInProgress) return;
 
-                var url = this.getAttribute('href');
+                const url = this.getAttribute('href');
 
                 if (debounceTimeout) {
                     clearTimeout(debounceTimeout);
                 }
 
                 debounceTimeout = setTimeout(() => {
-                    if (currentRequest) {
-                        currentRequest.abort(); // Zrušiť predchádzajúcu požiadavku
+                    if (abortController) {
+                        abortController.abort();
                     }
 
-                    isRequestInProgress = true; // Nastaviť príznak, že požiadavka je v procese
+                    abortController = new AbortController();
+                    const signal = abortController.signal;
+                    isRequestInProgress = true;
 
-                    // Zobraziť načítavaciu obrazovku
                     const loadingScreen = document.getElementById("loading-screen");
                     loadingScreen.style.display = "flex";
                     loadingScreen.style.opacity = "1";
 
-                    currentRequest = new XMLHttpRequest();
-                    currentRequest.open('GET', url, true);
-                    currentRequest.onreadystatechange = function () {
-                        if (currentRequest.readyState === 4) {
-                            if (currentRequest.status === 200) {
-                                var parser = new DOMParser();
-                                var doc = parser.parseFromString(currentRequest.responseText, 'text/html');
-                                var newContent = doc.querySelector('.gallery_container').innerHTML;
-                                document.querySelector('.gallery_container').innerHTML = ''; // Odstrániť starý obsah
-                                document.querySelector('.gallery_container').innerHTML = newContent; // Pridať nový obsah
-
-                                document.querySelectorAll('.category-link').forEach(l => {
-                                    l.parentElement.classList.remove('selected');
-                                });
-
-                                link.parentElement.classList.add('selected');
-
-                                initializeScripts(); // Znovu inicializujte skripty
-                            } else {
-                                console.error('Chyba pri načítaní produktov:', currentRequest.statusText);
+                    fetch(url, { signal })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Chyba pri načítaní produktov');
                             }
-                            isRequestInProgress = false; // Resetovať príznak po dokončení požiadavky
+                            return response.text();
+                        })
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const newContent = doc.querySelector('.gallery_container').innerHTML;
+                            document.querySelector('.gallery_container').innerHTML = newContent;
 
-                            // Skryť načítavaciu obrazovku
-                            setTimeout(function () {
+                            document.querySelectorAll('.category-link').forEach(l => {
+                                l.parentElement.classList.remove('selected');
+                            });
+
+                            link.parentElement.classList.add('selected');
+                            initializeScripts();
+                        })
+                        .catch(error => {
+                            if (error.name !== 'AbortError') {
+                                console.error('Chyba:', error);
+                            }
+                        })
+                        .finally(() => {
+                            isRequestInProgress = false;
+                            setTimeout(() => {
                                 loadingScreen.style.opacity = "0";
                                 loadingScreen.style.display = "none";
                             }, 1000);
-                        }
-                    };
-                    currentRequest.send();
-                }, 300); // Debounce čas v milisekundách
+                        });
+                }, 300);
             });
         });
     }

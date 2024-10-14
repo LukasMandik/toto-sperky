@@ -177,4 +177,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://c1dbfca0eb07bc6d71e6030b3b95a471@o4508122130481152.ingest.de.sentry.io/4508122145947728",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1.0,
+)
 #test3
