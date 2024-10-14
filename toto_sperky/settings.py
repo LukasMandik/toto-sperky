@@ -48,10 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     # 'livereload',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django.contrib.sitemaps',
     'django_cleanup.apps.CleanupConfig',
     'toto_sperky_web',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
