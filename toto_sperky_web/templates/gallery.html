@@ -12,7 +12,6 @@
 {% block og_description %}Prezrite si našu galériu produktov na Toto šperky. Objavte širokú škálu šperkov.{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
 <div class="gallery_content_page">
     <section class="categories">
         <h3 class="h3_category">Kategórie</h3>
@@ -70,7 +69,7 @@
         checkAspectRatio();
         initializeGSAPAnimations();
         initializeMobileHover();
-        initializeCategoryLinks(); // Pridajte túto funkciu
+        // initializeCategoryLinks(); // Pridajte túto funkciu
     }
   
 
@@ -137,7 +136,6 @@
     }
 
    
-</script>
 </script>
 
 <script>

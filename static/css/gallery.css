@@ -13,7 +13,7 @@
 
 h3.h3_category {
     position: absolute;
-    top: 30px;
+    top: 120px;
     width: 100%;
     font-size: 22px;
     font-weight: 800;
@@ -601,13 +601,9 @@ input#goToPage{
 		margin: 20px auto 5px auto;
 	
 	}
-	h3.h3_category{
-	
-		
+	h3.h3_category{	
 			text-align: center;
-			/* padding-left: 1.8px; */
 			top: 85px;
-	
 	}
 	.categories{
 			margin-top: 50px;
