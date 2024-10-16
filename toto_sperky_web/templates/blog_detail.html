@@ -17,7 +17,7 @@
       "name": "Toto šperky",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.totosperky.sk/media/logo_cierne.png"
+        "url": "https://www.vasadomena.sk/media/logo_cierne.png"
       }
     },
     "datePublished": "{{ blog.created|date:'Y-m-d' }}",
@@ -137,26 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-const productDescription = document.getElementById('productDescription');
-const lines = productDescription.innerText.split('\n').length;
-const scrollDowns = document.querySelector('.scroll-downs');
-const productDetailTextP = document.querySelector('.product_detail_text_p .product_detail_scroll_wrap');
-
-function showScrollDowns() {
-  scrollDowns.style.opacity = '0.9';
-}
-
-if (lines > 14) {
-  showScrollDowns();
-} else {
-  scrollDowns.style.opacity = '0';
-}
-
-productDetailTextP.addEventListener('scroll', function() {
-  scrollDowns.style.opacity = '0';
-});
-
-let timeout;
 
 function handleBackButton() {
   setTimeout(() => {
@@ -181,34 +161,6 @@ function handleBackButton() {
   }, 300);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  const modal = document.getElementById('modal');
-  const modalContent = document.querySelector('.modal-content img');
-  const galleryImages = document.querySelectorAll('.product_detail_image img');
-  const body = document.querySelector('body');
-
-  galleryImages.forEach(img => {
-    img.addEventListener('click', function () {
-      const imageUrl = this.getAttribute('src');
-      modalContent.setAttribute('src', imageUrl);
-      modal.style.display = 'flex';
-      body.style.overflow = 'hidden';
-    });
-  });
-
-  const closeButton = document.querySelector('.close-button');
-  closeButton.addEventListener('click', function () {
-    modal.style.display = 'none';
-    body.style.overflow = 'auto';
-  });
-
-  modal.addEventListener('click', function (e) {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-      body.style.overflow = 'auto';
-    }
-  });
-});
 </script>
 
 {% endblock %}

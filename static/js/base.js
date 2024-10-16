@@ -103,21 +103,21 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const currentPath = window.location.pathname;
-    const menuItems = document.querySelectorAll('.startermenu li a');
+//   document.addEventListener('DOMContentLoaded', () => {
+//     const currentPath = window.location.pathname;
+//     const menuItems = document.querySelectorAll('.startermenu li a');
 
-    menuItems.forEach(item => {
-        const section = item.getAttribute('data-section');
-        if ((currentPath === '/' && section === 'home') || 
-            currentPath.includes(section.toLowerCase()) || 
-            (currentPath.includes('product') && section === 'Gallery')) {
-            item.classList.add('active2');
-        } else {
-            item.classList.remove('active2');
-        }
-    });
-});
+//     menuItems.forEach(item => {
+//         const section = item.getAttribute('data-section');
+//         if ((currentPath === '/' && section === 'home') || 
+//             currentPath.includes(section.toLowerCase()) || 
+//             (currentPath.includes('product') && section === 'Gallery')) {
+//             item.classList.add('active2');
+//         } else {
+//             item.classList.remove('active2');
+//         }
+//     });
+// });
 
 
 
@@ -325,3 +325,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     window.addEventListener("load", executeCodes);
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    var bodyWrapper = document.querySelector('.footer_hide_element');
+    
+        bodyWrapper.style.clipPath = 'ellipse(69% 100% at center 0)';
+        // bodyWrapper.style.webkitClipPath = 'ellipse(350% 100% at 50% 0%)';
+    
+    });
