@@ -211,8 +211,8 @@ function initializeGSAPAnimations() {
         });
     }
 
-    function isTouchScreen() {
-        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    function isMobileDevice() {
+        return window.matchMedia("(max-width: 767px)").matches;
     }
 
     function initializeMobileHover() {
