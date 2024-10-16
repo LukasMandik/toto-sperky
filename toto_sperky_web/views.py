@@ -261,10 +261,10 @@ def gallery(request):
         request.session['items_per_page'] = items_per_page
         return redirect(request.path)
 
-    # Skontrolujte, či je požiadavka AJAX
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        # Ak je to AJAX, vráťte iba čiastočnú šablónu
-        return render(request, 'partials/product_list.html', context)
+    # # Skontrolujte, či je požiadavka AJAX
+    # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    #     # Ak je to AJAX, vráťte iba čiastočnú šablónu
+    #     return render(request, 'partials/product_list.html', context)
 
     # Inak vráťte celú šablónu
     return render(request, 'gallery.html', context)

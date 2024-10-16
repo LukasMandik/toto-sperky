@@ -15,7 +15,7 @@
         <div class="box">
             <a href="{{ product.get_absolute_url }}">
                 {% if product.video %}
-                <video autoplay="" loop muted playsinline loading="lazy">
+                <video autoplay="" loop muted playsinline>
                     {% if product.video_thumbnail %}
                     <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
                     {% endif %}
@@ -23,7 +23,7 @@
                 </video>
                 {% else %}
                     {% if product.image_thumbnail %}
-                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
+                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}">
                     {% endif %}
                 {% endif %}
                 <div class="description_card">

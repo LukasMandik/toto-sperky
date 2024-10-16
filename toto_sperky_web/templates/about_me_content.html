@@ -21,7 +21,7 @@
             {% for product in products %}
             <a href="{{ product.get_absolute_url }}">
                 {% if product.image_thumbnail %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
                 {% endif %}
             </a>
             {% endfor %}
