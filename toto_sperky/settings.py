@@ -149,7 +149,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
+from django.core.servers.basehttp import WSGIServer
+WSGIServer.request_queue_size = 10
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
