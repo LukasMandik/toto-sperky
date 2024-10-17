@@ -1,5 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 
 window.addEventListener('load', function() {
     gsap.registerPlugin(ScrollTrigger);
