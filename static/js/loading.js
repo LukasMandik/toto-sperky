@@ -1,4 +1,8 @@
 
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+
 function mediaLoaded() {
     const images = document.getElementsByTagName("img");
     const videos = document.getElementsByTagName("video");

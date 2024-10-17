@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 window.addEventListener('load', function() {
     const searchInputs = document.querySelectorAll('.search-input');
     const suggestionsBoxes = document.querySelectorAll('.suggestions-box');
