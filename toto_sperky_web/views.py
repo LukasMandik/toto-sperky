@@ -11,11 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserLoginForm
-from django.template.response import TemplateResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from .forms import BlogForm, BlogImageForm
-from .models import Blog
+
 # Create your views here.
 
 def home(request):
@@ -29,7 +25,7 @@ def home(request):
     
     }
 
-    return TemplateResponse(request, 'home.html', context)
+    return render(request, 'home.html', context)
 
 
 def about_me(request):
@@ -41,14 +37,14 @@ def about_me(request):
     
     }
 
-    return TemplateResponse(request, 'about_me.html', context)
+    return render(request, 'about_me.html', context)
 
 def blog_view(request):
     blogs = Blog.objects.filter(available=True).order_by('-created')[:10]
     context = {
         'blogs': blogs,
     }
-    return TemplateResponse(request, 'blog.html', context)
+    return render(request, 'blog.html', context)
 
 # @login_required
 # def add_blog(request):
@@ -109,7 +105,10 @@ def add_blog(request):
     return render(request, 'add_blog.html', context)
 
 
-
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import BlogForm, BlogImageForm
+from .models import Blog, BlogImage
 
 @login_required
 def update_blog(request, slug):
@@ -268,7 +267,7 @@ def gallery(request):
     #     return render(request, 'partials/product_list.html', context)
 
     # Inak vráťte celú šablónu
-    return TemplateResponse(request, 'gallery.html', context)
+    return render(request, 'gallery.html', context)
 
 
 
@@ -372,7 +371,7 @@ def ProductDetailView(request, slug):
         'product': product,
         'meta_description': product.get_meta_description(),
     }
-    return TemplateResponse(request, 'product_detail.html', context)
+    return render(request, 'product_detail.html', context)
 
 def BlogDetailView(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
@@ -380,7 +379,7 @@ def BlogDetailView(request, slug):
         'blog': blog,
         'meta_description': blog.get_meta_description(),
     }
-    return TemplateResponse(request, 'blog_detail.html', context)
+    return render(request, 'blog_detail.html', context)
 
 @login_required
 def product_data(request, slug):

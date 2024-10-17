@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.starterdot').forEach((elem) => {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.line_center').forEach((elem) => {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.line_center_about_me').forEach((elem) => {
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.line_center_short').forEach((elem) => {
@@ -106,8 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
       Timeline.to(line, { strokeDashoffset: 0 });
     });
   });
-
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
         let lines = elem.querySelectorAll('.text_home_about_jewelry h1.first_text, .text_home_about_jewelry h2.last_text');
   
@@ -128,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
         let lines = elem.querySelectorAll('.text_home_about_jewelry .ellipse_group');
   
@@ -149,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.utils.toArray('.second_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-1');
   
@@ -170,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.utils.toArray('.second_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-2');
   
@@ -191,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     gsap.utils.toArray('.second_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-3');
   
@@ -212,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-document.addEventListener("DOMContentLoaded", function() {
+  $(document).ready(function() {
     gsap.utils.toArray('.starter').forEach((elem) => {
         let lines = elem.querySelectorAll('.main_image_container');
   
@@ -235,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   
   
-document.addEventListener("DOMContentLoaded", function() {
+$(document).ready(function() {
     gsap.utils.toArray('body').forEach((elem) => {
         let lines = elem.querySelectorAll('.main_image_container');
   
@@ -256,8 +255,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
   });
-
-document.addEventListener("DOMContentLoaded", function() {
+  $(document).ready(function() {
     gsap.utils.toArray('.third_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.carusel');
   
@@ -278,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });  
 
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
   const carousel = document.querySelector('.carusel');
   const images = carousel.querySelectorAll('.carusel a .carousel_items');
 
