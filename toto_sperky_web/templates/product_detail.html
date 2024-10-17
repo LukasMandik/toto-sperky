@@ -50,13 +50,13 @@
 
   <div class="product_detail_image">
       {% if product.video %}
-      <video controls autoplay="" loop muted playsinline>
+      <video controls autoplay="" loop muted playsinline loading="lazy">
           <source src="{{ product.video.url }}" type="video/mp4">
           Your browser does not support the video tag.
       </video>
       {% else %}
         {% if product.image %}
-          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
         {% endif %}
       {% endif %}
       {% if user.is_authenticated %}

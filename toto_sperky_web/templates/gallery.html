@@ -22,7 +22,7 @@
                     <a class="category-link" href="/gallery">
                         <p>Všetko</p>
                     </a>
-                    <img src="{% static 'media/_DSC6992.jpg' %}" alt="všetky vyrobky" class="gallery-image">
+                    <img src="{% static 'media/_DSC6992.jpg' %}" alt="všetky vyrobky" class="gallery-image" loading="lazy">
                 </li>
             </div>
             {% for category in categories %}
@@ -41,7 +41,7 @@
                     </a>
                     {% endif %}
                     {% if category.image %}
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}"class="gallery-image">
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}"class="gallery-image" loading="lazy">
                     {% endif %}
                 </li>
             </div>

@@ -120,7 +120,7 @@
             <a href="{{ last_product.get_absolute_url }}">
                 <div class="carousel_items">
                     {% if last_product.video %}
-                    <video autoplay="" loop muted playsinline>
+                    <video autoplay="" loop muted playsinline loading="lazy" >
                         {% if last_product.video_thumbnail %}
                         <source src="{{ last_product.video_thumbnail.url }}" type="video/mp4">
                         {% endif %}
@@ -129,7 +129,7 @@
                     </video>
                     {% else %}
                     {% if last_product.image_thumbnail %}
-                    <img src="{{ last_product.image_thumbnail.url }}" alt="{{ last_product.name }}">
+                    <img src="{{ last_product.image_thumbnail.url }}" alt="{{ last_product.name }}" loading="lazy">
                     {% endif %}
                     {% endif %}
                 </div>
@@ -139,7 +139,7 @@
             <a href="{{ product.get_absolute_url }}">
                 <div class="carousel_items">
                     {% if product.video %}
-                    <video autoplay="" loop muted playsinline>
+                    <video autoplay="" loop muted playsinline loading="lazy">
                         {% if product.video_thumbnail %}
                         <source src="{{ product.video_thumbnail.url }}" type="video/mp4">
                         {% endif %}
@@ -148,7 +148,7 @@
                     </video>
                     {% else %}
                     {% if product.image_thumbnail %}
-                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}">
+                    <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}" loading="lazy">
                     {% endif %}
                     {% endif %}
                 </div>
