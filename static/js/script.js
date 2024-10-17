@@ -1,4 +1,77 @@
 
+document.addEventListener('DOMContentLoaded', function() {
+  
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray('.starterline').forEach((elem) => {
+      let line = elem.querySelector('.line');
+      var lineLength = line.getTotalLength();
+      line.style.strokeDasharray = lineLength;
+      line.style.strokeDashoffset = lineLength;
+
+      let Timeline = gsap.timeline({
+          ease: "elastic",
+
+          scrollTrigger: {
+              trigger: elem,
+              start: "top 0svh",
+              end: "bottom -100svh",
+              scrub: true,
+              // markers:true,
+          }
+      });
+
+      Timeline
+      .to(line,{strokeDashoffset: 0})
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Získajte názov aktuálneho súboru
+  const currentPath = window.location.pathname;
+
+  // Podmienka na kontrolu, či sme na hlavnej stránke
+  if (currentPath === "/") {
+      // Nastavenie pre hlavnú stránku
+      if (window.matchMedia('(min-width: 768px)').matches) {
+          gsap.registerPlugin(ScrollTrigger);
+
+          gsap.to(".main_navbar", {
+              backgroundColor: "#FBF8F5",
+              boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
+              duration: 0.2,
+              ease: "power2.out",
+              scrollTrigger: {
+                  trigger: ".main_image_container",
+                  start: "center -25% ",
+                  end: "center -25%",
+                  scrub: false,
+                  // markers: true,
+                  toggleActions: "restart none none reverse",
+              }
+          });
+      }
+  } else {
+      // Nastavenie pre ostatné stránky
+      if (window.matchMedia('(min-width: 768px)').matches) {
+          gsap.registerPlugin(ScrollTrigger);
+
+          gsap.to(".main_navbar", {
+              backgroundColor: "#FBF8F5",
+              boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
+              duration: 0.2,
+              ease: "power2.out",
+              scrollTrigger: {
+                  trigger: ".wrapper",
+                  start: "center 50svh ",
+                  end: "center 0svh",
+                  scrub: false,
+                  // markers: true,
+                  toggleActions: "restart none none reverse",
+              }
+          });
+      }
+  }
+});
 
   
 
@@ -85,6 +158,8 @@ gsap.from(Container, {
 });
 }
 });
+
+
   
 
 
