@@ -112,50 +112,50 @@
         
             
 <script>
-// function initializeGSAPAnimations() {
-//         gsap.utils.toArray('.container').forEach((elem) => {
-//             let lines = elem.querySelectorAll('.container .box');
+function initializeGSAPAnimations() {
+        gsap.utils.toArray('.container').forEach((elem) => {
+            let lines = elem.querySelectorAll('.container .box');
 
-//             lines.forEach((line) => {
-//                 let timeline = gsap.timeline({
-//                     ease: "elastic",
-//                     scrollTrigger: {
-//                         trigger: line,
-//                         start: "top 630svh",
-//                         end: "bottom 600svh",
-//                         scrub: false,
-//                         toggleActions: "restart none none reverse",
-//                     },
-//                 });
+            lines.forEach((line) => {
+                let timeline = gsap.timeline({
+                    ease: "elastic",
+                    scrollTrigger: {
+                        trigger: line,
+                        start: "top 630svh",
+                        end: "bottom 600svh",
+                        scrub: false,
+                        toggleActions: "restart none none reverse",
+                    },
+                });
 
-//                 timeline.from(line, { opacity: 0, y: 20 });
-//             });
-//         });
+                timeline.from(line, { opacity: 0, y: 20 });
+            });
+        });
 
-//         gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger);
 
-//         gsap.utils.toArray('.line_center_short').forEach((elem) => {
-//             let line = elem.querySelector('.line');
-//             let lineLength = line.getTotalLength();
+        gsap.utils.toArray('.line_center_short').forEach((elem) => {
+            let line = elem.querySelector('.line');
+            let lineLength = line.getTotalLength();
 
-//             line.style.strokeDasharray = lineLength;
-//             line.style.strokeDashoffset = lineLength;
+            line.style.strokeDasharray = lineLength;
+            line.style.strokeDashoffset = lineLength;
 
-//             let Timeline = gsap.timeline({
-//                 scrollTrigger: {
-//                     trigger: elem,
-//                     easy: "linear",
-//                     start: "top 500svh",
-//                     end: "bottom 300svh",
-//                     scrub: true,
-//                 }
-//             });
+            let Timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: elem,
+                    easy: "linear",
+                    start: "top 500svh",
+                    end: "bottom 300svh",
+                    scrub: true,
+                }
+            });
 
-//             Timeline
-//                 .to(line, { strokeDashoffset: 0 })
-//         });
+            Timeline
+                .to(line, { strokeDashoffset: 0 })
+        });
 
-//     }
+    }
 
     function checkAspectRatio() {
         const videos = document.querySelectorAll('.container .box a video');
