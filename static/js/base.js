@@ -1,7 +1,7 @@
 
 
 
-$(document).ready(function() {
+window.addEventListener('load', function() {
 
     let hamburger = document.querySelector(".hamburger");
     let menu = document.querySelector(".menu");
@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 });
 
-$(document).ready(function() {
+window.addEventListener('load', function() {
     let hamburger = document.querySelector(".hamburger");
     let toggle = document.querySelector("#toggle");
 
@@ -31,8 +31,7 @@ $(document).ready(function() {
 });
 
 
-
-$(document).ready(function() {
+window.addEventListener('load', function() {
     const currentPath = window.location.pathname;
     const menuItems = document.querySelectorAll('.startermenu li a');
 
@@ -51,7 +50,7 @@ $(document).ready(function() {
 
 
 
-$(document).ready(function() {
+window.addEventListener('load', function() {
     const customizeCookiesButton = document.getElementById("customizeCookies");
     const modal = document.getElementById("customize-cookies-modal");
     const closeModal = document.querySelector(".close_cookies");
@@ -151,7 +150,7 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
+window.addEventListener('load', function() {
     const cookieBox = document.querySelector(".wrapper2");
     const buttons = document.querySelectorAll(".button");
     const modal = document.getElementById("customize-cookies-modal");
@@ -254,7 +253,9 @@ $(document).ready(function() {
 
     window.addEventListener("load", executeCodes);
 });
-$(document).ready(function() {
+
+
+window.addEventListener('load', function() {
     var bodyWrapper = document.querySelector('.footer_hide_element');
     
         bodyWrapper.style.clipPath = 'ellipse(69% 100% at center 0)';

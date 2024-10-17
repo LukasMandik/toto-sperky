@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
     const searchInputs = document.querySelectorAll('.search-input');
     const suggestionsBoxes = document.querySelectorAll('.suggestions-box');
     const searchForms = document.querySelectorAll('.search-form'); // Získajte všetky formuláre

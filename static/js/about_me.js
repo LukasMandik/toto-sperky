@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
     gsap.utils.toArray('.text-about-me1').forEach((elem) => {
         let lines = elem.querySelectorAll('.text-about-me1 p');
   
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   });
-  document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener('load', function() {
     gsap.utils.toArray('.content-about-me').forEach((elem) => {
         let lines = elem.querySelectorAll('.image_neckless img');
   
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener('load', function() {
     gsap.utils.toArray('.container_about_me').forEach((elem) => {
         let lines = elem.querySelectorAll('.image_neckless');
   
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener('load', function() {
     gsap.utils.toArray('.text-about-me').forEach((elem) => {
         let lines = elem.querySelectorAll('.text-about-me p');
   
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener('load', function() {
     gsap.utils.toArray('.content-about-me').forEach((elem) => {
         let lines = elem.querySelectorAll('.carousel');
   
