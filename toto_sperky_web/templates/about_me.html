@@ -24,6 +24,7 @@
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 {% block og_description %}Zistite viac o Ivane, autorke jedinečných šperkov zo striebra a šperkárskeho cínu. Objavte jej inšpirácie, tvorivé procesy a osobný príbeh.{% endblock %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/about_me.css' %}">
 {% include 'about_me_content.html' %}
 <script src="{% static 'js/about_me.js' %}"></script>
 {% endblock %}

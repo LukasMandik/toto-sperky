@@ -35,6 +35,7 @@
 {% block og_description %}{{ blog.get_meta_description }}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
 <div class="product_detail_container_wrapper">
   <div class="blog_detail_container">
 
@@ -84,14 +85,6 @@
   </div>
 </div>
 
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-body">
-      <img src="" class="modal-img" alt="" loading="lazy">
-      <span class="close-button">&times;</span>
-    </div>
-  </div>
-</div>
 
 <script>
 let currentSlide = 0;
