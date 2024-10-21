@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load compress %}
 {% load static %}
 {% block title %}Blog{% endblock %}
 
@@ -12,8 +13,9 @@
 {% block og_description %}Prečítajte si najnovšie články na našom blogu o trendoch v šperkoch.{% endblock %}
 
 {% block content %}
-
+{% compress css %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endcompress %}
 <section class="container_blog">
     <h3 class="title_blog"> Blog </h3>
     {% for blog in blogs %}

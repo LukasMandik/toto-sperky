@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     # 'livereload',
+    'compressor',
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
@@ -55,6 +56,16 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
+STATICFILES_FINDERS = [
+       'django.contrib.staticfiles.finders.FileSystemFinder',
+       'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+       'compressor.finders.CompressorFinder',
+   ]
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     hamburger.addEventListener("click", function(){
         menu.classList.toggle("active");
+        console.log("Hamburger menu bolo kliknuté");
     });
 
 });
