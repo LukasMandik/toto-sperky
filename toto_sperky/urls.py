@@ -17,7 +17,7 @@ sitemaps = {
 urlpatterns = [
     path('', include('toto_sperky_web.urls')),
     path('admin/', admin.site.urls),
-    # path('gallery/', views.gallery, name='gallery'),
+    path('gallery/', views.gallery, name='gallery'),
     path('search/', views.search_results, name='search_results'),
     path('search_suggestions/', views.search_suggestions, name='search_suggestions'),  # Pridanie tejto línie
     path('add_blog/', views.add_blog, name='add_blog'),
@@ -29,7 +29,7 @@ urlpatterns = [
     path('add_category/', views.add_category, name='add_category'),
     path('category/<slug:slug>/update/', views.update_category, name='update_category'),
     path('category/<slug:slug>/delete/', views.delete_category, name='delete_category'),
-    # path('category/<slug:slug>/', views.category_detail, name='category_detail'),
+    path('category/<slug:slug>/', views.category_detail, name='category_detail'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]

@@ -981,25 +981,17 @@ input[type=search]::-webkit-search-cancel-button {
 .container_about_me {
 	background-color: var(--background-color-light);
     width: 100%;
-	/* max-width: 800px; */
-    /* position: relative; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-    /* overflow-y: auto; */
 	overflow-x: hidden;
-	/* margin-top: 100px; */
 	padding-top: 100px;
-	
-	/* padding-bottom: 100px; */
-	/* overflow-x: auto;  */
 }
 .main_home_container .container_about_me{
 	margin-top: 30px;
 }
 
 .content-about-me {
-	/* overflow-x: hidden; */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -1007,13 +999,7 @@ input[type=search]::-webkit-search-cancel-button {
     justify-content: center;
     width: 100%;
     height: auto;
-    /* position: absolute;
-    right: 5.13%;
-    left: 5.13%;
-    top: 84px; */
 	overflow: hidden;
-
-
 	z-index: 2;
 }
 .container_about_me .content-about-me .carousel {
@@ -1024,39 +1010,19 @@ input[type=search]::-webkit-search-cancel-button {
 	border-radius: 10px;
 	margin-bottom: 20px;
 }
-
-
-
-
-
-
 .line_center_about_me, .line_center_detail_product{
 	height: 100px;
-	/* rotate: 180deg; */
 }
 .content-about-me, .line_center_about_me , .line_center_detail_product{
 	margin-top: 0;
-    
 }
-
-.logo-cierne-1 {
-    flex-shrink: 0;
-    width: 186px;
-    height: 177px;
-
-    object-fit: cover;
-}
-
 .tro-ku-o-mne {
 	color: var(--text-color-dark);
-    /* text-align: justified; */
-
     text-align: center;
     font-size: 28px;
     font-weight: 800;
     line-height: 105%;
 	letter-spacing: 1px;
-
     width: 230px;
     height: 29px;
 }
@@ -1064,7 +1030,6 @@ input[type=search]::-webkit-search-cancel-button {
 .text-about-me p, .text-about-me1 p {
 	color: var(--text-color-dark);
     text-align: left;
-	/* hyphens: auto; */
 	white-space: pre-wrap;
 	max-width: 600px;
     font-size: 18px;
@@ -1074,19 +1039,11 @@ input[type=search]::-webkit-search-cancel-button {
 	font-weight: 200;
 	line-height: 150%;
 	z-index: 20;
-	/* white-space: break-spaces; */
-	/* white-space-collapse: collapse; */
 	word-break: break-word;
-	/* word-spacing: -2px; */
-
-    /* position: relative; */
     align-self: stretch;
 }
 .text-about-me span, .text-about-me1 span{
-    /* color: #fb144e; */
-
 	font-weight: 500;
-
 }
 
 
@@ -1101,54 +1058,6 @@ input[type=search]::-webkit-search-cancel-button {
 	overflow:hidden;
 	border-radius: 5px;
 	
-
-  }
-
-  /* .wrapper3::before,
-  .wrapper3::after {
-	  content: "";
-	  position: absolute;
-	  width: 50px;
-	  height: 220px;
-	  z-index: 2;
-	  background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.908)); 
-
-  }
-  
-  .wrapper3::after {
-	  right: 0;
-	  top: 0;box
-
-	  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.908)); 
-  } */
-  
-  
-  .box2{
-	width:150px;
-	height:220px;
-	position:absolute;
-	/* background:red; */
-	font-size:25px;
-	/* line-height:150px; */
-	/* padding-right: 10px; */
-	/* margin: 10px; */
-	
-  }
-
-  .box2 img, .box2 video{
-
-	width: 100%;
-	height: 100%;
-	border-radius: 15px;
-	object-fit: cover;
-  }
-  
-  
-  
-  
-  .boxes {
-	position:relative;
-	left:-150px;
 
   }
 
