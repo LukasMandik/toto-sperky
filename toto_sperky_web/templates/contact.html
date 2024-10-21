@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load compress %}
 {% load static %}
 {% block title %}Kontakt{% endblock %}
 
@@ -41,9 +40,7 @@
 
 
 {% block content %}
-{% compress css %}
 <link rel="stylesheet" href="{% static 'css/contact.css' %}">
-{% endcompress %}
 <section class="container_contact">
     <div class="content_contact">
         <!-- <img class="logo-cierne-1" src="{% static 'media/logo_cierne.png' %}" /> -->
