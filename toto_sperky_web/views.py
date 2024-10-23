@@ -46,29 +46,6 @@ def blog_view(request):
     }
     return render(request, 'blog.html', context)
 
-# @login_required
-# def add_blog(request):
-#     ImageFormSet = modelformset_factory(BlogImage, form=BlogImageForm, extra=3)  # Adjust 'extra' to allow multiple images
-#     if request.method == 'POST':
-#         form = BlogForm(request.POST)
-#         formset = ImageFormSet(request.POST, request.FILES, queryset=BlogImage.objects.none())
-        
-#         if form.is_valid() and formset.is_valid():
-#             blog = form.save(commit=False)
-#             blog.save()
-
-#             for form in formset.cleaned_data:
-#                 if form:
-#                     image = form['image']
-#                     photo = BlogImage(blog=blog, image=image)
-#                     photo.save()
-                    
-#             return redirect('blog')
-#     else:
-#         form = BlogForm()
-#         formset = ImageFormSet(queryset=BlogImage.objects.none())
-    
-#     return render(request, 'add_blog.html', {'form': form, 'image_forms': formset})
 
 
 @login_required
@@ -288,7 +265,7 @@ def add_product(request):
                     form.add_error('video', "The video size must be less than 120 MB.")
                 else:
                     form.save()
-                    return redirect('gallery')  # Přesměrování na stránku s úspěchem
+                    return redirect('toto_sperky_web:gallery')  # Přesměrování na stránku s úspěchem
     else:
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
@@ -303,7 +280,7 @@ def add_category(request):
                 form.add_error('image', "The image size must be less than 15 MB.")
             else:
                 form.save()
-                return redirect('gallery')  # Přesměrování na stránku s úspěchem
+                return redirect('toto_sperky_web:gallery')  # Přesměrování na stránku s úspěchem
     else:
         form = CategoryForm()
     return render(request, 'add_category.html', {'form': form})
@@ -324,7 +301,7 @@ def update_product(request, slug):
                     form.add_error('video', "The video size must be less than 120 MB.")
                 else:
                     form.save()
-                    return redirect('gallery')
+                    return redirect('toto_sperky_web:gallery')
     else:
         form = ProductForm(instance=product)
     return render(request, 'update_product.html', {'form': form, 'product': product})
@@ -341,7 +318,7 @@ def update_category(request, slug):
             else:
             
                 form.save()
-                return redirect('gallery')  # Presmerovanie na stránku s úspechom
+                return redirect('toto_sperky_web:gallery')  # Presmerovanie na stránku s úspechom
     else:
         form = CategoryForm(instance=category)
     return render(request, 'update_category.html', {'form': form, 'category': category})
@@ -352,7 +329,7 @@ def delete_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
         product.delete()
-        return redirect('gallery')  # Presmerovanie na stránku s úspechom
+        return redirect('toto_sperky_web:gallery')  # Presmerovanie na stránku s úspechom
     return render(request, 'delete_product.html', {'product': product})
 
 @login_required
@@ -360,7 +337,7 @@ def delete_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     if request.method == 'POST':
         category.delete()
-        return redirect('gallery')  # Presmerovanie na stránku s úspechom
+        return redirect('toto_sperky_web:gallery')  # Presmerovanie na stránku s úspechom
     return render(request, 'delete_category.html', {'category': category})
 
 

@@ -1,7 +1,7 @@
 {% load static %}
 <script src="{% static 'js/search_suggestions.js' %}"></script>
 <div class="search_form">
-    <form class="search-form" method="GET" action="{% url 'search_results' %}">
+    <form class="search-form" method="GET" action="{% url 'toto_sperky_web:search_results' %}">
         <input class="search-input" type="search" name="q" placeholder="Vyhladať na stránke" required minlength="3" autocomplete="on">
         <!-- <button class="btn" type="submit"><i class='bx bx-search'></i></button> -->
     </form>

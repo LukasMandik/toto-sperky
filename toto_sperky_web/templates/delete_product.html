@@ -10,7 +10,7 @@
     <form method="post">
         {% csrf_token %}
         <button class="btn delete" type="submit">Áno, odstrániť</button>
-        <a href="{% url 'update_product' product.slug %}" class="">
+        <a href="{% url 'toto_sperky_web:update_product' product.slug %}" class="">
             <button class="btn cancel" type="button">Nie</button>
         </a>
     </form>
