@@ -1084,7 +1084,7 @@ footer p a, footer p {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	z-index: 39999;
+	z-index: 9999;
 	gap: 10px;
 	overflow: hidden;
 	overflow-y: hidden;
@@ -1346,7 +1346,7 @@ gap: 10px;
 		display: block;
 	}
 	.main_navbar .menu{
-		display: block;
+		/* display: block; */
 		visibility: hidden;
 		background: var(--background-color-light);
 		width: 100%;
@@ -1355,7 +1355,7 @@ gap: 10px;
 		transition: all 0.8s ease;
 	}
 	.main_navbar .menu.active {
-		display: block;
+		/* display: block; */
 		visibility: visible;
 		opacity: 1;
 		transition: all 0.4s ease;
