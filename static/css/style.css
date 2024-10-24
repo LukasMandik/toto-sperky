@@ -1,10 +1,4 @@
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 240px 0 0 0 #efefef inset !important;
-}
 :root {
   --primary-darkMode: rgb(28, 32, 41);
   --primary-darkMode2: rgba(32, 39, 52, 0.877);
@@ -16,6 +10,7 @@ input:-webkit-autofill:active{
   --background-color-light: #fffcf6;
   --text-color-dark: #383838;
 }
+
 *{
 	margin: 0;
 	padding: 0;
