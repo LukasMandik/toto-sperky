@@ -27,9 +27,9 @@ function hideLoadingScreen() {
       // loadingScreen.style.opacity = "0";
       setTimeout(function () {
         loadingScreen.style.display = "none";
-      }, 500);
+      }, 50);
     } else {
-      setTimeout(hideLoadingScreen, 100);
+      setTimeout(hideLoadingScreen, 10);
     }
 }
 
@@ -42,5 +42,5 @@ window.addEventListener("load", function () {
     // loadingScreen.style.opacity = "0";
     setTimeout(function () {
         loadingScreen.style.display = "none";
-    }, 1000);
+    }, 10);
 });
