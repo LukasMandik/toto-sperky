@@ -318,6 +318,7 @@ h3.h3_category {
 	padding-left: 10px;
 	padding-right: 10px;
     display: -webkit-box;
+	line-clamp: 4;
     -webkit-line-clamp: 4; 
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -459,9 +460,9 @@ h3.h3_category {
 
 } 
 
-details {
-	overflow: hidden; /* Hide the rest of the content */
-	transition: all 4s ease-out; /* Animate the change */
+/* details {
+	overflow: hidden; 
+	transition: all 4s ease-out;
  }
 
 
@@ -473,11 +474,10 @@ details summary::-webkit-details-marker {
 details > summary {
 	list-style: none;
   }
-
-  details > summary::marker, /* Latest Chrome, Edge, Firefox */ 
-  details > summary::-webkit-details-marker /* Safari */ {
+details > summary::marker, 
+details > summary::-webkit-details-marker {
 	  display: none;
-	}
+	} */
 .pagination details summary{
 		display: flex;
 		flex-direction: column;
