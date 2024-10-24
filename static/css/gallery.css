@@ -460,7 +460,7 @@ h3.h3_category {
 
 } 
 
-/* details {
+details {
 	overflow: hidden; 
 	transition: all 4s ease-out;
  }
@@ -477,7 +477,7 @@ details > summary {
 details > summary::marker, 
 details > summary::-webkit-details-marker {
 	  display: none;
-	} */
+	}
 .pagination details summary{
 		display: flex;
 		flex-direction: column;

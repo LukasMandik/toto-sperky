@@ -77,7 +77,7 @@ body.dark-mode {
 	outline: none; 
 	padding: 1.2em 1.2em; 
 	cursor:pointer;
-	/* -webkit-appearance: none;  */
+	-webkit-appearance: none; 
 	font-weight: inherit; 
 	font-size: inherit; 
 	font-family: inherit; 
@@ -1065,7 +1065,7 @@ footer {
 }
 footer p a, footer p {
 	color: #cdcdcd;
-	z-index: 1000;
+	z-index: 39999;
   }
 
 #loading-message{
