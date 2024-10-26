@@ -85,55 +85,5 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('input[type="file"]').forEach(fileInput => {
-            fileInput.addEventListener('change', function(event) {
-                const fileInput = event.target;
-                const file = fileInput.files[0];
-                const fileNameElement = fileInput.closest('.image-upload').querySelector('.file-name');
-                const imageThumbElement = fileInput.closest('.image-upload').querySelector('.image-thumb');
 
-                if (file) {
-                    // Display the file name
-                    fileNameElement.textContent = file.name;
-
-                    // Create a URL for the selected file and display the image preview
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        imageThumbElement.src = e.target.result;
-                        imageThumbElement.style.display = 'block';
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    // Clear the file name and hide the image preview if no file is selected
-                    fileNameElement.textContent = '';
-                    imageThumbElement.style.display = 'none';
-                    imageThumbElement.src = '';
-                }
-            });
-        });
-
-        document.getElementById('delete-link').addEventListener('click', function(event) {
-            // Prevent the default link behavior
-            event.preventDefault();
-
-            // Delay opening the link by 0.3 seconds
-            setTimeout(function() {
-                window.location.href = event.target.href;
-            }, 300); // 0.3-second delay
-        });
-
-        const form = document.getElementById('blog-form');
-        const saveButton = document.getElementById('save-button');
-        const loadingMessage = document.getElementById('loading-message');
-
-        form.addEventListener('submit', function(event) {
-            // Disable the "Save" button
-            saveButton.disabled = true;
-            // Show the loading message
-            loadingMessage.style.display = 'flex';
-        });
-    });
-</script>
 {% endblock %}

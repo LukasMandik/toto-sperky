@@ -43,31 +43,5 @@
 
 
 
-<script>
-    document.getElementById('id_image').addEventListener('change', function(event) {
-        const fileInput = event.target;
-        const file = fileInput.files[0];
-        const fileName = document.getElementById('file-name-image');
-        const imageThumb = document.getElementById('image-thumb');
-    
-        if (file) {
-            // Display the file name
-            fileName.textContent = file.name;
-    
-            // Create a URL for the selected file and display the image preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imageThumb.src = e.target.result;
-                imageThumb.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        } else {
-            // Clear the file name and hide the image preview if no file is selected
-            fileName.textContent = '';
-            imageThumb.style.display = 'none';
-            imageThumb.src = '';
-        }
-    });
-    
-    </script>
+
 {% endblock %}
