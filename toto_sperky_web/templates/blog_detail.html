@@ -86,6 +86,74 @@
 </div>
 
 
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel img');
+const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+let slideInterval;
 
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.style.display = i === index ? 'block' : 'none';
+  });
+  indicators.forEach((indicator, i) => {
+    indicator.classList.toggle('active', i === index);
+  });
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function startSlideShow() {
+  slideInterval = setInterval(nextSlide, 4000); // 4 sekundy
+}
+
+function stopSlideShow() {
+  clearInterval(slideInterval);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  showSlide(currentSlide);
+  startSlideShow();
+
+  const carousel = document.querySelector('.carousel');
+  carousel.addEventListener('mouseenter', stopSlideShow);
+  carousel.addEventListener('mouseleave', startSlideShow);
+
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      currentSlide = index;
+      showSlide(currentSlide);
+    });
+  });
+});
+
+
+function handleBackButton() {
+  setTimeout(() => {
+    if (history.scrollRestoration === 'auto') {
+      history.scrollRestoration = 'manual';
+      history.back();
+      history.scrollRestoration = 'auto';
+    } else {
+      const scrollPosition = history.state?.scrollPosition;
+      if (scrollPosition) {
+        window.scrollTo({
+          top: scrollPosition.y,
+          behavior: 'smooth'
+        });
+      } else {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, 300);
+}
+
+</script>
 
 {% endblock %}

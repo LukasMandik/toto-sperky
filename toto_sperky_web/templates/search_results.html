@@ -51,7 +51,72 @@
         
     </div>
 </div>
+<script>
+    function handleBackButton() {
+        setTimeout(() => {
+            if (history.scrollRestoration === 'auto') {
+                // If history restoration is enabled, use it to go back to the previous scroll position
+                history.scrollRestoration = 'manual'; // Disable automatic scroll restoration
+                history.back(); // Go back in history
+                history.scrollRestoration = 'auto'; // Re-enable automatic scroll restoration
+            } else {
+                // If history restoration is not supported, manually set the scroll position
+                const scrollPosition = history.state?.scrollPosition; // Get the scroll position from history state
+                if (scrollPosition) {
+                    window.scrollTo({
+                        top: scrollPosition.y,
+                        behavior: 'smooth' // Animate the scroll for a smooth transition
+                    });
+                } else {
+                    // If scroll position is not available, go back to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }, 300); // 0,3-sekundové oneskorenie
+    }
 
+    function highlightText(text, query, isDescription = false) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        if (isDescription) {
+            const match = text.match(regex);
+            if (match) {
+                const start = Math.max(text.indexOf(match[0]) - 40, 0);
+                const end = Math.min(start + match[0].length + 120, text.length);
+                return text.substring(start, end).replace(regex, '<span class="highlight">$1</span>');
+            }
+        }
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const query = "{{ query }}";
+        const results = document.querySelectorAll('.result-item .name, .result-item .description');
+
+        results.forEach(result => {
+            const isDescription = result.classList.contains('description');
+            result.innerHTML = highlightText(result.innerHTML, query, isDescription);
+        });
+
+        const videos = document.querySelectorAll('video');
+
+        videos.forEach(video => {
+            video.muted = true; // Uisti sa, že video je stlmené
+            video.playsInline = true; // Pre mobilné zariadenia
+            video.autoplay = true;
+            video.loop = true;
+            video.controls = false;
+            
+
+            // Pokus o spustenie videa
+            video.play().catch(error => {
+                console.error('Video sa nepodarilo spustiť automaticky:', error);
+            });
+        });
+    });
+</script>
 {% endblock %}
 
 

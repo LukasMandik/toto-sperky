@@ -65,7 +65,87 @@
 </div>
 
 
+<script>
+    // JavaScript pre zobrazenie náhľadov obrázkov
+    document.getElementById('id_image').addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        const fileName = document.getElementById('file-name-image');
+        const imageThumb = document.getElementById('image-thumb');
+    
+        if (file) {
+            // Zobrazenie názvu súboru
+            fileName.textContent = file.name;
+    
+            // Vytvorenie URL pre vybraný súbor a zobrazenie náhľadu obrázka
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imageThumb.src = e.target.result;
+                imageThumb.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            // Vymazanie názvu súboru a skrytie náhľadu obrázka, ak nie je vybraný žiadny súbor
+            fileName.textContent = '';
+            imageThumb.style.display = 'none';
+            imageThumb.src = '';
+        }
+    });
 
+    // JavaScript pre zobrazenie náhľadov videí a vymazanie starého náhľadu videa
+    document.getElementById('id_video').addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        const fileName = document.getElementById('file-name');
+        const videoThumb = document.getElementById('video-thumb');
+
+        if (file) {
+            // Vymazanie starého náhľadu videa, ak existuje
+            videoThumb.src = '';
+            videoThumb.style.display = 'none';
+
+            // Zobrazenie názvu súboru
+            fileName.textContent = file.name;
+
+            // Vytvorenie URL pre vybraný súbor a zobrazenie náhľadu videa
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                videoThumb.src = e.target.result;
+                videoThumb.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            // Vymazanie názvu súboru a skrytie náhľadu videa, ak nie je vybraný žiadny súbor
+            fileName.textContent = '';
+            videoThumb.style.display = 'none';
+            videoThumb.src = '';
+        }
+    });
+
+    // JavaScript pre deaktiváciu tlačidla "Save" počas odosielania formulára
+    const form = document.getElementById('product-form');
+    const saveButton = document.getElementById('save-button');
+    const loadingMessage = document.getElementById('loading-message');
+
+    form.addEventListener('submit', function(event) {
+        // Deaktivácia tlačidla "Save"
+        saveButton.disabled = true;
+        // Zobrazenie správy o nahrávaní
+        loadingMessage.style.display = 'flex';
+    });
+
+    // JavaScript pre povolenie alebo zakázanie tlačidla "Save" v závislosti od toho, či je vybrané video
+    const videoField = document.getElementById('id_video');
+    videoField.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            // Povolenie tlačidla "Save", ak je vybrané video
+            saveButton.disabled = false;
+        } else {
+            // Zakázanie tlačidla "Save", ak nie je vybrané žiadne video
+            saveButton.disabled = true;
+        }
+    });
+</script>
 
 
 {% endblock %}

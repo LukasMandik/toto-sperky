@@ -39,5 +39,31 @@
     </div>
 </div>
 
-
+<script>
+    function handleBackButton() {
+        setTimeout(() => {
+            if (history.scrollRestoration === 'auto') {
+                // If history restoration is enabled, use it to go back to the previous scroll position
+                history.scrollRestoration = 'manual'; // Disable automatic scroll restoration
+                history.back(); // Go back in history
+                history.scrollRestoration = 'auto'; // Re-enable automatic scroll restoration
+            } else {
+                // If history restoration is not supported, manually set the scroll position
+                const scrollPosition = history.state?.scrollPosition; // Get the scroll position from history state
+                if (scrollPosition) {
+                    window.scrollTo({
+                        top: scrollPosition.y,
+                        behavior: 'smooth' // Animate the scroll for a smooth transition
+                    });
+                } else {
+                    // If scroll position is not available, go back to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }, 300); // 0,3-sekundové oneskorenie
+    }
+  </script>
 {% endblock %}

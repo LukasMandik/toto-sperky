@@ -36,5 +36,77 @@
     </button>
 </div>
 
+<script>
+    document.getElementById('id_image').addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        const fileName = document.getElementById('file-name-image');
+        const imageThumb = document.getElementById('image-thumb');
+    
+        if (file) {
+            // Display the file name
+            fileName.textContent = file.name;
+    
+            // Create a URL for the selected file and display the image preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imageThumb.src = e.target.result;
+                imageThumb.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            // Clear the file name and hide the image preview if no file is selected
+            fileName.textContent = '';
+            imageThumb.style.display = 'none';
+            imageThumb.src = '';
+        }
+    });
+    
+    </script>
 
+
+<script>
+    document.getElementById('delete-button').addEventListener('click', function() {
+        this.classList.add('active');
+    });
+    
+  
+
+    // Odstráni aktívny efekt, ak používateľ klikne mimo tlačidla
+    window.addEventListener('click', function(event) {
+        var deleteButton = document.getElementById('delete-button');
+        if (event.target !== deleteButton) {
+            deleteButton.classList.remove('active');
+        }
+    });
+</script>
+
+<script>
+    // Získání formuláře
+    const form = document.getElementById('product-form');
+    // Získání tlačítka "Save"
+    const saveButton = document.getElementById('save-button');
+    // Získání zprávy o nahrávání
+    const loadingMessage = document.getElementById('loading-message');
+
+    // Přidání posluchače události na formulář pro deaktivaci tlačítka "Save" při odesílání formuláře
+    form.addEventListener('submit', function(event) {
+        // Deaktivace tlačítka "Save"
+        saveButton.disabled = true;
+        // Zobrazení zprávy o nahrávání
+        loadingMessage.style.display = 'block';
+    });
+
+    // Přidání posluchače události na pole "video" pro povolení / zakázání tlačítka "Save" v závislosti na tom, zda je vybráno video pro nahrání
+    const videoField = document.getElementById('id_video');
+    videoField.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            // Pokud je vybráno video, povolíme tlačítko "Save"
+            saveButton.disabled = false;
+        } else {
+            // Pokud není vybráno žádné video, zakážeme tlačítko "Save"
+            saveButton.disabled = true;
+        }
+    });
+</script>
 {% endblock %}

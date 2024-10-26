@@ -55,5 +55,100 @@
  
 <!-- test -->
 
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeScripts();
+    });
+    function initializeScripts() {
+        checkAspectRatio();
+        initializeGSAPAnimations();
+        initializeMobileHover();
+        // initializeCategoryLinks(); // Pridajte túto funkciu
+    }
+  
 
+    // function initializeCategoryLinks() {
+    //     document.querySelectorAll('.category-link').forEach(link => {
+    //         link.addEventListener('click', function (e) {
+    //             e.preventDefault();
+    //             if (isRequestInProgress) return;
+
+    //             const url = this.getAttribute('href');
+
+    //             if (debounceTimeout) {
+    //                 clearTimeout(debounceTimeout);
+    //             }
+
+    //             debounceTimeout = setTimeout(() => {
+    //                 if (abortController) {
+    //                     abortController.abort();
+    //                 }
+
+    //                 abortController = new AbortController();
+    //                 const signal = abortController.signal;
+    //                 isRequestInProgress = true;
+
+    //                 const loadingScreen = document.getElementById("loading-screen");
+    //                 loadingScreen.style.display = "flex";
+    //                 loadingScreen.style.opacity = "1";
+
+    //                 fetch(url, { signal })
+    //                     .then(response => {
+    //                         if (!response.ok) {
+    //                             throw new Error('Chyba pri načítaní produktov');
+    //                         }
+    //                         return response.text();
+    //                     })
+    //                     .then(html => {
+    //                         const parser = new DOMParser();
+    //                         const doc = parser.parseFromString(html, 'text/html');
+    //                         const newContent = doc.querySelector('.gallery_container').innerHTML;
+    //                         document.querySelector('.gallery_container').innerHTML = newContent;
+
+    //                         document.querySelectorAll('.category-link').forEach(l => {
+    //                             l.parentElement.classList.remove('selected');
+    //                         });
+
+    //                         link.parentElement.classList.add('selected');
+    //                         initializeScripts();
+    //                     })
+    //                     .catch(error => {
+    //                         if (error.name !== 'AbortError') {
+    //                             console.error('Chyba:', error);
+    //                         }
+    //                     })
+    //                     .finally(() => {
+    //                         isRequestInProgress = false;
+    //                         setTimeout(() => {
+    //                             loadingScreen.style.opacity = "0";
+    //                             loadingScreen.style.display = "none";
+    //                         }, 1000);
+    //                     });
+    //             }, 300);
+    //         });
+    //     });
+    // }
+
+   
+</script>
+
+<script>
+window.addEventListener('load', function() {
+    const categoryLinks = document.querySelectorAll('.category-link');
+    const categoriesContainer = document.querySelector('.categories');
+
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const scrollPosition = categoriesContainer.scrollLeft;
+            localStorage.setItem('selectedCategoryPosition', scrollPosition);
+        });
+    });
+
+    const savedPosition = localStorage.getItem('selectedCategoryPosition');
+    if (savedPosition) {
+        categoriesContainer.scrollLeft = savedPosition;
+    }
+});
+</script>
 {% endblock %}
