@@ -6,22 +6,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="index, follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0>
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
   
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Toto šperky",
-    "url": "https://www.totosperky.sk",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://www.totosperky.sk/search?query={search_term_string}",
-      "query-input": "required name=search_term_string"
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Toto šperky",
+      "url": "https://www.totosperky.sk",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.totosperky.sk/search?query={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
     }
-  }
-  </script>
+    </script>
 
     {% block meta_description %}
     <meta name="description" content="Objavte krásne a kvalitné šperky na Toto šperky.">
@@ -34,16 +34,16 @@
     <meta property="og:description" content="{% block og_description %}Objavte krásne a kvalitné šperky na Toto šperky.{% endblock %}">
     
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
     <link rel="icon" type="image/x-icon" href="{% static '/media/logo_cierne.png' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" /> -->
     <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
     <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>{% block title %}Toto šperky{%endblock%}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body id="body">
   
