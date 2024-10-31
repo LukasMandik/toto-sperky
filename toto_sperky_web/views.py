@@ -17,7 +17,7 @@ from .forms import UserLoginForm
 def home(request):
 
     products = Product.objects.filter(available=True).order_by('-created')[:10]
-    last_product = Product.objects.filter(available=True).order_by('-created')[9]
+    last_product = products[9] if len(products) > 9 else None
     context = {
 
         'products': products,
@@ -167,14 +167,9 @@ def delete_blog(request, slug):
 
 def contact(request):
 
-    products = Product.objects.filter(available=True).order_by('-created')[:5]
-    context = {
 
-        'products': products,
-    
-    }
 
-    return render(request, 'contact.html', context)
+    return render(request, 'contact.html')
 
 
 
@@ -229,7 +224,6 @@ def gallery(request):
         'middle_range': middle_range,
         'last_range': last_range,
         'paginator': paginator,  # Pridáme paginator do kontextu
-        # 'show_footer': True, 
     }
 
     # Uloženie vybranej hodnoty počtu položiek na stránku do session

@@ -90,9 +90,7 @@
       {% endblock %}
       <div class="footer_hide_element"></div>
 
-    {% if not show_footer %}
-      {% include 'footer.html' %}
-    {% endif %}
+    {% include 'footer.html' %}
   {% endblock %}
   <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -104,5 +102,6 @@
   <script src="{% static 'js/loading.js' %}"></script>
   <script src="{% static 'js/base.js' %}"></script>
   <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/cookies.js' %}"></script>
 </body>
 </html>
