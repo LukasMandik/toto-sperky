@@ -33,7 +33,7 @@
 {% if product.image %}
     {{ product.image.url }}
 {% else %}
-    {% static 'media/logo_cierne.png %}  <!-- Cesta k predvolenému obrázku -->
+    {% static 'media/logo_cierne.png' %}  <!-- Cesta k predvolenému obrázku -->
 {% endif %}
 {% endblock %}
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}

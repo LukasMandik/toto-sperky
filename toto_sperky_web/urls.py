@@ -28,7 +28,6 @@ urlpatterns = [
     path('blog/<slug:slug>/', BlogDetailView, name='blog_detail'),
     path('cookies/', cookies, name='cookies'),
     path('product/<slug:slug>/data/', product_data, name='product_data'),
-    path('category/<slug:slug>/', category_detail, name='category_detail'),
     path('login/', UserLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
 ]
