@@ -4,7 +4,7 @@ beautifulsoup4==4.12.3
 certifi==2024.2.2
 charset-normalizer==3.3.2
 decorator==4.4.2
-Django==5.0.4
+Django==5.1.2
 django-appconf==1.0.6
 django-cleanup==8.1.0
 django-environ==0.11.2
@@ -22,7 +22,6 @@ opencv-python-headless==4.9.0.80
 Pillow==9.5.0
 proglog==0.1.10
 psycopg2-binary==2.9.9
-pylibmc==1.6.3
 rcssmin==1.1.2
 redis==5.1.1
 requests==2.32.2
@@ -34,4 +33,4 @@ tornado==6.4
 tqdm==4.66.4
 typing_extensions==4.11.0
 urllib3==2.2.1
-whitenoise==6.6.0
+whitenoise==6.8.2

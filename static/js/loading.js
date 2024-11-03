@@ -29,11 +29,11 @@ function hideLoadingScreen() {
     }
 }
 
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
     hideLoadingScreen();
 });
 
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
     const loadingScreen = document.getElementById("loading-screen");
     // loadingScreen.style.opacity = "0";
     setTimeout(function () {

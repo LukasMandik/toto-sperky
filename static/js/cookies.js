@@ -139,5 +139,5 @@ $(document).ready(function() {
     initializeCookieSettings();
 
     // Event listener pre načítanie stránky
-    window.addEventListener("load", executeCodes);
+    window.addEventListener("DOMContentLoaded", executeCodes);
 });

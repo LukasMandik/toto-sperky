@@ -1,5 +1,5 @@
 
-window.addEventListener('load', function() {
+window.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.starterdot').forEach((elem) => {
@@ -30,7 +30,7 @@ window.addEventListener('load', function() {
     });
   });
   
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.line_center').forEach((elem) => {
@@ -55,7 +55,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.line_center_about_me').forEach((elem) => {
@@ -80,7 +80,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
   
     gsap.utils.toArray('.line_center_short').forEach((elem) => {
@@ -106,7 +106,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
         let lines = elem.querySelectorAll('.text_home_about_jewelry h1.first_text, .text_home_about_jewelry h2.last_text');
   
@@ -127,7 +127,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.text_home_about_jewelry').forEach((elem) => {
         let lines = elem.querySelectorAll('.text_home_about_jewelry .ellipse_group');
   
@@ -148,7 +148,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.second_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-1');
   
@@ -169,7 +169,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.second_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-2');
   
@@ -189,7 +189,7 @@ window.addEventListener('load', function() {
       });
     });
   });
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.second_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.second_home_container .text_home_about_jewelry .ellipse_group .ellipse-3');
   
@@ -210,7 +210,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.starter').forEach((elem) => {
         let lines = elem.querySelectorAll('.main_image_container');
   
@@ -233,7 +233,7 @@ window.addEventListener('load', function() {
   });
   
   
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('body').forEach((elem) => {
         let lines = elem.querySelectorAll('.main_image_container');
   
@@ -255,7 +255,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.third_home_container').forEach((elem) => {
         let lines = elem.querySelectorAll('.carusel');
   
@@ -276,7 +276,7 @@ window.addEventListener('load', function() {
     });
   });  
 
-window.addEventListener('load', function() {
+window.addEventListener('DOMContentLoaded', function() {
   const carousel = document.querySelector('.carusel');
   const images = carousel.querySelectorAll('.carusel a .carousel_items');
 

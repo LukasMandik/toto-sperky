@@ -8,17 +8,13 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import os
 import os
-import tempfile
 from moviepy.editor import VideoFileClip
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.base import ContentFile
 from PIL import Image
 from io import BytesIO
-import cv2
-import sys
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
-# Create your models here.
 from django.db import models
 from django.core.files.base import ContentFile
 from django.db.models.signals import pre_save
