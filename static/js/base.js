@@ -1,33 +1,28 @@
 $(document).ready(function() {
+    const hamburger = document.querySelector(".hamburger");
+    const menu = document.querySelector(".menu");
+    const toggle = document.querySelector("#toggle");
 
-    let hamburger = document.querySelector(".hamburger");
-    let menu = document.querySelector(".menu");
-
-    hamburger.addEventListener("click", function(){
+    hamburger.addEventListener("click", function(event) {
+        event.preventDefault();
+        // Toggle menu visibility
         menu.classList.toggle("active");
-        console.log("Hamburger menu bolo kliknuté");
-    });
-
-});
-
-$(document).ready(function() {
-    let hamburger = document.querySelector(".hamburger");
-    let toggle = document.querySelector("#toggle");
-
-    hamburger.addEventListener("click", function() {
+        // Toggle hamburger aktivný stav
         toggle.classList.toggle("active");
+
+        // Správa overflow pre telo stránky
         if (toggle.classList.contains("active")) {
             document.body.style.overflow = 'hidden';
-            // document.body.style.position = 'fixed';
             document.body.style.width = '100%';
         } else {
             document.body.style.overflow = '';
             document.body.style.position = '';
             document.body.style.width = '';
         }
+
+        console.log("Hamburger menu bolo kliknuté");
     });
 });
-
 
 $(document).ready(function() {
     const currentPath = window.location.pathname;
@@ -44,9 +39,6 @@ $(document).ready(function() {
         }
     });
 });
-
-
-
 
 $(document).ready(function() {
     var bodyWrapper = document.querySelector('.footer_hide_element');
