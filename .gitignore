@@ -1,7 +1,6 @@
 # created by virtualenv automatically
 staticfiles/media/*
 static/media/*
-settings.py
 # te
 
 # Byte-compiled / optimized / DLL files
