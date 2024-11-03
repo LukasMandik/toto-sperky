@@ -28,7 +28,7 @@
             {% for category in categories %}
             <div class="categories_item">
                 <li {% if category.slug == selected_category %} class="selected"{% endif %}>
-                    <a  class="category-link" href="/gallery?category={{ category.slug }}/">
+                    <a  class="category-link" href="/gallery?category={{ category.slug }}">
                         <p>{{ category.name }}</p>
                     </a>
                     {% if user.is_authenticated %}
