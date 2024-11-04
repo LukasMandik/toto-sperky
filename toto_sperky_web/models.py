@@ -25,6 +25,7 @@ from io import BytesIO
 from moviepy.editor import VideoFileClip
 import cv2
 from PIL import ExifTags
+import subprocess
 
 class Blog(models.Model):
     name = models.CharField(max_length=200)
@@ -211,7 +212,8 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField(null=True, blank=True)
-    video = models.FileField(null=True, blank=True)   # Nové pole pro video soubor
+    video = models.FileField(null=True, blank=True) 
+    video_webm = models.FileField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -296,50 +298,85 @@ class Product(models.Model):
 
         # Zpracování videa
 
+        
         if self.video:
             video_path = self.video.path
-        
-            
             base_name, ext = os.path.splitext(os.path.basename(video_path))
 
-            if '_compressed' in base_name:
-                print("Video is already compressed, skipping compression.")
-            else:
+            if '_compressed' not in base_name:
                 compressed_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_compressed{ext}")
+                webm_compressed_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_compressed.webm")
                 thumbnail_video_path = os.path.join(os.path.dirname(video_path), f"{base_name}_thumbnail{ext}")
 
                 if os.path.getsize(video_path) > 2 * 1024 * 1024:  # 2 MB
-                    os.system(f"ffmpeg -y -i {video_path} -vf 'scale=1280:-1' -c:v libx264 -preset slow -crf 22 -c:a aac {compressed_video_path}")
+                    self.compress_video(video_path, compressed_video_path)
+                    self.compress_video_webm(video_path, webm_compressed_video_path)
                     with open(compressed_video_path, 'rb') as f:
                         self.video = ContentFile(f.read(), name=f"{base_name}_compressed{ext}")
+                    with open(webm_compressed_video_path, 'rb') as f:
+                        self.video_webm = ContentFile(f.read(), name=f"{base_name}_compressed.webm")
                 else:
                     with open(video_path, 'rb') as f:
                         self.video = ContentFile(f.read(), name=f"{base_name}_compressed{ext}")
-                    print("Video size is acceptable, no compression needed.")
 
                 if not self.video_thumbnail or self.video_thumbnail.name != f"{base_name}_thumbnail{ext}":
-                    os.system(f"ffmpeg -y -i {video_path} -ss 00:00:01.00 -t 6 -vf 'scale=640:-2' -b:v 1050k {thumbnail_video_path}")
+                    self.create_thumbnail(video_path, thumbnail_video_path)
                     with open(thumbnail_video_path, 'rb') as f:
                         new_thumbnail_file = ContentFile(f.read(), name=f"{base_name}_thumbnail{ext}")
-
-                    if not self.video_thumbnail or self.video_thumbnail.name != new_thumbnail_file.name:
-                        self.video_thumbnail.save(f"{base_name}_thumbnail{ext}", new_thumbnail_file, save=False)
-                        print("Video thumbnail created and saved as:", self.video_thumbnail.name)
-                        print("Thumbnail video size:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
-                        print("Video compressed and saved as:", compressed_video_path)
-                        print("Compressed video size:", os.path.getsize(compressed_video_path) / (1024 * 1024), "MB")
-                        print("Original video size (before processing):", os.path.getsize(video_path) / (1024 * 1024), "MB")
-
-                for path in [compressed_video_path, thumbnail_video_path]:
-                    if os.path.exists(path):
-                        os.remove(path)
-
+                    self.video_thumbnail.save(f"{base_name}_thumbnail{ext}", new_thumbnail_file, save=False)
+                    print("Video thumbnail created and saved as:", self.video_thumbnail.name)
+                    print("Thumbnail video size:", os.path.getsize(thumbnail_video_path) / (1024 * 1024), "MB")
+                    print("Video compressed and saved as:", compressed_video_path)
+                    print("Compressed video size:", os.path.getsize(compressed_video_path) / (1024 * 1024), "MB")
+                    print("Original video size (before processing):", os.path.getsize(video_path) / (1024 * 1024), "MB")
+        
+            for path in [compressed_video_path, webm_compressed_video_path, thumbnail_video_path]:
+                if os.path.exists(path):
+                    os.remove(path)
+        
         if not self.image:
             self.image_thumbnail = None
         if not self.video:
             self.video_thumbnail = None
 
         super().save(*args, **kwargs)
+
+    def compress_video(self, input_path, output_path):
+        subprocess.run([
+            'ffmpeg',
+            '-y',
+            '-i', input_path,
+            '-vf', 'scale=1280:-1',
+            '-c:v', 'libx264',
+            '-preset', 'slow',
+            '-crf', '22',
+            '-c:a', 'aac',
+            output_path
+        ], check=True)
+
+    def compress_video_webm(self, input_path, output_path):
+        subprocess.run([
+            'ffmpeg',
+            '-y',
+            '-i', input_path,
+            '-vf', 'scale=1280:-1',
+            '-c:v', 'libvpx-vp9',
+            '-b:v', '1M',
+            '-c:a', 'libopus',
+            output_path
+        ], check=True)
+
+    def create_thumbnail(self, input_path, output_path):
+        subprocess.run([
+            'ffmpeg',
+            '-y',
+            '-i', input_path,
+            '-ss', '00:00:01.00',
+            '-t', '6',
+            '-vf', 'scale=640:-2',
+            '-b:v', '1050k',
+            output_path
+        ], check=True)
 
     def get_meta_description(self):
         return f"Vyrobila som {self.name}. {self.description[:150]}..."
