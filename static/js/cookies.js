@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function initializeCookieSettings() {
         const marketingCookie = getCookie("marketingCookies");
         if (!marketingCookie) {
-            marketingCookiesCheckbox.checked = false;
+            marketingCookiesCheckbox.checked = true;
         } else if (marketingCookie === "accepted") {
             marketingCookiesCheckbox.checked = true;
             loadGoogleAnalytics();
@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const currentCookieValue = getCookie("marketingCookies");
 
             if (currentCookieValue !== marketingCookies) {
+                setCookie("cookieBy", "toto_sperky", 30);
                 setCookie("marketingCookies", marketingCookies, 30);
                 if (marketingCookies === "accepted") {
                     loadGoogleAnalytics();
