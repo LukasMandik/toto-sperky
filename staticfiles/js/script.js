@@ -1,6 +1,6 @@
 
 
-window.addEventListener('load', function() {
+window.addEventListener('DOMContentLoaded', function() {
   
   gsap.registerPlugin(ScrollTrigger);
   gsap.utils.toArray('.starterline').forEach((elem) => {
@@ -26,7 +26,7 @@ window.addEventListener('load', function() {
   });
 });
 
-window.addEventListener('load', function() {
+window.addEventListener('DOMContentLoaded', function() {
   // Získajte názov aktuálneho súboru
   const currentPath = window.location.pathname;
 
@@ -73,7 +73,7 @@ window.addEventListener('load', function() {
       }
   }
 });
-window.addEventListener('load', function() {
+window.addEventListener('DOMContentLoaded', function() {
     gsap.utils.toArray('.home_buttons').forEach((elem) => {
         let lines = elem.querySelectorAll('.home_buttons .btn');
   
@@ -156,15 +156,3 @@ gsap.from(Container, {
 });
 }
 });
-  
-
-
-
-
-
-
-
-
-
-
-

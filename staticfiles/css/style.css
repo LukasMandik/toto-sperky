@@ -1,10 +1,4 @@
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 240px 0 0 0 #efefef inset !important;
-}
 :root {
   --primary-darkMode: rgb(28, 32, 41);
   --primary-darkMode2: rgba(32, 39, 52, 0.877);
@@ -16,6 +10,7 @@ input:-webkit-autofill:active{
   --background-color-light: #fffcf6;
   --text-color-dark: #383838;
 }
+
 *{
 	margin: 0;
 	padding: 0;
@@ -27,13 +22,7 @@ input:-webkit-autofill:active{
 	box-sizing: border-box;
 	list-style: none;
 }
-body, body.light-mode{
-  	background-color: var(--background-color-light);
-  
-	color: var(--text-color-dark);
-	transition: background 0.7s ease-in-out;
 
-}
 .footer_hide_element{
 	background-color: var(--background-color-light);
 	margin-bottom: 450px;
@@ -47,16 +36,21 @@ body.no-scroll {
 	position: fixed;
 	width: 100%;
 }
-body.dark-mode {
-	background: var(--primary-darkMode);
-	color: #e4e4e4;
-  }
-:root {
-	--light-color: #fefefe;
-	--dark-color: rgba(51, 51, 51, 0.995);
-	--sun-color: #FFEE58;
-	--moon-color: #BDBDBD;
+
+
+.error404 {
+	background-color: var(--background-color-light);
+    width: 100%;
+    height: 100svh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow-x: hidden;
+	padding-top: 100px;
 }
+
+
+
 .search_form {
 	margin-top: 24px;
 	margin-bottom: 14px;
@@ -271,6 +265,7 @@ input[type=search]::-webkit-search-cancel-button {
     position: relative;
     width: 100%;
 	display: -webkit-box;
+	line-clamp: 4;
     -webkit-line-clamp: 4; 
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -309,6 +304,7 @@ input[type=search]::-webkit-search-cancel-button {
 }
 .text p:first-child {
     display: -webkit-box;
+	line-clamp: 1;
     -webkit-line-clamp: 1; 
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -316,6 +312,7 @@ input[type=search]::-webkit-search-cancel-button {
 }
 .text p:nth-child(2) {
     display: -webkit-box;
+	line-clamp: 2;
     -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -1062,7 +1059,7 @@ footer {
 }
 footer p a, footer p {
 	color: #cdcdcd;
-	z-index: 1000;
+	z-index: 39999;
   }
 
 #loading-message{
@@ -1084,7 +1081,7 @@ footer p a, footer p {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	z-index: 39999;
+	z-index: 9999;
 	gap: 10px;
 	overflow: hidden;
 	overflow-y: hidden;

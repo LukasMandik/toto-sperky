@@ -1,7 +1,3 @@
-
-
-
-
 function mediaLoaded() {
     const images = document.getElementsByTagName("img");
     const videos = document.getElementsByTagName("video");
@@ -24,12 +20,12 @@ function mediaLoaded() {
 function hideLoadingScreen() {
     const loadingScreen = document.getElementById("loading-screen");
     if (mediaLoaded()) {
-      loadingScreen.style.opacity = "0";
+      // loadingScreen.style.opacity = "0";
       setTimeout(function () {
         loadingScreen.style.display = "none";
-      }, 500);
+      }, 50);
     } else {
-      setTimeout(hideLoadingScreen, 100);
+      setTimeout(hideLoadingScreen, 10);
     }
 }
 
@@ -39,8 +35,8 @@ window.addEventListener("load", function () {
 
 window.addEventListener("load", function () {
     const loadingScreen = document.getElementById("loading-screen");
-    loadingScreen.style.opacity = "0";
+    // loadingScreen.style.opacity = "0";
     setTimeout(function () {
         loadingScreen.style.display = "none";
-    }, 1000);
+    }, 10);
 });

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Ojoj!{% endblock %}
+
+{% block content %}
+<style>
+    .error404 {
+        background-color: var(--background-color-light);
+        width: 100%;
+        height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+    }
+    .error404 h1{
+        margin-bottom: 20px;
+    }
+</style>
+<div class="error404">
+    <h1>Ojoj!</h1>
+    <p>Zdá sa, že ste sa stratili. Táto stránka neexistuje.</p>
+</div>
+
+{% endblock %}
