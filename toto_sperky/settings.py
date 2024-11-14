@@ -32,10 +32,7 @@ DEBUG = False
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".totosperky.sk", "192.168.100.4"]
 
 CSRF_TRUSTED_ORIGINS = [
-    # 'https://blog.hubspot.com/website/what-is-localhost',  # Povoliť localhost
     'https://*.totosperky.sk',  # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
-    'http://127.0.0.1:8000',  # Povoliť konkrétnu IP adresu a port
-    'http://37.205.12.97',
 ]
 
 # Application definition
