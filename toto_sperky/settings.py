@@ -29,7 +29,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".totosperky.sk", "192.168.100.4"]
+ALLOWED_HOSTS = [".totosperky.sk"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.totosperky.sk',  # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
@@ -212,6 +212,16 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
+# Rate limiting settings
+RATELIMIT_ENABLE = True
+RATELIMIT_USE_CACHE = 'default'
+RATELIMIT_KEY_PREFIX = 'rl'
+
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+SECURE_SSL_REDIRECT = True
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -226,6 +236,25 @@ LOGGING = {
         'django': {
             'handlers': ['file'],
             'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/django/security.log',
+        },
+    },
+    'loggers': {
+        'django.security': {
+            'handlers': ['file'],
+            'level': 'WARNING',
             'propagate': True,
         },
     },
