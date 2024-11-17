@@ -29,10 +29,10 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [".totosperky.sk"]
+ALLOWED_HOSTS = [".totosperky.sk", 'www.totosperky.sk']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.totosperky.sk',  # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
+    'https://*.totosperky.sk', 'https://www.totosperky.sk', # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
 ]
 
 # Application definition
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'toto_sperky_web.middleware.SecurityMiddleware',  # pridajte na začiatok
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
