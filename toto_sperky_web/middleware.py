@@ -9,6 +9,12 @@ security_logger = logging.getLogger('django.security')
 class SecurityMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
+        # Pridajte povolené user agents
+        self.allowed_user_agents = [
+            'sentryuptimebot',
+            'sentry'
+        ]
+        
         # Rozšírený zoznam blokovaných vzorov
         self.blocked_patterns = [
             # Systémové a konfiguračné súbory
@@ -129,6 +135,11 @@ class SecurityMiddleware:
 
     def is_suspicious_user_agent(self, request):
         user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+        
+        # Najprv skontrolujte povolené user agents
+        if any(agent in user_agent for agent in self.allowed_user_agents):
+            return False
+            
         suspicious_agents = [
             'sqlmap',
             'nikto',
