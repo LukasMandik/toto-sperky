@@ -82,7 +82,31 @@ class SecurityMiddleware:
             r'passwd',
             r'password',
             r'admin',
-            r'root'
+            r'root',
+            
+            # Spring Boot Actuator endpoints
+            r'actuator',
+            r'gateway/routes',
+            r'env',
+            r'health',
+            r'metrics',
+            r'trace',
+            r'dump',
+            r'jolokia',
+            r'logfile',
+            r'prometheus',
+            r'heapdump',
+            
+            # Ďalšie nebezpečné endpointy
+            r'swagger',
+            r'api-docs',
+            r'console',
+            r'manager',
+            r'jenkins',
+            r'solr',
+            r'druid',
+            r'elasticsearch',
+            r'graphql',
         ]
         
         # IP adresy, ktoré chceme blokovať
@@ -97,6 +121,9 @@ class SecurityMiddleware:
             'localhost',
             '127.0.0.1'
         }
+        
+        # Pridajte blokovanie portov
+        self.blocked_ports = {'443', '80', '8080', '8443', '8888'}
 
     def __call__(self, request):
         # Kontrola IP adresy
@@ -120,10 +147,17 @@ class SecurityMiddleware:
             self.log_attack(request, client_ip, "suspicious_user_agent")
             return HttpResponseForbidden("Access Denied")
 
+        # Kontrola portu
+        if self.is_port_suspicious(request):
+            self.log_attack(request, client_ip, "suspicious_port")
+            return HttpResponseForbidden("Access Denied")
+
         return self.get_response(request)
 
     def is_valid_host(self, request):
-        host = request.get_host().split(':')[0].lower()
+        host = request.get_host().lower()
+        # Odstráňte port z hostu
+        host = host.split(':')[0] if ':' in host else host
         return host in self.allowed_hosts
 
     def is_suspicious_request(self, request):
@@ -172,3 +206,11 @@ class SecurityMiddleware:
             'raw_uri': request.META.get('RAW_URI', '')
         }
         security_logger.warning(f"Attack attempt detected: {log_data}") 
+
+    def is_port_suspicious(self, request):
+        host = request.get_host()
+        if ':' in host:
+            port = host.split(':')[1]
+            return port in self.blocked_ports
+        return False
+        

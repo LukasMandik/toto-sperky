@@ -229,6 +229,18 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
+# Pridajte rate limiting pre API endpointy
+RATELIMIT_ENABLE = True
+RATELIMIT_USE_CACHE = 'default'
+RATELIMIT_KEY_PREFIX = 'rl'
+
+# Špecifické rate limity pre rôzne endpointy
+RATELIMIT_RATE = {
+    'api': '100/h',
+    'admin': '50/h',
+    'default': '1000/h'
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
