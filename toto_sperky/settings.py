@@ -232,44 +232,6 @@ X_FRAME_OPTIONS = 'DENY'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/django/django.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/django/security.log',
-        },
-    },
-    'loggers': {
-        'django.security': {
-            'handlers': ['file'],
-            'level': 'WARNING',
-            'propagate': True,
-        },
-    },
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
@@ -283,14 +245,14 @@ LOGGING = {
             'filename': '/var/log/django/security.log',
             'formatter': 'verbose',
         },
-        'mail_admins': {
+        'sentry': {
             'level': 'WARNING',
-            'class': 'django.utils.log.AdminEmailHandler',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
         }
     },
     'loggers': {
         'django.security': {
-            'handlers': ['security_file', 'mail_admins'],
+            'handlers': ['security_file', 'sentry'],
             'level': 'WARNING',
             'propagate': True,
         }
