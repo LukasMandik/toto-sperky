@@ -137,6 +137,21 @@ class SecurityMiddleware:
         }
 
     def __call__(self, request):
+        # 1. Kontrola metódy
+        if not self.is_valid_request_method(request):
+            self.log_attack(request, self.get_client_ip(request), "invalid_method")
+            return HttpResponseForbidden("Method Not Allowed")
+
+        # 2. Kontrola Content-Type
+        if not self.has_valid_content_type(request):
+            self.log_attack(request, self.get_client_ip(request), "invalid_content_type")
+            return HttpResponseForbidden("Invalid Content Type")
+
+        # 3. Kontrola podozrivých hlavičiek
+        if self.has_suspicious_headers(request):
+            self.log_attack(request, self.get_client_ip(request), "suspicious_headers")
+            return HttpResponseForbidden("Invalid Headers")
+
         # Kontrola IP adresy
         client_ip = self.get_client_ip(request)
         if client_ip in self.blocked_ips:
@@ -213,3 +228,25 @@ class SecurityMiddleware:
             'referer': request.META.get('HTTP_REFERER', '')
         }
         security_logger.warning(f"Attack attempt detected: {log_data}") 
+
+    def is_valid_request_method(self, request):
+        """Kontrola povolených HTTP metód"""
+        return request.method in {'GET', 'POST', 'HEAD'}
+
+    def has_valid_content_type(self, request):
+        """Kontrola Content-Type hlavičky"""
+        if request.method == 'POST':
+            content_type = request.META.get('CONTENT_TYPE', '').lower()
+            return 'application/x-www-form-urlencoded' in content_type or 'multipart/form-data' in content_type
+        return True
+
+    def has_suspicious_headers(self, request):
+        """Kontrola podozrivých hlavičiek"""
+        suspicious_headers = {
+            'HTTP_PROXY',
+            'HTTP_VIA',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_REAL_IP',
+            'HTTP_X_FORWARDED_HOST'
+        }
+        return any(header in request.META for header in suspicious_headers)
