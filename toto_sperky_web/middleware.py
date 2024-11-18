@@ -84,29 +84,43 @@ class SecurityMiddleware:
             r'admin',
             r'root',
             
-            # Spring Boot Actuator endpoints
-            r'actuator',
-            r'gateway/routes',
-            r'env',
-            r'health',
-            r'metrics',
-            r'trace',
-            r'dump',
-            r'jolokia',
-            r'logfile',
-            r'prometheus',
-            r'heapdump',
+            # Docker API endpoints
+            r'containers',
+            r'images',
+            r'volumes',
+            r'networks',
+            r'swarm',
+            r'nodes',
+            r'services',
+            r'tasks',
+            r'secrets',
+            r'configs',
+            r'docker',
             
-            # Ďalšie nebezpečné endpointy
-            r'swagger',
-            r'api-docs',
-            r'console',
-            r'manager',
-            r'jenkins',
-            r'solr',
-            r'druid',
-            r'elasticsearch',
-            r'graphql',
+            # Systémové a diagnostické endpointy
+            r'version',
+            r'info',
+            r'_ping',
+            r'events',
+            r'system',
+            r'stats',
+            r'top',
+            r'processes',
+            
+            # FFmpeg a média
+            r'ffmpeg',
+            r'ffprobe',
+            r'stream',
+            r'convert',
+            r'media',
+            
+            # Ďalšie nebezpečné cesty
+            r'debug',
+            r'test',
+            r'setup',
+            r'install',
+            r'config',
+            r'settings'
         ]
         
         # IP adresy, ktoré chceme blokovať
@@ -121,9 +135,6 @@ class SecurityMiddleware:
             'localhost',
             '127.0.0.1'
         }
-        
-        # Pridajte blokovanie portov
-        self.blocked_ports = {'443', '80', '8080', '8443', '8888'}
 
     def __call__(self, request):
         # Kontrola IP adresy
@@ -135,29 +146,25 @@ class SecurityMiddleware:
         # Kontrola hostu
         if not self.is_valid_host(request):
             self.log_attack(request, client_ip, "invalid_host")
-            return HttpResponse("Invalid host", status=400)
+            return HttpResponseForbidden("Invalid Host")
 
-        # Kontrola podozrivých požiadaviek
-        if self.is_suspicious_request(request):
-            self.log_attack(request, client_ip, "suspicious_request")
-            return HttpResponseForbidden("Access Denied")
+        # Kontrola podozrivých URL
+        path = request.path.lower()
+        for pattern in self.blocked_patterns:
+            if re.search(pattern, path):
+                self.log_attack(request, client_ip, f"blocked_pattern: {pattern}")
+                return HttpResponseForbidden("Access Denied")
 
         # Kontrola user agenta
-        if self.is_suspicious_user_agent(request):
+        user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+        if not user_agent or 'ffmpeg' in user_agent:
             self.log_attack(request, client_ip, "suspicious_user_agent")
-            return HttpResponseForbidden("Access Denied")
-
-        # Kontrola portu
-        if self.is_port_suspicious(request):
-            self.log_attack(request, client_ip, "suspicious_port")
             return HttpResponseForbidden("Access Denied")
 
         return self.get_response(request)
 
     def is_valid_host(self, request):
-        host = request.get_host().lower()
-        # Odstráňte port z hostu
-        host = host.split(':')[0] if ':' in host else host
+        host = request.get_host().split(':')[0].lower()
         return host in self.allowed_hosts
 
     def is_suspicious_request(self, request):
@@ -201,16 +208,8 @@ class SecurityMiddleware:
             'method': request.method,
             'user_agent': request.META.get('HTTP_USER_AGENT', ''),
             'attack_type': attack_type,
-            'referer': request.META.get('HTTP_REFERER', ''),
+            'host': request.get_host(),
             'query_string': request.META.get('QUERY_STRING', ''),
-            'raw_uri': request.META.get('RAW_URI', '')
+            'referer': request.META.get('HTTP_REFERER', '')
         }
         security_logger.warning(f"Attack attempt detected: {log_data}") 
-
-    def is_port_suspicious(self, request):
-        host = request.get_host()
-        if ':' in host:
-            port = host.split(':')[1]
-            return port in self.blocked_ports
-        return False
-        
