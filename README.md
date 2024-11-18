@@ -1,64 +1,96 @@
-# Toto-šperky - Webová aplikácia
+# Toto-jewelry - Web Application
 
-## O projekte
-Webová aplikácia vytvorená pre výrobcu ručne vyrábaných šperkov, ktorá slúži na prezentáciu produktov a komunikáciu so zákazníkmi. Aplikácia umožňuje správu produktov, kategórií a blogu prostredníctvom administrátorského rozhrania.
+## About the Project
+A web application created for a handmade jewelry manufacturer, serving to showcase products and communicate with customers. The application enables management of products, categories, and blog through an administrative interface.
 
-## Hlavné funkcie
+## Main Features
 
-### Verejná časť
-- Prezentácia šperkov v galérii s možnosťou filtrovania podľa kategórií
-- Detailné zobrazenie produktov s obrázkami a videami
-- Sekcia "O mne" s informáciami o výrobcovi
-- Blog sekcia s článkami a fotogalériou
-- Kontaktná stránka
-- Responzívny dizajn pre všetky zariadenia
+### Public Section
+- Jewelry presentation in gallery with category filtering
+- Detailed product view with images and videos
+- "About Me" section with manufacturer information
+- Blog section with articles and photo gallery
+- Contact page
+- Responsive design for all devices
+- Advanced search functionality with real-time suggestions
 
-### Administrátorská časť (CRUD operácie)
+### Administrative Section (CRUD Operations)
 
-#### Správa produktov
-- Pridávanie nových produktov
-- Úprava existujúcich produktov
-- Mazanie produktov
-- Nastavenie dostupnosti produktov
-- Nahrávanie obrázkov a videí
+#### Product Management
+- Adding new products
+- Editing existing products
+- Deleting products
+- Setting product availability
+- Uploading images and videos
 
-#### Správa kategórií
-- Vytváranie nových kategórií
-- Úprava existujúcich kategórií
-- Mazanie kategórií
-- Priradenie produktov do kategórií
+#### Category Management
+- Creating new categories
+- Editing existing categories
+- Deleting categories
+- Assigning products to categories
 
-#### Správa blogu
-- Pridávanie nových článkov
-- Úprava existujúcich článkov
-- Mazanie článkov
-- Nahrávanie viacerých obrázkov ku článkom
-- Automatický výpočet času čítania
+#### Blog Management
+- Adding new articles
+- Editing existing articles
+- Deleting articles
+- Uploading multiple images for articles
+- Automatic reading time calculation
 
-## Technické detaily
+### Enhanced Search Functionality
+- Real-time search suggestions as user types
+- Search across multiple content types (products, categories, blogs)
+- Visual feedback with highlighted search terms
+- Support for images and videos in search results
+- Search history using localStorage
+- Mobile-optimized search interface
+- Debounced search requests for performance
+- Relevance-based result ordering
+- Rich media preview in suggestions
+- Smooth animations for suggestion box
+- Cross-model search capabilities
 
-### Obmedzenia pre nahrávané súbory
-- Obrázky: maximálna veľkosť 15 MB
-- Videá: maximálna veľkosť 120 MB
+#### Search Implementation Details
+- Frontend Features:
+  - Real-time suggestions with debouncing
+  - Highlighted search terms in results
+  - Image and video preview support
+  - Smooth animations for UI elements
+  - Mobile-friendly interface
+  - Search history management
+  - Keyboard navigation support
 
-### SEO Optimalizácia
-- Meta tagy pre všetky stránky
-- Open Graph protokol pre zdieľanie na sociálnych sieťach
-- Schema.org značkovanie pre lepšiu indexáciu
-- Optimalizované URL adresy (slugy)
+- Backend Features:
+  - Full-text search across multiple models
+  - Relevance-based result ordering
+  - Search in product names, descriptions, and categories
+  - Blog content search capability
+  - Efficient query optimization
+  - Cross-model search integration
 
-### Zabezpečenie
-- Autentifikácia používateľov pre prístup k admin funkciam
-- CSRF ochrana pre všetky formuláre
-- Validácia nahrávaných súborov
+## Technical Details
 
-### Paginácia a filtrovanie
-- Nastaviteľný počet položiek na stránku (15/30/50)
-- Filtrovanie produktov podľa kategórií
-- Možnosť priameho prechodu na konkrétnu stránku
+### File Upload Limitations
+- Images: maximum size 15 MB
+- Videos: maximum size 120 MB
 
-## Použité technológie
+### SEO Optimization
+- Meta tags for all pages
+- Open Graph protocol for social media sharing
+- Schema.org markup for better indexing
+- Optimized URLs (slugs)
+
+### Security
+- User authentication for admin functions
+- CSRF protection for all forms
+- File upload validation
+
+### Pagination and Filtering
+- Adjustable items per page (15/30/50)
+- Product filtering by categories
+- Direct page navigation
+
+## Technologies Used
 - Django (Python web framework)
 - HTML5, CSS3, JavaScript
-- Postgre databáza
+- PostgreSQL database
 
