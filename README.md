@@ -94,3 +94,58 @@ A web application created for a handmade jewelry manufacturer, serving to showca
 - HTML5, CSS3, JavaScript
 - PostgreSQL database
 
+## Server Environment
+
+### Hosting Infrastructure
+- VPS (Virtual Private Server)
+- Operating System: Ubuntu Linux 22.04 LTS
+- Web Server: Nginx 1.18
+- WSGI Server: Gunicorn 20.1
+- Database: PostgreSQL 14
+
+### Server Configuration
+- Nginx as reverse proxy
+- Gunicorn WSGI server with 4 workers
+- Automatic SSL certificate management via Let's Encrypt
+- Gzip compression for static files
+- Static content caching
+- Optimized Django application settings
+
+### Security Features
+- Custom security middleware with:
+  - IP filtering
+  - Request pattern validation
+  - Port restriction
+  - Host validation
+  - User agent verification
+- HTTPS enforcement
+- HSTS implementation
+- XSS protection
+- Content type sniffing prevention
+- Rate limiting for API endpoints
+- CSRF protection
+- Secure cookie configuration
+
+### Monitoring and Performance
+- Sentry integration for error tracking and performance monitoring
+- Automated database backups
+- UFW firewall configuration
+- DDoS protection
+- Regular security updates
+- Comprehensive logging system
+
+### Performance Optimization
+- Application-level caching
+- Database query optimization
+- CDN integration for static files
+- Lazy loading for images and videos
+- CSS and JavaScript minification
+- Template caching
+- Optimized media file processing
+
+### Analytics and Tracking
+- Google Analytics integration
+- Custom event tracking
+- User behavior analytics
+- Performance metrics monitoring
+
