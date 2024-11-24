@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import home, gallery, ProductDetailView, cookies, product_data, about_me, contact, blog_view, BlogDetailView, category_detail, UserLoginView, search_results, search_suggestions, add_blog, update_blog, delete_blog, add_product, update_product, delete_product, add_category, update_category, delete_category
+from .views import home, gallery, ProductDetailView, cookies, product_data, about_me, contact, blog_view, BlogDetailView, category_detail, UserLoginView, search_results, search_suggestions, add_blog, update_blog, delete_blog, add_product, update_product, delete_product, add_category, update_category, delete_category, get_video_progress
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import LogoutView
 
@@ -24,12 +24,16 @@ urlpatterns = [
     path('category/<slug:slug>/update/', update_category, name='update_category'),
     path('category/<slug:slug>/delete/', delete_category, name='delete_category'),
     path('category/<slug:slug>/', category_detail, name='category_detail'),
+
+    
     path('product/<slug:slug>/', ProductDetailView, name='product_detail'),
     path('blog/<slug:slug>/', BlogDetailView, name='blog_detail'),
     path('cookies/', cookies, name='cookies'),
     path('product/<slug:slug>/data/', product_data, name='product_data'),
     path('login/', UserLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('get_video_progress/', get_video_progress, name='get_video_progress'),
+
 ]
 
 # urlpatterns += staticfiles_urlpatterns()

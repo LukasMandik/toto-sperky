@@ -492,3 +492,12 @@ class UserLoginView(LoginView):
 
 class UserLogoutView(LogoutView):
     template_name = 'home.html'  # Môžete špecifikovať šablónu, ktorá sa zobrazí po odhlásení
+
+
+from django.http import JsonResponse
+from django.core.cache import cache
+
+def get_video_progress(request):
+    progress = cache.get('video_progress', 0)
+    print(f"Current progress from cache: {progress}%")
+    return JsonResponse({'progress': progress})

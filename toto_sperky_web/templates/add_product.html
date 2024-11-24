@@ -47,18 +47,24 @@
             {{ form.video }}
             <div id="video-preview">
                 <p id="file-name"></p>
-                <video id="video-thumb" controls style="display: none; max-width: 200px; max-height: 200px;"></video>
+                <video id="video-thumb" controls style="display: none; margin: 0 auto; max-width: 250px; max-height: 250px;"></video>
             </div>
             {% if form.errors.video %}
                 <div class="alert alert-danger">{{ form.errors.video }}</div>
             {% endif %}
         </div>
 
-
+        
         <button class="btn type1" id="save-button" type="submit" >Uložiť</button>
         <div id="loading-message" style="display: none;">
             Produkt sa nahráva, prosím čakajte...
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
+            </div>
             <div class="chaotic-orbit"></div>
+            <div id="upload-progress" style="display: none;">
+                <p><span id="progress-percentage">0</span>%</p>
+            </div>
         </div>
     </form>
 </div>
@@ -156,6 +162,29 @@
             // Pokud není vybráno žádné video, zakážeme tlačítko "Save"
             saveButton.disabled = true;
         }
+    });
+</script>
+
+<script>
+    function fetchProgress() {
+        fetch('/get_video_progress/')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Progress:', data.progress);
+                document.getElementById('progress-percentage').innerText = data.progress;
+                document.getElementById('progress-bar-fill').style.width = data.progress + '%';
+                if (data.progress >= 100) {
+                    clearInterval(progressInterval);
+                    document.getElementById('upload-progress').style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching progress:', error));
+    }
+
+    const saveButton2 = document.getElementById('save-button');
+    saveButton2.addEventListener('click', function() {
+        document.getElementById('upload-progress').style.display = 'block';
+        const progressInterval = setInterval(fetchProgress, 1000); // Aktualizuje každú sekundu
     });
 </script>
 {% endblock %}
