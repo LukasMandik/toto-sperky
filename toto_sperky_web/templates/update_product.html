@@ -22,9 +22,7 @@
             {{ form.category }}
         </div>
         {% if user.is_authenticated %}
-        <div class="home_buttons">
-            <a href="{% url 'toto_sperky_web:add_category' %}" class="btn type1">Nová kategória</a>
-        </div>
+        <a href="{% url 'toto_sperky_web:add_category' %}" class="btn">Nová kategória</a>
         {% endif %}
         <div class="form-group">
             <label for="id_available">Dostupné:</label>
@@ -46,27 +44,27 @@
             {{ form.video }}
             <div id="video-preview">
                 <p id="file-name"></p>
-                <video id="video-thumb" controls style="display: none; max-width: 200px; max-height: 200px;"></video>
+                <video id="video-thumb" controls style="display: none; margin: 0 auto; max-width: 250px; max-height: 250px;"></video>
             </div>
             {% if form.errors.video %}
                 <div class="alert alert-danger">{{ form.errors.video }}</div>
             {% endif %}
         </div>
-        <button id="save-button" type="submit" class="btn type1">Uložiť zmeny</button>
-        <div id="loading-message" style="display: none;">Produkt se nahrává, prosím čekejte...</div>
+        <button class="btn type1" id="save-button" type="submit">Uložiť zmeny</button>
+        <div id="loading-message" style="display: none;">
+            Produkt sa nahráva, prosím čakajte...
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div class="chaotic-orbit"></div>
+            <div id="upload-progress" style="display: none;">
+                <p><span id="progress-percentage">0</span>%</p>
+            </div>
+        </div>
     </form>
-    
-    <div class="delete-button" id="delete-button" type="submit">
-        <a id="delete-link" href="{% url 'toto_sperky_web:delete_product' product.slug %}"></a>
-        <svg class="delete-svgIcon" viewBox="0 0 448 512">
-            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
-        </svg>
-    </div>
 </div>
 
-
 <script>
-    // JavaScript pre zobrazenie náhľadov obrázkov
     document.getElementById('id_image').addEventListener('change', function(event) {
         const fileInput = event.target;
         const file = fileInput.files[0];
@@ -74,10 +72,7 @@
         const imageThumb = document.getElementById('image-thumb');
     
         if (file) {
-            // Zobrazenie názvu súboru
             fileName.textContent = file.name;
-    
-            // Vytvorenie URL pre vybraný súbor a zobrazenie náhľadu obrázka
             const reader = new FileReader();
             reader.onload = function(e) {
                 imageThumb.src = e.target.result;
@@ -85,14 +80,12 @@
             }
             reader.readAsDataURL(file);
         } else {
-            // Vymazanie názvu súboru a skrytie náhľadu obrázka, ak nie je vybraný žiadny súbor
             fileName.textContent = '';
             imageThumb.style.display = 'none';
             imageThumb.src = '';
         }
     });
 
-    // JavaScript pre zobrazenie náhľadov videí a vymazanie starého náhľadu videa
     document.getElementById('id_video').addEventListener('change', function(event) {
         const fileInput = event.target;
         const file = fileInput.files[0];
@@ -100,14 +93,7 @@
         const videoThumb = document.getElementById('video-thumb');
 
         if (file) {
-            // Vymazanie starého náhľadu videa, ak existuje
-            videoThumb.src = '';
-            videoThumb.style.display = 'none';
-
-            // Zobrazenie názvu súboru
             fileName.textContent = file.name;
-
-            // Vytvorenie URL pre vybraný súbor a zobrazenie náhľadu videa
             const reader = new FileReader();
             reader.onload = function(e) {
                 videoThumb.src = e.target.result;
@@ -115,37 +101,49 @@
             }
             reader.readAsDataURL(file);
         } else {
-            // Vymazanie názvu súboru a skrytie náhľadu videa, ak nie je vybraný žiadny súbor
             fileName.textContent = '';
             videoThumb.style.display = 'none';
             videoThumb.src = '';
         }
     });
 
-    // JavaScript pre deaktiváciu tlačidla "Save" počas odosielania formulára
     const form = document.getElementById('product-form');
     const saveButton = document.getElementById('save-button');
     const loadingMessage = document.getElementById('loading-message');
 
     form.addEventListener('submit', function(event) {
-        // Deaktivácia tlačidla "Save"
         saveButton.disabled = true;
-        // Zobrazenie správy o nahrávaní
         loadingMessage.style.display = 'flex';
     });
 
-    // JavaScript pre povolenie alebo zakázanie tlačidla "Save" v závislosti od toho, či je vybrané video
     const videoField = document.getElementById('id_video');
     videoField.addEventListener('change', function() {
         if (this.files.length > 0) {
-            // Povolenie tlačidla "Save", ak je vybrané video
             saveButton.disabled = false;
         } else {
-            // Zakázanie tlačidla "Save", ak nie je vybrané žiadne video
             saveButton.disabled = true;
         }
     });
+
+    function fetchProgress() {
+        fetch('/get_video_progress/')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Progress:', data.progress);
+                document.getElementById('progress-percentage').innerText = data.progress;
+                document.getElementById('progress-bar-fill').style.width = data.progress + '%';
+                if (data.progress >= 100) {
+                    clearInterval(progressInterval);
+                    document.getElementById('upload-progress').style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching progress:', error));
+    }
+
+    const saveButton2 = document.getElementById('save-button');
+    saveButton2.addEventListener('click', function() {
+        document.getElementById('upload-progress').style.display = 'block';
+        const progressInterval = setInterval(fetchProgress, 1000);
+    });
 </script>
-
-
 {% endblock %}

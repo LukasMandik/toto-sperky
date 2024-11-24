@@ -51,7 +51,7 @@
 
   <div class="product_detail_image">
     {% if product.video or product.video_webm %}
-      <video autoplay="" controls loop muted playsinline loading="lazy">
+      <video class="video" autoplay="" controls loop muted playsinline loading="lazy">
           {% if product.video %}
               <source src="{{ product.video.url }}" type="video/mp4">
           {% endif %}
@@ -198,6 +198,17 @@ window.addEventListener('DOMContentLoaded', function() {
       body.style.overflow = 'auto';  // Re-enable scrolling on modal close
     }
   });
+});
+</script>
+
+<script>
+document.addEventListener('fullscreenchange', function() {
+    const video = document.querySelector('video');
+    if (document.fullscreenElement) {
+        video.classList.add('fullscreen-active');
+    } else {
+        video.classList.remove('fullscreen-active');
+    }
 });
 </script>
 {% endblock %}
