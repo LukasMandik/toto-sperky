@@ -240,70 +240,70 @@ RATELIMIT_RATE = {
     'default': '1000/h'
 }
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/django/django.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': '/var/log/django/django.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/django/security.log',
-        },
-    },
-    'loggers': {
-        'django.security': {
-            'handlers': ['file'],
-            'level': 'WARNING',
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'WARNING',
+#             'class': 'logging.FileHandler',
+#             'filename': '/var/log/django/security.log',
+#         },
+#     },
+#     'loggers': {
+#         'django.security': {
+#             'handlers': ['file'],
+#             'level': 'WARNING',
+#             'propagate': True,
+#         },
+#     },
+# }
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        }
-    },
-    'handlers': {
-        'security_file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/django/security.log',
-            'formatter': 'verbose',
-        },
-        'mail_admins': {
-            'level': 'WARNING',
-            'class': 'django.utils.log.AdminEmailHandler',
-        }
-    },
-    'loggers': {
-        'django.security': {
-            'handlers': ['security_file', 'mail_admins'],
-            'level': 'WARNING',
-            'propagate': True,
-        }
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+#             'style': '{',
+#         }
+#     },
+#     'handlers': {
+#         'security_file': {
+#             'level': 'WARNING',
+#             'class': 'logging.FileHandler',
+#             'filename': '/var/log/django/security.log',
+#             'formatter': 'verbose',
+#         },
+#         'mail_admins': {
+#             'level': 'WARNING',
+#             'class': 'django.utils.log.AdminEmailHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.security': {
+#             'handlers': ['security_file', 'mail_admins'],
+#             'level': 'WARNING',
+#             'propagate': True,
+#         }
+#     }
+# }
