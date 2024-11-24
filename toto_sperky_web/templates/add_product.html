@@ -61,10 +61,10 @@
             <div class="progress-bar">
                 <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
             </div>
-            <div class="chaotic-orbit"></div>
             <div id="upload-progress" style="display: none;">
                 <p><span id="progress-percentage">0</span>%</p>
             </div>
+            <div class="chaotic-orbit"></div>
         </div>
     </form>
 </div>
@@ -144,47 +144,94 @@
     // Získání zprávy o nahrávání
     const loadingMessage = document.getElementById('loading-message');
 
-    // Přidání posluchače události na formulář pro deaktivaci tlačítka "Save" při odesílání formuláře
-    form.addEventListener('submit', function(event) {
-        // Deaktivace tlačítka "Save"
-        saveButton.disabled = true;
-        // Zobrazení zprávy o nahrávání
-        loadingMessage.style.display = 'flex';
-    });
+    let progressInterval; // Deklarujeme mimo event listener
 
-    // Přidání posluchače události na pole "video" pro povolení / zakázání tlačítka "Save" v závislosti na tom, zda je vybráno video pro nahrání
-    const videoField = document.getElementById('id_video');
-    videoField.addEventListener('change', function() {
-        if (this.files.length > 0) {
-            // Pokud je vybráno video, povolíme tlačítko "Save"
-            saveButton.disabled = false;
-        } else {
-            // Pokud není vybráno žádné video, zakážeme tlačítko "Save"
-            saveButton.disabled = true;
-        }
-    });
-</script>
-
-<script>
     function fetchProgress() {
-        fetch('/get_video_progress/')
-            .then(response => response.json())
-            .then(data => {
-                console.log('Progress:', data.progress);
-                document.getElementById('progress-percentage').innerText = data.progress;
-                document.getElementById('progress-bar-fill').style.width = data.progress + '%';
+        console.log('Začiatok fetch požiadavky');
+        
+        // Pridáme timestamp pre zabránenie cache
+        const timestamp = new Date().getTime();
+        fetch(`/get_video_progress/?t=${timestamp}`, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Cache-Control': 'no-cache'
+            }
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Dáta získané:', data);
+            const progressElement = document.getElementById('progress-percentage');
+            const progressBarElement = document.getElementById('progress-bar-fill');
+            
+            if (data && typeof data.progress !== 'undefined') {
+                progressElement.textContent = data.progress;
+                progressBarElement.style.width = data.progress + '%';
+                
                 if (data.progress >= 100) {
+                    console.log('Progress dokončený');
                     clearInterval(progressInterval);
                     document.getElementById('upload-progress').style.display = 'none';
                 }
-            })
-            .catch(error => console.error('Error fetching progress:', error));
+            } else {
+                console.warn('Neplatné dáta z servera:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Chyba pri získavaní progresu:', error);
+            console.log('Detaily chyby:', {
+                message: error.message,
+                stack: error.stack,
+                type: error.name
+            });
+        });
     }
 
-    const saveButton2 = document.getElementById('save-button');
-    saveButton2.addEventListener('click', function() {
+    // Kombinujeme oba event listenery do jedného
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        console.log('Formulár sa odosiela');
+        saveButton.disabled = true;
+        loadingMessage.style.display = 'flex';
         document.getElementById('upload-progress').style.display = 'block';
-        const progressInterval = setInterval(fetchProgress, 1000); // Aktualizuje každú sekundu
+        
+        progressInterval = setInterval(() => {
+            console.log('Spúšťam kontrolu progresu');
+            fetchProgress();
+        }, 1000);
+        
+        const formData = new FormData(form);
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            console.log('Formulár úspešne odoslaný');
+            if (!response.ok) {
+                throw new Error('Chyba pri odosielaní formulára');
+            }
+            return response.text();
+        })
+        .then(() => {
+            console.log('Presmerovanie na galériu');
+            window.location.href = '/gallery/';  // Presmerovanie na galériu po úspešnom nahratí
+        })
+        .catch(error => {
+            console.error('Chyba pri odosielaní formulára:', error);
+            clearInterval(progressInterval);
+            saveButton.disabled = false;
+            loadingMessage.style.display = 'none';
+        });
     });
 </script>
 {% endblock %}

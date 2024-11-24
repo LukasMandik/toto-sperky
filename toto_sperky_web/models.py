@@ -28,6 +28,9 @@ from PIL import ExifTags
 import subprocess
 from django.core.cache import cache
 from ffmpeg_progress_yield import FfmpegProgress
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Blog(models.Model):
     name = models.CharField(max_length=200)
@@ -371,10 +374,14 @@ class Product(models.Model):
         progress = FfmpegProgress(command)
         try:
             for progress_info in progress.run_command_with_progress():
+                logger.info(f"Setting cache with progress: {progress_info}")
                 cache.set('video_progress', progress_info, timeout=60)
                 print(f"Progress: {progress_info}%")
+        except Exception as e:
+            logger.error(f"Error during video compression: {str(e)}")
         finally:
             # Vymazanie cache po dokončení alebo prerušení
+            logger.info("Clearing cache after process completion")
             cache.delete('video_progress')
             print("Cache cleared after process completion or interruption.")
 

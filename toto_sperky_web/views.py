@@ -11,6 +11,19 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserLoginForm
+from django.core.cache import cache
+import logging
+
+# Vytvorenie a konfigurácia loggera
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Výpis do konzoly
+        logging.FileHandler('debug.log')  # Výpis do súboru
+    ]
+)
 
 # Create your views here.
 
@@ -494,10 +507,31 @@ class UserLogoutView(LogoutView):
     template_name = 'home.html'  # Môžete špecifikovať šablónu, ktorá sa zobrazí po odhlásení
 
 
-from django.http import JsonResponse
-from django.core.cache import cache
-
 def get_video_progress(request):
-    progress = cache.get('video_progress', 0)
-    print(f"Current progress from cache: {progress}%")
-    return JsonResponse({'progress': progress})
+    try:
+        logger.info("=== Starting get_video_progress ===")
+        logger.info(f"Request from device: {request.META.get('HTTP_USER_AGENT')}")
+        logger.info(f"Request method: {request.method}")
+        logger.info(f"Request headers: {dict(request.headers)}")
+        
+        progress = cache.get('video_progress')
+        logger.info(f"Progress from cache: {progress}")
+        
+        if progress is None:
+            logger.warning("No progress found in cache")
+            progress = 0
+        
+        response_data = {
+            'progress': progress,
+            'status': 'success'
+        }
+        logger.info(f"Sending response: {response_data}")
+        return JsonResponse(response_data)
+        
+    except Exception as e:
+        logger.error(f"Error in get_video_progress: {str(e)}", exc_info=True)
+        return JsonResponse({
+            'progress': 0,
+            'status': 'error',
+            'error': str(e)
+        })
