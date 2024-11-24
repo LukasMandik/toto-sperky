@@ -31,14 +31,16 @@
 
 {% block og_title %}{{ product.name }} - Detail produktu{% endblock %}
 {% block og_image %}
-{% if product.video_webm %}
-    <meta property="og:video" content="{{ product.video_webm.url }}">
-    <meta property="og:video:type" content="video/webm">
-{% endif %}
 {% if product.image %}
     {{ product.image.url }}
 {% else %}
     {% static 'media/logo_cierne.png' %}  <!-- Cesta k predvolenému obrázku -->
+{% endif %}
+{% endblock %}
+{% block og_video %}
+{% if product.video_webm %}
+    <meta property="og:video" content="{{ product.video_webm.url }}">
+    <meta property="og:video:type" content="video/webm">
 {% endif %}
 {% endblock %}
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
