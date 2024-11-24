@@ -1,4 +1,34 @@
 {% load static %}
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {% for product in products %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.counter }},
+          "item": {
+            "@type": "Product",
+            "name": "{{ product.name }}",
+            "description": "{{ product.description }}",
+            {% if product.video_webm %}
+            "video": {
+              "@type": "VideoObject",
+              "contentUrl": "{{ product.video_webm.url }}",
+              "thumbnailUrl": "{{ product.video_thumbnail.url }}"
+            },
+            {% endif %}
+            {% if product.image %}
+            "image": "{{ product.image.url }}",
+            {% endif %}
+            "url": "{{ request.build_absolute_uri }}{{ product.get_absolute_url }}"
+          }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
+    }
+</script>
 
 <div class="gallery_container">
     {% if not selected_category %}
@@ -239,6 +269,8 @@ function initializeGSAPAnimations() {
         }
     }
     </script>    
+
+
 
 
 
