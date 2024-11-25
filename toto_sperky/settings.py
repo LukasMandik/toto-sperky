@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [".totosperky.sk", 'www.totosperky.sk']
+ALLOWED_HOSTS = [".totosperky.sk", 'www.totosperky.sk', "192.168.100.4",]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.totosperky.sk', 'https://www.totosperky.sk', # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
@@ -90,12 +90,13 @@ TEMPLATES = [
     },
 ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        'LOCATION': '127.0.0.1:11211',
+if not DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
     }
-}
 
 WSGI_APPLICATION = 'toto_sperky.wsgi.application'
 
@@ -188,57 +189,57 @@ LOGOUT_REDIRECT_URL = '/'
 
 import sentry_sdk
 
-sentry_sdk.init(
-    dsn="https://c1dbfca0eb07bc6d71e6030b3b95a471@o4508122130481152.ingest.de.sentry.io/4508122145947728",
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for tracing.
-    traces_sample_rate=1.0,
-    # Set profiles_sample_rate to 1.0 to profile 100%
-    # of sampled transactions.
-    # We recommend adjusting this value in production.
-    profiles_sample_rate=1.0,
-)
+if not DEBUG:
+    sentry_sdk.init(
+        dsn="https://c1dbfca0eb07bc6d71e6030b3b95a471@o4508122130481152.ingest.de.sentry.io/4508122145947728",
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for tracing.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+    )
+
+    SECURE_HSTS_SECONDS = 31536000  
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+    # Rate limiting settings
+    RATELIMIT_ENABLE = True
+    RATELIMIT_USE_CACHE = 'default'
+    RATELIMIT_KEY_PREFIX = 'rl'
 
 
-SECURE_HSTS_SECONDS = 31536000  # 1 rok
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+    # Security settings
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    USE_X_FORWARDED_HOST = True
+    SECURE_SSL_REDIRECT = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+    # Pridajte rate limiting pre API endpointy
+    RATELIMIT_ENABLE = True
+    RATELIMIT_USE_CACHE = 'default'
+    RATELIMIT_KEY_PREFIX = 'rl'
 
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
-
-# Rate limiting settings
-RATELIMIT_ENABLE = True
-RATELIMIT_USE_CACHE = 'default'
-RATELIMIT_KEY_PREFIX = 'rl'
-
-
-# Security settings
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-USE_X_FORWARDED_HOST = True
-SECURE_SSL_REDIRECT = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
-
-# Pridajte rate limiting pre API endpointy
-RATELIMIT_ENABLE = True
-RATELIMIT_USE_CACHE = 'default'
-RATELIMIT_KEY_PREFIX = 'rl'
-
-# Špecifické rate limity pre rôzne endpointy
-RATELIMIT_RATE = {
-    'api': '100/h',
-    'admin': '50/h',
-    'default': '1000/h'
-}
+    # Špecifické rate limity pre rôzne endpointy
+    RATELIMIT_RATE = {
+        'api': '100/h',
+        'admin': '50/h',
+        'default': '1000/h'
+    }
 
 # LOGGING = {
 #     'version': 1,

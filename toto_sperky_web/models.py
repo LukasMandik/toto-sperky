@@ -374,16 +374,16 @@ class Product(models.Model):
         progress = FfmpegProgress(command)
         try:
             for progress_info in progress.run_command_with_progress():
-                logger.info(f"Setting cache with progress: {progress_info}")
+                # logger.info(f"Setting cache with progress: {progress_info}")
                 cache.set('video_progress', progress_info, timeout=60)
-                print(f"Progress: {progress_info}%")
+                # print(f"Progress: {progress_info}%")
         except Exception as e:
             logger.error(f"Error during video compression: {str(e)}")
         finally:
             # Vymazanie cache po dokončení alebo prerušení
-            logger.info("Clearing cache after process completion")
+            # logger.info("Clearing cache after process completion")
             cache.delete('video_progress')
-            print("Cache cleared after process completion or interruption.")
+            # print("Cache cleared after process completion or interruption.")
 
     def create_thumbnail(self, input_path, output_path):
         command =[
@@ -401,11 +401,11 @@ class Product(models.Model):
         try:
             for progress_info in progress.run_command_with_progress():
                 cache.set('video_progress', progress_info, timeout=60)
-                print(f"Progress: {progress_info}%")
+                # print(f"Progress: {progress_info}%")
         finally:
             # Vymazanie cache po dokončení alebo prerušení
             cache.delete('video_progress')
-            print("Cache cleared after process completion or interruption.")
+            # print("Cache cleared after process completion or interruption.")
 
     def get_meta_description(self):
         return f"Vyrobila som {self.name}. {self.description[:150]}..."

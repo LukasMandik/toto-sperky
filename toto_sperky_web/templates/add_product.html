@@ -137,19 +137,13 @@
 </script>
 
 <script>
-    // Získání formuláře
     const form = document.getElementById('product-form');
-    // Získání tlačítka "Save"
     const saveButton = document.getElementById('save-button');
-    // Získání zprávy o nahrávání
     const loadingMessage = document.getElementById('loading-message');
 
-    let progressInterval; // Deklarujeme mimo event listener
+    let progressInterval;
 
     function fetchProgress() {
-        console.log('Začiatok fetch požiadavky');
-        
-        // Pridáme timestamp pre zabránenie cache
         const timestamp = new Date().getTime();
         fetch(`/get_video_progress/?t=${timestamp}`, {
             headers: {
@@ -159,14 +153,12 @@
             }
         })
         .then(response => {
-            console.log('Response status:', response.status);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
         .then(data => {
-            console.log('Dáta získané:', data);
             const progressElement = document.getElementById('progress-percentage');
             const progressBarElement = document.getElementById('progress-bar-fill');
             
@@ -175,35 +167,24 @@
                 progressBarElement.style.width = data.progress + '%';
                 
                 if (data.progress >= 100) {
-                    console.log('Progress dokončený');
                     clearInterval(progressInterval);
                     document.getElementById('upload-progress').style.display = 'none';
                 }
-            } else {
-                console.warn('Neplatné dáta z servera:', data);
             }
         })
         .catch(error => {
             console.error('Chyba pri získavaní progresu:', error);
-            console.log('Detaily chyby:', {
-                message: error.message,
-                stack: error.stack,
-                type: error.name
-            });
         });
     }
 
-    // Kombinujeme oba event listenery do jedného
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         
-        console.log('Formulár sa odosiela');
         saveButton.disabled = true;
         loadingMessage.style.display = 'flex';
         document.getElementById('upload-progress').style.display = 'block';
         
         progressInterval = setInterval(() => {
-            console.log('Spúšťam kontrolu progresu');
             fetchProgress();
         }, 1000);
         
@@ -216,15 +197,13 @@
             }
         })
         .then(response => {
-            console.log('Formulár úspešne odoslaný');
             if (!response.ok) {
                 throw new Error('Chyba pri odosielaní formulára');
             }
             return response.text();
         })
         .then(() => {
-            console.log('Presmerovanie na galériu');
-            window.location.href = '/gallery/';  // Presmerovanie na galériu po úspešnom nahratí
+            window.location.href = '/gallery/';
         })
         .catch(error => {
             console.error('Chyba pri odosielaní formulára:', error);

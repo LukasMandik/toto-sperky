@@ -509,23 +509,23 @@ class UserLogoutView(LogoutView):
 
 def get_video_progress(request):
     try:
-        logger.info("=== Starting get_video_progress ===")
-        logger.info(f"Request from device: {request.META.get('HTTP_USER_AGENT')}")
-        logger.info(f"Request method: {request.method}")
-        logger.info(f"Request headers: {dict(request.headers)}")
+        # logger.info("=== Starting get_video_progress ===")
+        # logger.info(f"Request from device: {request.META.get('HTTP_USER_AGENT')}")
+        # logger.info(f"Request method: {request.method}")
+        # logger.info(f"Request headers: {dict(request.headers)}")
         
         progress = cache.get('video_progress')
-        logger.info(f"Progress from cache: {progress}")
+        # logger.info(f"Progress from cache: {progress}")
         
         if progress is None:
-            logger.warning("No progress found in cache")
+            # logger.warning("No progress found in cache")
             progress = 0
         
         response_data = {
             'progress': progress,
             'status': 'success'
         }
-        logger.info(f"Sending response: {response_data}")
+        # logger.info(f"Sending response: {response_data}")
         return JsonResponse(response_data)
         
     except Exception as e:
