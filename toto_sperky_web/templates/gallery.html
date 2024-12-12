@@ -53,7 +53,9 @@
             "@type": "VideoObject",
             "contentUrl": "{{ product.video_webm.url }}",
             "thumbnailUrl": "{{ product.video_thumbnail.url }}",
-            "uploadDate": "{{ product.created|date:'c' }}"
+            "uploadDate": "{{ product.created|date:'c' }}",
+            "name": "{{ product.name }}",
+            "description": "{{ product.description }}"
           },
           {% endif %}
           {% if product.image %}
@@ -65,6 +67,13 @@
           "brand": {
             "@type": "Brand",
             "name": "Toto šperky"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "price": "",
+            "availability": "http://schema.org/InStock",
+            "url": "{{ request.build_absolute_uri }}{{ product.get_absolute_url }}"
           }
         }
       }{% if not forloop.last %},{% endif %}

@@ -17,7 +17,7 @@ class BlogSitemap(Sitemap):
         return '/blog/%s' % (obj.slug)
 
 class ProductSitemap(Sitemap):
-    changefreq = "monthly"
+    changefreq = "daily"
     priority = 0.8
     protocol = 'https'
 
@@ -42,7 +42,7 @@ class CategorySitemap(Sitemap):
         return obj.updated
 
 class StaticViewSitemap(Sitemap):
-    changefreq = "monthly"
+    changefreq = "daily"
     priority = 0.8
     protocol = 'https'
 
