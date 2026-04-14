@@ -138,6 +138,12 @@ class BlogForm(forms.ModelForm):
                 slug += f'{random.randint(1, 100)}'
         return slug
 
+class BlogAdminForm(forms.ModelForm):
+    """Django admin: viditeľný a upraviteľný slug (verejný BlogForm ho má skrytý)."""
+    class Meta:
+        model = Blog
+        fields = ['name', 'slug', 'description', 'available']
+
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Meno'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Heslo'}))

@@ -27,9 +27,9 @@ class BlogImageInline(admin.TabularInline):
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'created', 'updated', 'available')
     list_filter = ('available', 'created', 'updated')
-    search_fields = ('name', 'description')
+    search_fields = ('name', 'description', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [BlogImageInline]
-    form = forms.BlogForm  # Priradíme vlastný formulár pre model Blog
+    form = forms.BlogAdminForm
 
 admin.site.register(Blog, BlogAdmin)
