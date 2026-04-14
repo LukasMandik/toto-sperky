@@ -18,15 +18,17 @@ from django.core.cache import cache
 import logging
 from .utils import clean_html_for_search
 
-# Vytvorenie a konfigurácia loggera
+# Vytvorenie a konfigurácia loggera (súbor debug.log len ak ide zapisovať – napr. na VPS bez práv)
 logger = logging.getLogger(__name__)
+_log_handlers = [logging.StreamHandler()]
+try:
+    _log_handlers.append(logging.FileHandler('debug.log', encoding='utf-8'))
+except (PermissionError, OSError):
+    pass
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(),  # Výpis do konzoly
-        logging.FileHandler('debug.log')  # Výpis do súboru
-    ]
+    handlers=_log_handlers,
 )
 
 # Create your views here.
