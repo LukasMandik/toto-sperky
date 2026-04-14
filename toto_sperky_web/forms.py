@@ -9,10 +9,11 @@ import random
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['name', 'slug', 'image']
+        fields = ['name', 'slug', 'description', 'image']
         widgets = {
             'slug': forms.HiddenInput(),
             'name': forms.TextInput(attrs={'placeholder': 'Zadaj názov kategórie'}),
+            # description používa CKEditor5 widget automaticky
         }
 
     def __init__(self, *args, **kwargs):
@@ -111,10 +112,7 @@ class BlogForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Názov článku'
             }),
-            'description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Obsah článku'
-            }),
+            # description používa CKEditor5 widget automaticky
             'available': forms.CheckboxInput(attrs={
                 'class': 'form-check-input'
             })

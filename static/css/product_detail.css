@@ -20,13 +20,14 @@
 
 .product_detail_container .product_detail_text_p h1.desktop_screen{
 	font-size: 28px;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 105%;
 	letter-spacing: 1px;
 	margin-bottom: 20px;
 }
 .product_detail_container .product_detail_text_p h1.mobile_screen{
 	display: none;
+	margin-top: 15px;
 
 }
 
@@ -64,12 +65,215 @@
 
 .product_detail_container .product_detail_text_p .product_detail_scroll_wrap p{
 	font-size: 18px;
-	line-height: 1.5;
+	line-height: 1.4;
 	letter-spacing: 1px;
 	text-align: justify;
 	white-space: pre-wrap;
-	hyphens: auto;
+
+}
+.product_detail_container .product_detail_text_p .product_detail_scroll_wrap p:last-child{
 	margin-bottom: 40px;
+}
+
+/* CKEditor content styles for product description */
+.product-description {
+	font-size: 18px;
+	line-height: 1.7;
+	letter-spacing: 1px;
+	text-align: justify;
+	hyphens: auto;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.product-description p {
+	margin-bottom: .5em;
+	font-weight: 300;
+	opacity: 0.8;
+	line-height: 1.4;
+	letter-spacing: 1px;
+}
+
+.product-description h1,
+.product-description h2,
+.product-description h3 {
+	margin-top: .5em;
+	margin-bottom: 0.5em;
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 1px;
+}
+
+.product-description h1 {
+	font-size: 1.8em;
+}
+
+.product-description h2 {
+	font-size: 1.5em;
+}
+
+.product-description h3 {
+	font-size: 1.2em;
+}
+
+.product-description ul,
+.product-description ol {
+	margin-left: 1.5em !important;
+	margin-bottom: 0.5em !important;
+	padding-left: 0.5em !important;
+	list-style-position: outside !important;
+}
+
+/* Nested lists - reduce margin */
+.product-description ul ul,
+.product-description ol ol,
+.product-description ul ol,
+.product-description ol ul {
+	margin-bottom: 0.2em !important;
+	margin-top: 0.2em !important;
+}
+
+/* Bullet lists - level 1 */
+.product-description > ul,
+.product-description > ul > li {
+	list-style-type: disc !important;
+}
+
+/* Bullet lists - level 2 */
+.product-description ul ul,
+.product-description ul ul li {
+	list-style-type: circle !important;
+}
+
+/* Bullet lists - level 3+ */
+.product-description ul ul ul,
+.product-description ul ul ul li {
+	list-style-type: square !important;
+}
+
+/* Numbered lists */
+.product-description ol,
+.product-description ol li {
+	list-style-type: decimal !important;
+}
+
+/* Nested numbered lists */
+.product-description ol ol,
+.product-description ol ol li {
+	list-style-type: lower-alpha !important;
+}
+
+.product-description ol ol ol,
+.product-description ol ol ol li {
+	list-style-type: lower-roman !important;
+}
+
+.product-description li {
+	margin-bottom: 0.2em;
+	display: list-item !important;
+}
+
+/* Remove paragraph margins inside list items */
+.product-description li p {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.product-description ul li::marker,
+.product-description ol li::marker {
+	color: var(--text-color-dark);
+}
+
+.product-description blockquote {
+	border-left: 4px solid var(--text-color-dark);
+	padding-left: 1em;
+	margin: 1em 0;
+	font-style: italic;
+	color: #666;
+}
+
+.product-description a {
+	color: var(--text-color-dark);
+	text-decoration: underline;
+}
+
+.product-description strong {
+	font-weight: 700;
+}
+
+.product-description em,
+.product-description i {
+	font-style: italic !important;
+}
+
+.product-description u {
+	text-decoration: underline !important;
+}
+
+.product-description s,
+.product-description strike,
+.product-description del {
+	text-decoration: line-through !important;
+}
+
+.product-description img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+	margin: 1.5em auto;
+	display: block;
+}
+
+/* CKEditor image styles */
+.product-description figure {
+	margin: 1.5em 0;
+}
+
+.product-description figure.image {
+	display: block;
+	margin: 1.5em auto;
+	text-align: center;
+}
+
+.product-description figure.image img {
+	margin: 0 auto;
+}
+
+.product-description figure.image-style-side {
+	float: right;
+	max-width: 50%;
+	margin: 0.5em 0 0.5em 1.5em;
+}
+
+.product-description figure.image-style-align-left {
+	float: left;
+	max-width: 50%;
+	margin: 0.5em 1.5em 0.5em 0;
+}
+
+.product-description figure.image-style-align-right {
+	float: right;
+	max-width: 50%;
+	margin: 0.5em 0 0.5em 1.5em;
+}
+
+.product-description figure.image-style-align-center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.product-description figcaption {
+	font-size: 0.9em;
+	color: #666;
+	text-align: center;
+	margin-top: 0.5em;
+}
+
+/* Clear floats after images */
+.product-description::after {
+	content: "";
+	display: table;
+	clear: both;
 }
 
 .product_detail_container .product_detail_text_p::before {
@@ -283,7 +487,7 @@
 	.product_detail_container .product_detail_text_p h1.mobile_screen{
 			display: block;
 			font-size: 28px;
-			font-weight: 800;
+			font-weight: 500;
 			line-height: 105%;
 			letter-spacing: 1px;
 			margin-bottom: 20px;

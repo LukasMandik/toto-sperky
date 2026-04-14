@@ -1,0 +1,57 @@
+/* Universal Hero Section Styles */
+.hero-section {
+    padding: 100px 20px 20px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-color-dark);
+    opacity: 0.5;
+    margin-bottom: 15px;
+}
+
+.hero-section h1 {
+    font-size: 38px;
+    font-weight: 300;
+    color: var(--text-color-dark);
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.hero-line {
+    width: 60px;
+    height: 1px;
+    background: var(--text-color-dark);
+    margin: 30px auto 0;
+    opacity: 0.3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 100px 20px 40px;
+    }
+    
+    .hero-section h1 {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 575px) {
+    .hero-label-arrow {
+        display: none;
+    }
+}
+

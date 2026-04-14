@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function() {
           gsap.registerPlugin(ScrollTrigger);
 
           gsap.to(".main_navbar", {
-              backgroundColor: "#FBF8F5",
+              backgroundColor: "#fffcf6",
               boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
               duration: 0.2,
               ease: "power2.out",
@@ -57,7 +57,7 @@ window.addEventListener('DOMContentLoaded', function() {
           gsap.registerPlugin(ScrollTrigger);
 
           gsap.to(".main_navbar", {
-              backgroundColor: "#FBF8F5",
+              backgroundColor: "#fffcf6",
               boxShadow: "0px 3px 10px rgba(43, 43, 43, 0.1)",
               duration: 0.2,
               ease: "power2.out",

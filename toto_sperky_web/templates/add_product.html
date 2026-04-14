@@ -4,6 +4,7 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/crud.css' %}">
+{{ form.media }}
 <div class="container_add_product">
     <h1>Pridať produkt</h1>
     <form id="product-form" method="post" enctype="multipart/form-data">
@@ -224,7 +225,7 @@
         })
         .then(() => {
             console.log('Presmerovanie na galériu');
-            window.location.href = '/gallery/';  // Presmerovanie na galériu po úspešnom nahratí
+            window.location.href = "{% url 'toto_sperky_web:gallery_categories' %}";  // Presmerovanie na galériu po úspešnom nahratí
         })
         .catch(error => {
             console.error('Chyba pri odosielaní formulára:', error);

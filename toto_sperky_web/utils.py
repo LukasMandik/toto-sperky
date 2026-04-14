@@ -1,4 +1,6 @@
 from PIL import Image
+import re
+from django.utils.html import strip_tags
 
 def remove_background(image_path, threshold=200, background_color=(255, 255, 255)):
     """
@@ -34,3 +36,28 @@ def remove_background(image_path, threshold=200, background_color=(255, 255, 255
     except Exception as e:
         print(f"Error during image processing: {e}")
         return None
+
+
+def clean_html_for_search(html_content):
+    """
+    Odstráni HTML tagy a vyčistí text pre vyhľadávanie.
+    
+    Args:
+        html_content (str): HTML obsah z CKEditoru
+        
+    Returns:
+        str: Vyčistený text bez HTML tagov
+    """
+    if not html_content:
+        return ""
+    
+    # Odstráni HTML tagy
+    clean_text = strip_tags(html_content)
+    
+    # Odstráni prebytočné medzery a nové riadky
+    clean_text = re.sub(r'\s+', ' ', clean_text)
+    
+    # Odstráni medzery na začiatku a konci
+    clean_text = clean_text.strip()
+    
+    return clean_text

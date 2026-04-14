@@ -7,44 +7,93 @@
 {% endblock %}
 
 {% block og_title %}Blog - Toto šperky{% endblock %}
-{% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'media/logo_cierne.png' %}{% endblock %}
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 {% block og_description %}Prečítajte si najnovšie články na našom blogu o trendoch v šperkoch.{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/hero.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
 <section class="container_blog">
-    <h3 class="title_blog"> Blog </h3>
-    {% for blog in blogs %}
-        <div class="line_center_about_me" >
-        <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs/>
-            <g id="Layer-1">
-            <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
-            </g>
-        </svg>
-    </div>
-    <a href="{{ blog.get_absolute_url }}">
-        <article class="blog-post">
-            <div class="blog-header" style="background-image: url('{{ blog.images.first.image.url }}');">
-                <div class="blog-info">
-                    <h2>{{ blog.name }}</h2>
-                    <p>Napísané: {{ blog.created|date:"j/n/Y" }}</p>
-                    <p>Čas čítania: {{ blog.reading_time }}</p>
-                </div>
-            </div>
-            <div class="blog-content">
-                <p>{{ blog.description }}</p>
-            </div>
-        </article>
-    </a>
-    {% endfor %} 
     
-    {% if user.is_authenticated %}
-    <div class="home_buttons">
-        <a href="{% url 'toto_sperky_web:add_blog' %}" class="btn type1">Pridať článok</a>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <span class="hero-label">Blog</span>
+            <h1>Príbehy & Inšpirácie</h1>
+            <div class="hero-line"></div>
+        </div>
+    </header>
+
+    <div class="content_blog">
+        <p class="blog-subtitle">Objavte príbehy za našimi šperkami a inšpirácie pre váš štýl.</p>
+        
+        {% if blogs %}
+        
+        <!-- Blog Grid -->
+        <div class="blog-grid">
+            {% for blog in blogs %}
+            <article class="blog-card">
+                <a href="{{ blog.get_absolute_url }}" class="card-link">
+                    <div class="card-image-container">
+                        {% if blog.images.first %}
+                        <img src="{{ blog.images.first.image.url }}" alt="{{ blog.name }}" class="card-image" loading="lazy">
+                        {% else %}
+                        <div class="card-image-placeholder"></div>
+                        {% endif %}
+                        <h2 class="card-title card-title--mobile">{{ blog.name }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ blog.name }}</h2>
+                        <p class="card-excerpt">{{ blog.description|striptags }}</p>
+                        <div class="card-footer">
+                            <div class="card-meta">
+                                <span class="card-date">{{ blog.created|date:"j M Y" }}</span>
+                                <span class="reading-time">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 6v6l4 2"/>
+                                    </svg>
+                                    {{ blog.reading_time }}
+                                </span>
+                            </div>
+                            <span class="read-more">
+                                Čítať viac
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        
+        <!-- Empty State -->
+        <div class="empty-state">
+            <div class="empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h10"/>
+                </svg>
+            </div>
+            <h2>Zatiaľ žiadne články</h2>
+            <p>Pripravujeme pre vás zaujímavý obsah</p>
+        </div>
+
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <div class="home_buttons">
+            <a href="{% url 'toto_sperky_web:add_blog' %}" class="btn type1">Nový článok</a>
+        </div>
+        {% endif %}
+
     </div>
-    {% endif %}
 </section>
 
 {% endblock %}

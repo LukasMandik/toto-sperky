@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import home, gallery, ProductDetailView, cookies, product_data, about_me, contact, blog_view, BlogDetailView, category_detail, UserLoginView, search_results, search_suggestions, add_blog, update_blog, delete_blog, add_product, update_product, delete_product, add_category, update_category, delete_category, get_video_progress
+from .views import home, gallery, gallery_categories, ProductDetailView, cookies, product_data, about_me, contact, blog_view, BlogDetailView, category_detail, UserLoginView, search_results, search_suggestions, add_blog, update_blog, delete_blog, add_product, update_product, delete_product, add_category, update_category, delete_category, get_video_progress
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import LogoutView
 
@@ -8,7 +8,8 @@ app_name = 'toto_sperky_web'
 
 urlpatterns = [
     path('', home, name='home'),
-    path('gallery/', gallery, name='gallery'),
+    path('gallery/', gallery_categories, name='gallery_categories'),
+    path('gallery/<slug:category_slug>/', gallery, name='gallery'),
     path('blog/', blog_view, name='blog'),
     path('about_me/', about_me, name='about_me'),
     path('contact/', contact, name='contact'),

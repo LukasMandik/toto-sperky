@@ -25,11 +25,18 @@
     <meta name="description" content="Objavte krásne a kvalitné šperky na Toto šperky.">
     {% endblock %}
 
+    <link rel="canonical" href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}">
+
     <meta property="og:title" content="{% block og_title %}Toto šperky{% endblock %}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="{% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}">
+    <meta property="og:locale" content="sk_SK">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'media/logo_cierne.png' %}{% endblock %}">
     <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Objavte krásne a kvalitné šperky na Toto šperky.{% endblock %}">
+    {% block og_extra %}{% endblock %}
+    <meta name="twitter:card" content="summary_large_image">
+
+    {% block structured_data %}{% endblock %}
     
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">

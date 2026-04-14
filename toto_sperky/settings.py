@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [".totosperky.sk", 'www.totosperky.sk', "192.168.100.4",]
+ALLOWED_HOSTS = [".totosperky.sk", 'www.totosperky.sk', "192.168.100.4", "localhost", "127.0.0.1", "192.168.100.5",]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.totosperky.sk', 'https://www.totosperky.sk', # Povoliť všetky poddomény `vasedomena.com` s protokolom HTTPS
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django_cleanup.apps.CleanupConfig',
+    'django_ckeditor_5',
     'toto_sperky_web',
 ]
 
@@ -308,3 +309,56 @@ if not DEBUG:
 #         }
 #     }
 # }
+
+# CKEditor 5 Configuration
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'bulletedList', 'numberedList', '|',
+            'blockQuote', 'link', '|',
+            'imageUpload', 'mediaEmbed', '|',
+            'undo', 'redo'
+        ],
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'},
+            ]
+        },
+        'image': {
+            'toolbar': ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
+        },
+    },
+    'blog': {
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'bulletedList', 'numberedList', '|',
+            'blockQuote', 'link', '|',
+            'imageUpload', 'mediaEmbed', '|',
+            'insertTable', '|',
+            'undo', 'redo'
+        ],
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'},
+            ]
+        },
+        'image': {
+            'toolbar': ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells']
+        },
+    }
+}
+
+CKEDITOR_5_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+CKEDITOR_5_UPLOAD_PATH = "ckeditor/"

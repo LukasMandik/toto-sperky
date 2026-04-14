@@ -29,13 +29,14 @@ import subprocess
 from django.core.cache import cache
 from ffmpeg_progress_yield import FfmpegProgress
 import logging
+from django_ckeditor_5.fields import CKEditor5Field
 
 logger = logging.getLogger(__name__)
 
 class Blog(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    description = models.TextField(blank=True)
+    description = CKEditor5Field('Obsah', config_name='blog', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     available = models.BooleanField(default=True)
@@ -155,6 +156,7 @@ def update_blog_image_thumbnails(sender, instance, **kwargs):
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True)
+    description = CKEditor5Field('Popis', config_name='default', blank=True)
     image = models.ImageField(blank=True, null=True,)
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -220,7 +222,7 @@ class Product(models.Model):
     video = models.FileField(null=True, blank=True) 
     video_webm = models.FileField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    description = models.TextField(blank=True)
+    description = CKEditor5Field('Popis', config_name='default', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     available = models.BooleanField(default=True)

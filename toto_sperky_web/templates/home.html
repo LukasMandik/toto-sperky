@@ -1,27 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Toto šperky{% endblock %}
-<script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Toto šperky",
-      "url": "https://www.totosperky.sk",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.totosperky.sk/search?query={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-</script>
 {% block meta_description %}
 <meta name="description" content="Vitajte na Toto šperky - kvalitné a elegantné šperky. Objavte našu ponuku prsteňov, náhrdelníkov a ďalších kúskov pre každú príležitosť.">
 {% endblock %}
 {% block og_title %}Toto šperky - Domov{% endblock %}
-{% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'media/logo_cierne.png' %}{% endblock %}
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 {% block og_description %}Vitajte na Toto šperky - kvalitné a elegantné šperky. Objavte našu ponuku prsteňov, náhrdelníkov a ďalších kúskov pre každú príležitosť.{% endblock %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/hero.css' %}">
 <link rel="stylesheet" href="{% static 'css/about_me.css' %}">
 <section class="main_home_container starter">
     <header class="main_image_container starter2" style="background-image: url('/static/assets/images/krystal s fantomovkov.jpg');">
@@ -96,7 +84,7 @@
             </svg>
         </div>      
         <div class="home_buttons">
-            <a href="/gallery" class="btn type1">Galéria</a>
+            <a href="{% url 'toto_sperky_web:gallery_categories' %}" class="btn type1">Galéria</a>
             <a href="/blog" class="btn type1">Blog</a>
             <a href="/about_me" class="btn type1">O mne</a>
         </div>
@@ -153,7 +141,7 @@
             {% endfor %}
         </div>
         <div class="home_buttons">
-            <a href="/gallery" class="btn type1">Celá galéria</a>
+            <a href="{% url 'toto_sperky_web:gallery_categories' %}" class="btn type1">Celá galéria</a>
         </div>
     </section>
     <article>
@@ -163,5 +151,90 @@
 
 <script src="{% static 'js/home.js' %}"></script>
 <script src="{% static 'js/about_me.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    initializeHomeDragScroll();
+
+    function initializeHomeDragScroll() {
+        const carousel = document.querySelector('.carusel');
+        const carouselLinks = document.querySelectorAll('.carusel a');
+        let globalDragState = false;
+        
+        if (!carousel) return;
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let hasDragged = false;
+
+        carousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            hasDragged = false;
+            globalDragState = false;
+            carousel.classList.add('dragging');
+            startX = e.pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+            carousel.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            isDown = false;
+            carousel.classList.remove('dragging');
+            carousel.style.cursor = 'grab';
+            setTimeout(() => { 
+                hasDragged = false; 
+                globalDragState = false;
+            }, 100);
+        });
+
+        carousel.addEventListener('mouseup', () => {
+            isDown = false;
+            carousel.classList.remove('dragging');
+            carousel.style.cursor = 'grab';
+            setTimeout(() => { 
+                hasDragged = false;
+                globalDragState = false;
+            }, 100);
+        });
+
+        carousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 2;
+            
+            if (Math.abs(walk) > 5) {
+                hasDragged = true;
+                globalDragState = true;
+            }
+            
+            carousel.scrollLeft = scrollLeft - walk;
+        });
+
+        carousel.style.cursor = 'grab';
+        
+        carousel.addEventListener('click', (e) => {
+            if (hasDragged || globalDragState) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        // Zabránenie aktivácie linkov pri dragovaní
+        carouselLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (hasDragged || globalDragState) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            });
+        });
+    }
+});
+
+</script>
 
 {% endblock %}
