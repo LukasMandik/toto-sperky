@@ -1019,6 +1019,21 @@ input#goToPage{
     }
 }
 
+/* Tablety a úzke okná (768px – 1199px) – väčší karusel aj pri ~1000px šírke */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .category-carousel {
+        gap: 14px;
+        max-width: calc(3 * 128px + 2 * 14px);
+        padding: 12px 0 14px;
+    }
+
+    .carousel-item {
+        flex: 0 0 128px;
+        height: 172px;
+        border-radius: 10px;
+    }
+}
+
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
     .categories_item {
@@ -1038,6 +1053,18 @@ input#goToPage{
     
     .categories-v2-list {
         gap: 30px;
+    }
+
+    .category-carousel {
+        gap: 18px;
+        max-width: calc(3 * 135px + 2 * 18px);
+        padding: 12px 0 14px;
+    }
+
+    .carousel-item {
+        flex: 0 0 135px;
+        height: 185px;
+        border-radius: 10px;
     }
 }
 
@@ -1065,6 +1092,18 @@ input#goToPage{
     
     .categories-v2-list {
         gap: 35px;
+    }
+
+    .category-carousel {
+        gap: 20px;
+        max-width: calc(3 * 170px + 2 * 20px);
+        padding: 14px 0 16px;
+    }
+
+    .carousel-item {
+        flex: 0 0 170px;
+        height: 225px;
+        border-radius: 12px;
     }
 }
 

@@ -13,7 +13,7 @@
 	margin: 0 auto;
 	max-width: 800px;
 	padding: 24px; 
-	padding-top: 120px;
+	padding-top: 20px;
 }
 
 
@@ -478,7 +478,7 @@
 		align-items: center;
 		gap: 0px;
 		margin: 0 auto;
-		padding-top: 60px;
+		padding-top: 0px;
 	}
 	.product_detail_container .product_detail_text_p h1.desktop_screen{
 			display: none;
