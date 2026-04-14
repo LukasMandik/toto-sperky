@@ -22,7 +22,7 @@
             {% if product.image %}
             "image": "{{ product.image.url }}",
             {% endif %}
-            "url": "{{ request.build_absolute_uri }}{{ product.get_absolute_url }}"
+            "url": "{{ request.scheme }}://{{ request.get_host }}{{ product.get_absolute_url }}"
           }
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
@@ -31,14 +31,6 @@
 </script>
 
 <div class="gallery_container">
-    {% if not selected_category %}
-        <h3 class="navigation">Galéria/Všetko</h3>
-        {% endif %}
-        {% for category in categories %}
-        {% if category.slug == selected_category %}
-        <h3 class="navigation">Galéria/{{ category.name }}</h3>
-        {% endif %}
-    {% endfor %}
 
     <div class="container starter">
         {% for product in products %}
@@ -58,7 +50,7 @@
                 {% endif %}
                 <div class="description_card">
                     <h3 class="product_name">{{ product.name }}</h3>
-                    <p class="product_description">{{ product.description }}</p>
+                    <p class="product_description">{{ product.description|striptags|truncatewords:15 }}</p>
                     <button>
                         Viac
                         <div class="arrow-wrapper">

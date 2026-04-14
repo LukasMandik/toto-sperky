@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Kontakt{% endblock %}
 
+{% block structured_data %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -12,7 +13,7 @@
       "url": "https://www.totosperky.sk/contact",
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+4214735863945",
+        "telephone": "421915336611",
         "contactType": "Customer Service",
         "email": "ing.vcelikovaivana@gmail.com",
         "areaServed": "SK",
@@ -20,7 +21,7 @@
       },
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "1.mája č.95",
+        "streetAddress": "Duklianska 36",
         "addressLocality": "Handlová",
         "postalCode": "972 51",
         "addressCountry": "Slovakia"
@@ -28,108 +29,102 @@
     }
   }
   </script>
+{% endblock %}
 
 {% block meta_description %}
 <meta name="description" content="Kontaktujte nás na Toto šperky. Sme tu pre vás, aby sme odpovedali na vaše otázky a poskytli vám potrebné informácie. Nájdete nás na adrese 1.mája č.95, Handlová, Slovensko.">
 {% endblock %}
 
 {% block og_title %}Kontakt - Toto šperky{% endblock %}
-{% block og_image %}{% static 'media/logo_cierne.png' %}{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'media/logo_cierne.png' %}{% endblock %}
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 {% block og_description %}Kontaktujte nás na Toto šperky. Sme tu pre vás, aby sme odpovedali na vaše otázky a poskytli vám potrebné informácie.{% endblock %}
 
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/hero.css' %}">
 <link rel="stylesheet" href="{% static 'css/contact.css' %}">
 <section class="container_contact">
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <span class="hero-label">Kontakt</span>
+            <h1>Spojme sa</h1>
+            <div class="hero-line"></div>
+        </div>
+    </header>
+
     <div class="content_contact">
-        <!-- <img class="logo-cierne-1" src="{% static 'media/logo_cierne.png' %}" /> -->
-        <h3 class="title_contact"> Chete vedieť viac? </h3>
-        <div class="text_contact"> 
-            <h4>
-                Som tu pre vás, neváhajte ma kontaktovať.
-            </h4>
+        <p class="contact-subtitle">Som tu pre vás, neváhajte ma kontaktovať.</p>
+        
+        <!-- Contact Methods Section -->
+        <div class="contact-methods">
+            <!-- Email -->
+            <div class="contact-method-section">
+                <h3>Email</h3>
+                <div class="circle_email">
+                    <a href="mailto:ing.vcelikovaivana@gmail.com" title="Email">
+                        <button>
+                            <span class="svg-wrapper-1">
+                              <span class="svg-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                  <path fill="none" d="M0 0h24v24H0z"></path>
+                                  <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+                                </svg>
+                              </span>
+                            </span>
+                        </button>
+                        <p>ing.vcelikovaivana@gmail.com</p>
+                    </a>
+                </div>
+            </div>
+            <!-- Phone -->
+            <div class="contact-method-section">
+                <h3>Telefónne číslo</h3>
+                <div class="circle_email">
+                    <a href="tel:+421915336611" title="Telefón">
+                        <button>
+                            <span class="svg-wrapper-1">
+                              <span class="svg-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+                                  <path fill="currentColor" d="m24.8868 19.1288c-1.0274-.1308-2.036-.3815-3.0052-.7467-.7878-.29-1.6724-.1034-2.276.48-.797.8075-2.0493.9936-2.9664.3258-1.4484-1.055-2.7233-2.3295-3.7783-3.7776-.6681-.9168-.4819-2.1691.3255-2.9659.5728-.6019.7584-1.4748.4802-2.2577-.3987-.98875-.6792-2.02109-.8358-3.07557-.2043-1.03534-1.1138-1.7807-2.1694-1.77778h-3.18289c-.60654-.00074-1.18614.25037-1.60035.69334-.40152.44503-.59539 1.03943-.53345 1.63555.344 3.31056 1.47164 6.49166 3.28961 9.27986 1.64878 2.5904 3.84608 4.7872 6.43688 6.4356 2.7927 1.797 5.9636 2.9227 9.2644 3.289h.1778c.5409.0036 1.0626-.2 1.4581-.569.444-.406.6957-.9806.6935-1.5822v-3.1821c.0429-1.0763-.7171-2.0185-1.7782-2.2046z"></path>
+                                </svg>
+                              </span>
+                            </span>
+                        </button>
+                        <p>+421 915 336 611</p>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="line_center_about_me" >
-            <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <defs/>
-                <g id="Layer-1">
-                <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
-                </g>
-            </svg>
-        </div>
-        <div class="circle_email">
-            <a href="mailto:ing.vcelikovaivana@gmail.com" title="Email ing.vcelikovaivana@gmail.com">
-                <button>
-                    <span class="svg-wrapper-1">
-                      <span class="svg-wrapper">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                        >
-                          <path fill="none" d="M0 0h24v24H0z"></path>
-                          <path
-                            fill="currentColor"
-                            d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                          ></path>
-                        </svg>
-                      </span>
-                    </span>
-                  </button>
-                <p>ing.vcelikovaivana@gmail.com</p>
-            </a>
-        </div>
-        <div class="circle_email">
-            <a href="tel:+4219056995 20" title="Call +4219056965520">
-                <button>
-                    <span class="svg-wrapper-1">
-                      <span class="svg-wrapper">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 32 32"
-                          width="32"
-                          height="32"
-                        >
-                        <path 
-                            fill="currentColor"
-                            d="m24.8868 19.1288c-1.0274-.1308-2.036-.3815-3.0052-.7467-.7878-.29-1.6724-.1034-2.276.48-.797.8075-2.0493.9936-2.9664.3258-1.4484-1.055-2.7233-2.3295-3.7783-3.7776-.6681-.9168-.4819-2.1691.3255-2.9659.5728-.6019.7584-1.4748.4802-2.2577-.3987-.98875-.6792-2.02109-.8358-3.07557-.2043-1.03534-1.1138-1.7807-2.1694-1.77778h-3.18289c-.60654-.00074-1.18614.25037-1.60035.69334-.40152.44503-.59539 1.03943-.53345 1.63555.344 3.31056 1.47164 6.49166 3.28961 9.27986 1.64878 2.5904 3.84608 4.7872 6.43688 6.4356 2.7927 1.797 5.9636 2.9227 9.2644 3.289h.1778c.5409.0036 1.0626-.2 1.4581-.569.444-.406.6957-.9806.6935-1.5822v-3.1821c.0429-1.0763-.7171-2.0185-1.7782-2.2046z"></path>
-                        </svg>
-                      </span>
-                    </span>
-                  </button>
-                <p>+4214735863945</p>
-            </a>
-        </div>
-        <div class="line_center_about_me" >
-            <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <defs/>
-                <g id="Layer-1">
-                <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
-                </g>
-            </svg>
-        </div>
-        <div class="connections_container_contact">
-            <h3>Sociálne siete</h3>
-            <p><a href="https://www.facebook.com/TOTOsperky/photos" target="_blank"><i class="fab fa-facebook"></i></a></p>
-            <p><a href="https://www.instagram.com/toto_jewelry/" class="instagram" target="_blank"><i class="fab fa-instagram"></i></a></p>
-        </div>
-        <div class="line_center_about_me" >
-            <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <defs/>
-                <g id="Layer-1">
-                <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
-                </g>
-            </svg>
-        </div>
-        <div class="connections_container_contact">
-            <h3>Adresa</h3>
-            <p>Toto šperky </p>
-            <p>1.mája č.95</p>
-            <p>972 51</p>
-            <p>Handlová</p>
-            <p>Slovensko</p>
+        
+        
+        <!-- Additional Info Section -->
+        <div class="contact-additional">
+            <!-- Social -->
+            <div class="contact-info-card">
+                <h3>Sociálne siete</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/TOTOsperky/photos" target="_blank" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/toto_jewelry/" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            
+            <!-- Address -->
+            <div class="contact-info-card">
+                <h3>Adresa</h3>
+                <address>
+                    Toto šperky<br>
+                    Duklianska 36<br>
+                    972 51 Handlová<br>
+                    Slovensko
+                </address>
+            </div>
         </div>
     </div>
 </section>

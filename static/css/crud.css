@@ -14,7 +14,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
-	max-width: 600px;
+	max-width: 750px;
 	width: 90%;
 }
 .container_add_product form{
@@ -162,6 +162,187 @@
 
 	font-size: 14px;
 }
+/* CKEditor 5 editor styles - match FE display */
+.ck-editor__editable {
+	min-height: 300px;
+	font-size: 16px;
+	line-height: 1.7;
+	color: var(--text-color-dark);
+}
+
+.ck-editor__editable p {
+	margin-bottom: 1em;
+	font-weight: 300;
+}
+
+.ck-editor__editable h1,
+.ck-editor__editable h2,
+.ck-editor__editable h3 {
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
+	font-weight: 500;
+}
+
+.ck-editor__editable h1 {
+	font-size: 1.8em;
+}
+
+.ck-editor__editable h2 {
+	font-size: 1.5em;
+}
+
+.ck-editor__editable h3 {
+	font-size: 1.2em;
+}
+
+.ck-editor__editable ul,
+.ck-editor__editable ol {
+	margin-left: 1.5em !important;
+	margin-bottom: 0.5em !important;
+	padding-left: 0.5em !important;
+	list-style-position: outside !important;
+}
+
+/* Nested lists - reduce margin */
+.ck-editor__editable ul ul,
+.ck-editor__editable ol ol,
+.ck-editor__editable ul ol,
+.ck-editor__editable ol ul {
+	margin-bottom: 0.2em !important;
+	margin-top: 0.2em !important;
+}
+
+/* Bullet lists - level 1 */
+.ck-editor__editable > ul,
+.ck-editor__editable > ul > li,
+.ck-editor__editable ul {
+	list-style-type: disc !important;
+}
+
+/* Bullet lists - level 2 */
+.ck-editor__editable ul ul,
+.ck-editor__editable ul ul li {
+	list-style-type: circle !important;
+}
+
+/* Bullet lists - level 3+ */
+.ck-editor__editable ul ul ul,
+.ck-editor__editable ul ul ul li {
+	list-style-type: square !important;
+}
+
+/* Numbered lists */
+.ck-editor__editable ol,
+.ck-editor__editable ol li {
+	list-style-type: decimal !important;
+}
+
+/* Nested numbered lists */
+.ck-editor__editable ol ol,
+.ck-editor__editable ol ol li {
+	list-style-type: lower-alpha !important;
+}
+
+.ck-editor__editable ol ol ol,
+.ck-editor__editable ol ol ol li {
+	list-style-type: lower-roman !important;
+}
+
+.ck-editor__editable li {
+	margin-bottom: 0.2em;
+	display: list-item !important;
+}
+
+/* Remove paragraph margins inside list items */
+.ck-editor__editable li p {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.ck-editor__editable ul li::marker,
+.ck-editor__editable ol li::marker {
+	color: var(--text-color-dark);
+}
+
+.ck-editor__editable blockquote {
+	border-left: 4px solid var(--text-color-dark);
+	padding-left: 1em;
+	margin: 1em 0;
+	font-style: italic;
+	color: #666;
+}
+
+.ck-editor__editable a {
+	color: var(--text-color-dark);
+	text-decoration: underline;
+}
+
+.ck-editor__editable img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+.ck-editor__editable figure.image {
+	margin: 1.5em 0;
+}
+
+.ck-editor__editable figure.image img {
+	display: block;
+	margin: 0 auto;
+}
+
+.ck-editor__editable figure.image-style-side {
+	float: right;
+	max-width: 50%;
+	margin: 0.5em 0 0.5em 1.5em;
+}
+
+.ck-editor__editable figcaption {
+	font-size: 0.9em;
+	color: #666;
+	text-align: center;
+	margin-top: 0.5em;
+}
+
+.ck-editor__editable strong {
+	font-weight: 700;
+}
+
+.ck-editor__editable em,
+.ck-editor__editable i {
+	font-style: italic !important;
+}
+
+.ck-editor__editable u {
+	text-decoration: underline !important;
+}
+
+.ck-editor__editable s,
+.ck-editor__editable strike,
+.ck-editor__editable del {
+	text-decoration: line-through !important;
+}
+
+/* CKEditor container width */
+.ck.ck-editor {
+	width: 100%;
+	max-width: 800px;
+}
+
+/* Make CKEditor resizable */
+.ck-editor__editable {
+	min-height: 300px;
+	max-height: none;
+	resize: both;
+	overflow: auto;
+}
+
+/* Allow editor container to expand */
+.ck.ck-editor__main {
+	max-width: none;
+}
+
 @media (max-width: 768px) {
 	.container_add_product{
         width: calc(100% - 0px);

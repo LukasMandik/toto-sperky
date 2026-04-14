@@ -774,8 +774,8 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	transform: translateX(-50%);
 	left: 50%;
 	font-size: 32px;
-	font-weight: 800;
-	line-height: 105%;
+	font-weight: 300;
+	line-height: -1px;
 	width: 400px;
 	margin: 0 auto;
 }
@@ -843,7 +843,7 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 .text_home_about_jewelry h2.last_text{
 	text-align: center;
 	font-size: 24px;
-	font-weight: 800;
+	font-weight: 200;
 	line-height: 105%;
 	width: 255px;
 	position: absolute;
@@ -880,8 +880,8 @@ path.toto2, path.logo_dot2, path.circle_fill2{
 	-webkit-column-break-inside: avoid;
 }
 .third_home_container h3{
-	font-size: 28px;
-	font-weight: 800;
+	font-size: 38px;
+	font-weight: 300;
 	letter-spacing: 1px;
 	line-height: 105%;
 	/* margin-top: 30px; */
@@ -939,6 +939,8 @@ margin-top: 25px;
 	padding-left: 200px;
 	padding-right: 130px;
 	margin: 0 auto;
+    user-select: none; /* Zabráni označovaniu textu */
+    cursor: grab;
 }
 .carusel::-webkit-scrollbar {
 	display: none;

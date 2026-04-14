@@ -1,6 +1,9 @@
+import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.utils.html import strip_tags
+from django.templatetags.static import static
 from django.forms import modelformset_factory
 from .models import Category ,Product, Blog, BlogImage
 from .forms import ProductForm, CategoryForm, BlogForm, BlogImageForm
@@ -13,6 +16,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserLoginForm
 from django.core.cache import cache
 import logging
+from .utils import clean_html_for_search
 
 # Vytvorenie a konfigurácia loggera
 logger = logging.getLogger(__name__)
@@ -187,23 +191,36 @@ def contact(request):
 
 
 
-def gallery(request):
-    category_slug = request.GET.get('category', '')
+def gallery_categories(request):
+    """Zobrazenie všetkých kategórií na hlavnej stránke galérie"""
+    categories = Category.objects.all().order_by('name').prefetch_related('product_set')
+    
+    # Pre každú kategóriu získame všetky dostupné produkty pre karusel
+    for category in categories:
+        if request.user.is_authenticated:
+            category.preview_products = category.product_set.all()
+        else:
+            category.preview_products = category.product_set.filter(available=True)
+    
+    context = {
+        'categories': categories,
+    }
+    
+    return render(request, 'gallery_categories.html', context)
+
+
+def gallery(request, category_slug):
+    """Zobrazenie produktov konkrétnej kategórie"""
+    category = get_object_or_404(Category, slug=category_slug)
     page_number = request.GET.get('page', 1)
     
     # Získanie uloženej hodnoty počtu položiek na stránku z session, alebo použitie defaultnej hodnoty (15)
     items_per_page = request.session.get('items_per_page', 15)
 
-    if category_slug:
-        if request.user.is_authenticated:
-            products = Product.objects.filter(category__slug=category_slug)
-        else:
-            products = Product.objects.filter(category__slug=category_slug, available=True)
+    if request.user.is_authenticated:
+        products = Product.objects.filter(category=category)
     else:
-        if request.user.is_authenticated:
-            products = Product.objects.all()
-        else:
-            products = Product.objects.filter(available=True)
+        products = Product.objects.filter(category=category, available=True)
 
     paginator = Paginator(products, items_per_page)
     page_obj = paginator.get_page(page_number)
@@ -231,12 +248,11 @@ def gallery(request):
     # Pridanie kontextu
     context = {
         'products': page_obj,
-        'categories': Category.objects.all(),
-        'selected_category': category_slug,
+        'category': category,
         'first_range': first_range,
         'middle_range': middle_range,
         'last_range': last_range,
-        'paginator': paginator,  # Pridáme paginator do kontextu
+        'paginator': paginator,
     }
 
     # Uloženie vybranej hodnoty počtu položiek na stránku do session
@@ -245,12 +261,6 @@ def gallery(request):
         request.session['items_per_page'] = items_per_page
         return redirect(request.path)
 
-    # # Skontrolujte, či je požiadavka AJAX
-    # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-    #     # Ak je to AJAX, vráťte iba čiastočnú šablónu
-    #     return render(request, 'partials/product_list.html', context)
-
-    # Inak vráťte celú šablónu
     return render(request, 'gallery.html', context)
 
 
@@ -272,7 +282,7 @@ def add_product(request):
                     form.add_error('video', "The video size must be less than 120 MB.")
                 else:
                     form.save()
-                    return redirect('toto_sperky_web:gallery')  # Přesměrování na stránku s úspěchem
+                    return redirect('toto_sperky_web:gallery_categories')  # Presmerovanie na stránku s úspechom
     else:
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
@@ -287,7 +297,7 @@ def add_category(request):
                 form.add_error('image', "The image size must be less than 15 MB.")
             else:
                 form.save()
-                return redirect('toto_sperky_web:gallery')  # Přesměrování na stránku s úspěchem
+                return redirect('toto_sperky_web:gallery_categories')  # Presmerovanie na stránku s úspechom
     else:
         form = CategoryForm()
     return render(request, 'add_category.html', {'form': form})
@@ -308,7 +318,7 @@ def update_product(request, slug):
                     form.add_error('video', "The video size must be less than 120 MB.")
                 else:
                     form.save()
-                    return redirect('toto_sperky_web:gallery')
+                    return redirect('toto_sperky_web:gallery_categories')
     else:
         form = ProductForm(instance=product)
     return render(request, 'update_product.html', {'form': form, 'product': product})
@@ -325,7 +335,7 @@ def update_category(request, slug):
             else:
             
                 form.save()
-                return redirect('toto_sperky_web:gallery')  # Presmerovanie na stránku s úspechom
+                return redirect('toto_sperky_web:gallery_categories')  # Presmerovanie na stránku s úspechom
     else:
         form = CategoryForm(instance=category)
     return render(request, 'update_category.html', {'form': form, 'category': category})
@@ -336,7 +346,7 @@ def delete_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == 'POST':
         product.delete()
-        return redirect('toto_sperky_web:gallery')  # Presmerovanie na stránku s úspechom
+        return redirect('toto_sperky_web:gallery_categories')  # Presmerovanie na stránku s úspechom
     return render(request, 'delete_product.html', {'product': product})
 
 @login_required
@@ -344,24 +354,64 @@ def delete_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     if request.method == 'POST':
         category.delete()
-        return redirect('toto_sperky_web:gallery')  # Presmerovanie na stránku s úspechom
+        return redirect('toto_sperky_web:gallery_categories')  # Presmerovanie na stránku s úspechom
     return render(request, 'delete_category.html', {'category': category})
 
 
 
 def ProductDetailView(request, slug):
     product = get_object_or_404(Product, slug=slug)
+    description_plain = strip_tags(product.description)[:500] if product.description else ""
+    json_ld = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product.name,
+        "description": description_plain,
+        "url": request.build_absolute_uri(),
+        "brand": {"@type": "Brand", "name": "Toto šperky"},
+    }
+    if product.image:
+        json_ld["image"] = request.build_absolute_uri(product.image.url)
+    if product.video_webm:
+        json_ld["video"] = request.build_absolute_uri(product.video_webm.url)
     context = {
         'product': product,
         'meta_description': product.get_meta_description(),
+        'product_json_ld': json.dumps(json_ld, ensure_ascii=False),
     }
     return render(request, 'product_detail.html', context)
 
 def BlogDetailView(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
+    related_blogs = (
+        Blog.objects.filter(available=True)
+        .exclude(id=blog.id)
+        .order_by('-created')[:3]
+    )
+    meta_img = blog.get_meta_image()
+    blog_json_ld = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": blog.name,
+        "author": {"@type": "Person", "name": "Ivana"},
+        "publisher": {
+            "@type": "Organization",
+            "name": "Toto šperky",
+            "logo": {
+                "@type": "ImageObject",
+                "url": request.build_absolute_uri(static("media/logo_cierne.png")),
+            },
+        },
+        "datePublished": blog.created.strftime("%Y-%m-%d") if blog.created else "",
+        "description": strip_tags(blog.get_meta_description())[:500],
+    }
+    if meta_img:
+        blog_json_ld["image"] = request.build_absolute_uri(meta_img)
     context = {
         'blog': blog,
         'meta_description': blog.get_meta_description(),
+        'related_blogs': related_blogs,
+        'blog_json_ld': json.dumps(blog_json_ld, ensure_ascii=False),
     }
     return render(request, 'blog_detail.html', context)
 

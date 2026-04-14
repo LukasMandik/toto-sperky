@@ -1,16 +1,20 @@
 {% load static %}
+
 <section class="container_about_me">
-    <div class="content-about-me">
-        <!-- <img class="logo-cierne-1" src="{% static 'media/logo_cierne.png' %}" /> -->
-        <h3 class="tro-ku-o-mne"> Trošku o mne </h3>
-        <div class="line_center_about_me" >
-            <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 29.7939 613.738" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <defs/>
-                <g id="Layer-1">
-                <path d="M15.4714 8.91668L15.3701 605.8" fill="black" fill-rule="nonzero" opacity="1" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1" class="line"/>
-                </g>
-            </svg>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <span class="hero-label">O mne</span>
+            <h1>Spoznajme sa</h1>
+            <div class="hero-line"></div>
         </div>
+    </header>
+
+    <div class="about-subtitle-container">
+        <p class="about-subtitle">Vášeň pre remeslo a krásu.</p>
+    </div>
+
+    <div class="content-about-me">
         <div class="text-about-me"> 
             <p>Ahoj, som Ivana <span>tvorím autorské diela</span> zo striebra a šperkárskeho cínu. Tvorím intuitívne, v dielach sa odráža moja osobnosť a nálada. Šperky osobne navrhujem na mieru a podľa <span>požiadavky zákazníka.</span></p>
         </div>
@@ -45,8 +49,9 @@
         </div>
     </div>
 </section>
+
 <script>
-    let currentSlide = 0;
+let currentSlide = 0;
 const slides = document.querySelectorAll('.carousel img');
 const indicators = document.querySelectorAll('.carousel-indicators .indicator');
 let slideInterval;
@@ -66,7 +71,7 @@ function nextSlide() {
 }
 
 function startSlideShow() {
-  slideInterval = setInterval(nextSlide, 4000); // 4 sekundy
+  slideInterval = setInterval(nextSlide, 4000);
 }
 
 function stopSlideShow() {
